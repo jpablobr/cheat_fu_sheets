@@ -1,0 +1,28 @@
+ARTS is Another RJS Test System
+==============================
+
+## Usage:
+    assert_rjs :alert, 'Hi!'<br>
+    assert_rjs :assign, 'a', '2'<br>
+    assert_rjs :call, 'foo', 'bar', 'baz'<br>
+    assert_rjs :draggable, 'draggable_item'<br>
+    assert_rjs :drop_receiving, 'receiving_item'<br>
+    assert_rjs :hide, "post_1", "post_2", "post_3"<br>
+    assert_rjs :insert_html, :bottom, 'posts'<br>
+    assert_rjs :redirect_to, :action => 'list'<br>
+    assert_rjs :remove, "post_1", "post_2", "post_3"<br>
+    assert_rjs :replace, 'completely_replaced_div'<br>
+    assert_rjs :replace, 'completely_replaced_div', '<p>This replaced the div</p>'<br>
+    assert_rjs :replace, 'completely_replaced_div', /replaced the div/<br>
+    assert_rjs :replace_html, 'replaceable_div', "This goes inside the div"<br>
+    assert_rjs :show, "post_1", "post_2", "post_3"<br>
+    assert_rjs :sortable, 'sortable_item'<br>
+    assert_rjs :toggle, "post_1", "post_2", "post_3"<br>
+    assert_rjs :visual_effect, :highlight, "posts", :duration => '1.0'<br>
+
+For the square bracket syntax (page['some_id'].toggle) use :page followed by the id and then subsequent method calls. Assignment requires a '=' at the end of the method name followed by the value.<br>
+
+    assert_rjs :page, 'some_id', :toggle<br>
+    assert_rjs :page, 'some_id', :style, :color=, 'red'<br>
+
+For a complete tutorial, see <http://glu.ttono.us/articles/2006/05/29/guide-test-driven-rjs-with-arts.>

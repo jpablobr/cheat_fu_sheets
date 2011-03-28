@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>ruby_datamapper_properties(1) - Ruby Data Mapper Properties</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#Example-Model">Example Model</a>
+    <a href="#Core-Types">Core Types</a>
+    <a href="#Types-via-dm-types-">Types via 'dm-types'</a>
+    <a href="#Natural-Keys">Natural Keys</a>
+    <a href="#Lazy-Loading">Lazy Loading</a>
+    <a href="#Overridding-Setters">Overridding Setters</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>ruby_datamapper_properties(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>ruby_datamapper_properties(1)</li>
+  </ol>
+
+  <h1>Ruby Data Mapper Properties</h1>
+<h2 id="Example-Model">Example Model</h2>
+
+<pre><code>class Post
+  include DataMapper::Resource
+  property :id,        Serial                       # primary serial key
+  property :title,     String,  :nullable =&gt; false  # Cannot be null
+  property :published, Boolean, :default  =&gt; false  # Default value for new records is false
+end
+</code></pre>
+
+<h2 id="Core-Types">Core Types</h2>
+
+<p><code>Boolean             </code><br />
+<code>String              </code><br />
+<code>Text                </code><br />
+<code>Float               </code><br />
+<code>Integer             </code><br />
+<code>BigDecimal,         </code><br />
+<code>DateTime, Date, Time</code><br />
+<code>Object, (marshalled)</code><br />
+<code>Discriminator       </code><br /></p>
+
+<h2 id="Types-via-dm-types-">Types via 'dm-types'</h2>
+
+<p><code>Csv         </code> <br />
+<code>Enum        </code> <br />
+<code>EpochTime   </code> <br />
+<code>FilePath    </code> <br />
+<code>Flag        </code> <br />
+<code>IPAddress   </code> <br />
+<code>URI         </code> <br />
+<code>Yaml        </code> <br />
+<code>Json        </code> <br />
+<code>BCryptHash  </code> <br />
+<code>Regex       </code> <br /></p>
+
+<h2 id="Natural-Keys">Natural Keys</h2>
+
+<p>property :sku, String, :key => true<br /></p>
+
+<h2 id="Lazy-Loading">Lazy Loading</h2>
+
+<p>Properties may be 'lazy loaded', after which you must call the
+method directly to have it's contents loaded. Text properties are
+lazy by default.<br /></p>
+
+<pre><code>property :body, Text
+property :body, Text, :lazy =&gt; false
+</code></pre>
+
+<p>Lazy Loading can also be done via contexts, which let you group
+lazily loaded properties together, so that when one is fetched,
+all the associated ones will be as well, cutting down on trips
+to the data-store.<br /></p>
+
+<pre><code>property :summary, Text, :lazy =&gt; [:show]
+property :body,    Text, :lazy =&gt; [:show]
+</code></pre>
+
+<h2 id="Overridding-Setters">Overridding Setters</h2>
+
+<p>Use the #attribute_set method instead of using @inst_vars.<br /></p>
+
+<pre><code>def name= string
+  raise ArgumentError if string != 'amazing'
+  attribute_set :name, string
+end
+</code></pre>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>March 2011</li>
+    <li class='tr'>ruby_datamapper_properties(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>

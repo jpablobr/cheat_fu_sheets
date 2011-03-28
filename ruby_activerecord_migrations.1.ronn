@@ -1,0 +1,81 @@
+Ruby Active Record Migrations
+=============================
+
+## Methods:
+`create_table`(name, options)                            <br>
+`drop_table`(name)                                       <br>
+`rename_table`(old_name, new_name)                       <br>
+`add_column`(table_name, column_name, type, options)     <br>
+`rename_column`(table_name, column_name, new_column_name)<br>
+`change_column`(table_name, column_name, type, options)  <br>
+`remove_column`(table_name, column_name)                 <br>
+`add_index`(table_name, column_name, index_type)         <br>
+`remove_index`(table_name, column_name)                  <br>
+
+## Available Column Types:
+<integer                    ><br>
+<float                      ><br>
+<datetime                   ><br>
+<date                       ><br>
+<timestamp                  ><br>
+<time                       ><br>
+<text                       ><br>
+<string                     ><br>
+<binary                     ><br>
+<boolean                    ><br>
+<decimal                    >
+:precision :scale<br>
+
+## Valid Column Options:
+`limit`<br>
+`null` (i.e. ":null => false" implies NOT NULL)<br>
+`default` (to specify default values)<br>
+`:decimal`, :precision => 8, :scale => 3<br>
+
+## Rake Tasks:
+`rake db:schema:dump`: run after you create a model to capture the schema.rb<br>
+`rake db:schema:import`: import the schema file into the current database (on error, check if your schema.rb has ":force => true" on the create table statements<br>
+`./script/generate migration MigrationName`: generate a new migration with a new 'highest' version (run './script/generate migration' for this info at your fingertips)<br>
+`rake db:migrate`: migrate your current database to the most recent version<br>
+`rake db:migrate VERSION=5`: migrate your current database to a specific version (in this case, version 5)<br>
+`rake db:rollback`: migrate down one migration<br>
+`rake db:rollback STEP=3`: migrate down three migrations<br>
+`rake db:migrate RAILS_ENV=production`: migrate your production database<br>
+
+## SQL:
+  Queries can be executed directly:<br>
+  execute <'ALTER TABLE researchers ADD CONSTRAINT fk_researchers_departments FOREIGN KEY ( department_id ) REFERENCES departments( id )'><br>
+
+## Example Migration:
+    class UpdateUsersAndCreateProducts < ActiveRecord::Migration
+      def self.up
+        rename_column "users", "password", "hashed_password"
+        remove_column "users", "email"
+
+         User.reset_column_information
+         User.find(:all).each{|u| #do something with u}
+
+        create_table "products", :force => true do |t|
+            t.column "name", :text
+            t.column "description", :text
+            t.column "price", :decimal, :precision => 9, :scale => 2
+        end
+
+        #the rails 2.0 way:
+        create_table :people do |t|
+          t.integer :account_id
+          t.string  :first_name, :last_name, :null => false
+          t.text    :description
+          t.timestamps
+        end
+      end
+
+      def self.down
+        rename_column "users", "hashed_password", "password"
+        add_column "users", "email", :string
+        drop_table "products"
+      end
+    end
+
+## Find Highest version:<br>
+script/runner "puts ActiveRecord::Migrator.current_version"

@@ -1,0 +1,137 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_DATAMAPPER_PROPERTIES" "1" "March 2011" "" ""
+.
+.SH "Example Model"
+.
+.nf
+
+class Post
+  include DataMapper::Resource
+  property :id,        Serial                       # primary serial key
+  property :title,     String,  :nullable => false  # Cannot be null
+  property :published, Boolean, :default  => false  # Default value for new records is false
+end
+.
+.fi
+.
+.SH "Core Types"
+\fBBoolean\fR
+.
+.br
+\fBString\fR
+.
+.br
+\fBText\fR
+.
+.br
+\fBFloat\fR
+.
+.br
+\fBInteger\fR
+.
+.br
+\fBBigDecimal,\fR
+.
+.br
+\fBDateTime, Date, Time\fR
+.
+.br
+\fBObject, (marshalled)\fR
+.
+.br
+\fBDiscriminator\fR
+.
+.br
+.
+.SH "Types via \'dm\-types\'"
+\fBCsv\fR
+.
+.br
+\fBEnum\fR
+.
+.br
+\fBEpochTime\fR
+.
+.br
+\fBFilePath\fR
+.
+.br
+\fBFlag\fR
+.
+.br
+\fBIPAddress\fR
+.
+.br
+\fBURI\fR
+.
+.br
+\fBYaml\fR
+.
+.br
+\fBJson\fR
+.
+.br
+\fBBCryptHash\fR
+.
+.br
+\fBRegex\fR
+.
+.br
+.
+.SH "Natural Keys"
+property :sku, String, :key => true
+.
+.br
+.
+.SH "Lazy Loading"
+Properties may be \'lazy loaded\', after which you must call the method directly to have it\'s contents loaded\. Text properties are lazy by default\.
+.
+.br
+.
+.IP "" 4
+.
+.nf
+
+property :body, Text
+property :body, Text, :lazy => false
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Lazy Loading can also be done via contexts, which let you group lazily loaded properties together, so that when one is fetched, all the associated ones will be as well, cutting down on trips to the data\-store\.
+.
+.br
+.
+.IP "" 4
+.
+.nf
+
+property :summary, Text, :lazy => [:show]
+property :body,    Text, :lazy => [:show]
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Overridding Setters"
+Use the #attribute_set method instead of using @inst_vars\.
+.
+.br
+.
+.IP "" 4
+.
+.nf
+
+def name= string
+  raise ArgumentError if string != \'amazing\'
+  attribute_set :name, string
+end
+.
+.fi
+.
+.IP "" 0
+

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>ruby_ambition(1) - Ruby Ambition</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#Query-to_sql">Query#to_sql</a>
+    <a href="#Query-to_hash">Query#to_hash</a>
+    <a href="#Equality">Equality</a>
+    <a href="#Associations">Associations</a>
+    <a href="#Comparisons">Comparisons</a>
+    <a href="#LIKE-and-REGEXP">LIKE and REGEXP</a>
+    <a href="#Detect">Detect</a>
+    <a href="#Limits">Limits</a>
+    <a href="#Sort">Sort</a>
+    <a href="#Count">Count</a>
+    <a href="#Other">Other</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>ruby_ambition(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>ruby_ambition(1)</li>
+  </ol>
+
+  <h1>Ruby Ambition</h1>
+<h2 id="Query-to_sql">Query#to_sql</h2>
+
+<pre><code>&gt;&gt; User.select { |m| m.name == 'jon' }.to_sql
+=&gt; "SELECT * FROM users WHERE users.name = 'jon'"
+</code></pre>
+
+<h2 id="Query-to_hash">Query#to_hash</h2>
+
+<pre><code>&gt;&gt; User.select { |m| m.name == 'jon' }.to_hash
+=&gt; {:conditions=&gt;"users.name = 'jon'"}
+</code></pre>
+
+<h2 id="Equality">Equality</h2>
+
+<pre><code>User.select { |m| m.name == 'jon' }
+User.select { |m| m.name != 'jon' }
+User.select { |m| m.name == 'jon' &amp;&amp; m.age == 21 }
+User.select { |m| (m.name == 'jon' || m.name == 'rick') &amp;&amp; m.age == 21 }
+</code></pre>
+
+<h2 id="Associations">Associations</h2>
+
+<pre><code>User.select { |u| u.email == 'chris@ozmm.org' &amp;&amp; u.profile.name == 'chris wanstrath' }.map(&amp;:title)
+</code></pre>
+
+<h2 id="Comparisons">Comparisons</h2>
+
+<pre><code>User.select { |m| m.age &lt; 21 }.to_sql
+User.select { |m| [1, 2, 3, 4].include? m.id }
+</code></pre>
+
+<h2 id="LIKE-and-REGEXP">LIKE and REGEXP</h2>
+
+<pre><code>User.select { |m| m.name =~ 'chri%' }
+User.select { |m| m.name !~ 'chris' }
+User.select { |m| !(m.name =~ 'chris') }
+User.select { |m| m.name =~ /chris/ }
+</code></pre>
+
+<h2 id="Detect">Detect</h2>
+
+<pre><code>User.detect { |m| m.name == 'chris' }
+</code></pre>
+
+<h2 id="Limits">Limits</h2>
+
+<pre><code>User.select { |m| m.name == 'jon' }.first
+User.select { |m| m.name == 'jon' }.first(5)
+User.select { |m| m.name == 'jon' }[10, 20]
+User.select { |m| m.name == 'jon' }[10..20]
+</code></pre>
+
+<h2 id="Sort">Sort</h2>
+
+<pre><code>User.select { |m| m.name == 'jon' }.sort_by { |m| m.name }
+User.select { |m| m.name == 'jon' }.sort_by { |m| [ m.name,  -m.age ] }
+User.select { |m| m.name == 'jon' }.sort_by { |m| -m.profiles.title }
+User.select { |m| m.name == 'jon' }.sort_by { rand }
+</code></pre>
+
+<h2 id="Count">Count</h2>
+
+<pre><code>User.select { |m| m.name == 'jon' }.size
+</code></pre>
+
+<h2 id="Other">Other</h2>
+
+<pre><code>User.any? { |m| m.name == 'jon' }
+User.all? { |m| m.name == 'jon' }
+User.select { |m| m.name == 'jon' }.empty?
+User.select { |m| m.name.downcase =~ 'jon%' }.to_sql
+</code></pre>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>March 2011</li>
+    <li class='tr'>ruby_ambition(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
