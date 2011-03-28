@@ -1,0 +1,52 @@
+Ruby Regexp
+===========
+
+## Syntax
+
+    /normal regex/iomx[neus]
+    %r|alternate form|
+
+## options:
+
+`/i     `    case insensitive<br>
+`/o     `    only interpolate #{} blocks once<br>
+`/m     `    multiline mode - '.' will match newline<br>
+`/x     `    extended mode - whitespace is ignored<br>
+`/[neus]`    encoding: none, EUC, UTF-8, SJIS, respectively<br>
+
+## regex characters:
+
+`.         ` any character except newline<br>
+`[ ]       ` any single character of set<br>
+`[^ ]      ` any single character NOT of set<br>
+`*         ` 0 or more previous regular expression<br>
+`*?        ` 0 or more previous regular expression(non greedy)<br>
+`+         ` 1 or more previous regular expression<br>
+`+?        ` 1 or more previous regular expression(non greedy)<br>
+`?         ` 0 or 1 previous regular expression<br>
+`|         ` alternation<br>
+`( )       ` grouping regular expressions<br>
+`^         ` beginning of a line or string<br>
+`$         ` end of a line or string<br>
+`{m,n}     ` at least m but most n previous regular expression<br>
+`{m,n}?    ` at least m but most n previous regular expression(non greedy)<br>
+`\A        ` beginning of a string<br>
+`\b        ` backspace(0x08)(inside[]only)<br>
+`\B        ` non-word boundary<br>
+`\b        ` word boundary(outside[]only)<br>
+`\d        ` digit, same as[0-9]<br>
+`\D        ` non-digit<br>
+`\S        ` non-whitespace character<br>
+`\s        ` whitespace character[ \t\n\r\f]<br>
+`\W        ` non-word character<br>
+`\w        ` word character[0-9A-Za-z_]<br>
+`\z        ` end of a string<br>
+`\Z        ` end of a string, or before newline at the end<br>
+`(?# )     ` comment<br>
+`(?: )     ` grouping without backreferences<br>
+`(?= )     ` zero-width positive look-ahead assertion<br>
+`(?! )     ` zero-width negative look-ahead assertion<br>
+`(?ix-ix)  ` turns on/off i/x options, localized in group if any.<br>
+`(?ix-ix: )` turns on/off i/x options, localized in non-capturing group.<br>
+
+thanks to <http://www.zenspider.com/Languages/Ruby/QuickRef.html#11>

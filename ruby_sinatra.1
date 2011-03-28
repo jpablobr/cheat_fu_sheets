@@ -1,0 +1,106 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_SINATRA" "1" "March 2011" "" ""
+.
+.SH "Routes"
+Enable :methodoverride to utilize RESTful routes via the :_method param\.
+.
+.IP "" 4
+.
+.nf
+
+get \'/users/?\' do
+end
+
+get \'/user/:id\' do |id|
+  # params[:id]
+end
+
+get \'/user/*\' do |id|
+
+end
+
+get \'/user/*/*\' do |id, operation|
+  p params[:splat]
+  # => [\'1\', \'edit\']
+end
+
+get %r{/hello/([\ew]+)} do
+  "Hello, #{params[:captures]\.first}!"
+end
+
+get \'/foo\', :agent => /Songbird (\ed\e\.\ed)[\ed\e/]*?/ do
+  "You\'re using Songbird version #{params[:agent][0]}"
+end
+
+get \'/foo\' do
+  # Matches non\-songbird browsers
+end
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Options"
+.
+.nf
+
+#set, #enable, #disable
+
+set :foo, \'bar\'
+
+get \'/foo\' do
+  options\.foo
+  # => \'bar\'
+end
+.
+.fi
+.
+.SH ":environment"
+A symbol representing the deployment environment\. Defaults to RACK_ENV or :development\. Typically is one of :test, :production, or :development\.
+.
+.SH ":sessions"
+Support for encrypted cookie\-based sessions are included with Sinatra but are disabled by default\.
+.
+.SH ":methodoverride"
+Support RESTful routes by faking the HTTP method using POST param :_method\.
+.
+.SH ":root"
+Application root directory\.
+.
+.SH ":static"
+Boolean determining whether or not static files should be served from the applications :public directory\.
+.
+.SH ":public"
+Static public files directory\.
+.
+.SH ":views"
+View template directory\.
+.
+.SH ":run"
+Whether or not the built\-in web server is started when the application is fully loaded\. By default this is true only when $0 == :app_file, i\.e when running the application file directly\.
+.
+.SH ":server"
+String or array of rack server handler names\. Defaults to %w( thin mongrel webrick )
+.
+.SH ":host"
+Hostname or ipaddress\. Defaults to 0\.0\.0\.0
+.
+.SH ":port"
+Server port number, defaults to 4567\.
+.
+.SH ":dump_errors"
+Boolean specifying whether backtraces are written to STDERR when an exception is raised from a route or filter\.
+.
+.SH ":clean_trace"
+Whether or not Sinatra should clean the backtrace, removing library / framework entries\.
+.
+.SH ":raise_errors"
+Boolean specifying whether exceptions raised from routes and filters should escape the application\. When disabled, exceptions are rescued and mapped to error handlers which typically set a 5xx status code and render a custom error page\.
+.
+.P
+Enabling the :raise_errors option causes exceptions to be raised outside of the application where it may be handled by the server handler or Rack middleware, such as Rack::ShowExceptions or Rack::MailExceptions\.
+.
+.SH ":lock"
+Ensure only a single request at a time using a mutex lock\.

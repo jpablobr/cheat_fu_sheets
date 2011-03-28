@@ -1,0 +1,170 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_MOCHA" "1" "March 2011" "" ""
+.
+.SH "Mocking a class method"
+.
+.nf
+
+product = Product\.new
+Product\.expects(:find)\.with(1)\.returns(product)
+assert_equal product, Product\.find(1)
+.
+.fi
+.
+.SH "Mocking an instance method on a real object"
+.
+.nf
+
+product = Product\.new
+product\.expects(:save)\.returns(true)
+assert product\.save
+.
+.fi
+.
+.SH "Stubbing instance methods on real object"
+.
+.nf
+
+prices = [stub(:pence => 1000), stub(:pence => 2000)]
+product = Product\.new
+product\.stubs(:prices)\.returns(prices)
+assert_equal [1000, 2000], product\.prices\.collect {|p| p\.pence}
+.
+.fi
+.
+.SH "Stubbing an instance method on all instances of a class"
+.
+.nf
+
+Product\.any_instance\.stubs(:name)\.returns(\'stubbed_name\')
+product = Product\.new
+assert_equal \'stubbed_name\', product\.name
+.
+.fi
+.
+.SH "Traditional mocking"
+.
+.nf
+
+object = mock()
+object\.expects(:expected_method)\.with(:p1, :p2)\.returns(:result)
+assert_equal :result, object\.expected_method(:p1, :p2)
+.
+.fi
+.
+.SH "Shortcuts"
+.
+.nf
+
+object = stub(:method1 => :result1, :method2 => :result2)
+assert_equal :result1, object\.method1
+assert_equal :result2, object\.method2
+.
+.fi
+.
+.SH "Expection Methods:"
+at_least(minimum)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that the expected method must be called at least a minimum number of times\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+at_least_once
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that the expected method must be called at least once\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+never
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that the expected method must never be called\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+raises(exception = RuntimeError, message = nil)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that when the expected method is called, it raises the specified exception with the specified message\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+returns(value)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that when the expected method is called, it returns the specified value\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+times(range)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that the number of calls to the expected method must be within a specific range\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+with(*arguments, &block)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that the expected method must be called with specified arguments\.
+.
+.fi
+.
+.IP "" 0
+.
+.P
+yields(*parameters)
+.
+.IP "" 4
+.
+.nf
+
+Modifies expectation so that when the expected method is called, it yields with the specified parameters\.
+.
+.fi
+.
+.IP "" 0
+

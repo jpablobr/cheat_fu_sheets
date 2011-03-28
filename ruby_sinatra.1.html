@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>ruby_sinatra(1) - Ruby Sinatra</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#Routes">Routes</a>
+    <a href="#Options">Options</a>
+    <a href="#-environment">:environment</a>
+    <a href="#-sessions">:sessions</a>
+    <a href="#-methodoverride">:methodoverride</a>
+    <a href="#-root">:root</a>
+    <a href="#-static">:static</a>
+    <a href="#-public">:public</a>
+    <a href="#-views">:views</a>
+    <a href="#-run">:run</a>
+    <a href="#-server">:server</a>
+    <a href="#-host">:host</a>
+    <a href="#-port">:port</a>
+    <a href="#-dump_errors">:dump_errors</a>
+    <a href="#-clean_trace">:clean_trace</a>
+    <a href="#-raise_errors">:raise_errors</a>
+    <a href="#-lock">:lock</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>ruby_sinatra(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>ruby_sinatra(1)</li>
+  </ol>
+
+  <h1>Ruby Sinatra</h1>
+<h2 id="Routes">Routes</h2>
+
+<p>Enable :methodoverride to utilize RESTful routes
+via the :_method param.</p>
+
+<pre><code>get '/users/?' do
+end
+
+get '/user/:id' do |id|
+  # params[:id]
+end
+
+get '/user/*' do |id|
+
+end
+
+get '/user/*/*' do |id, operation|
+  p params[:splat]
+  # =&gt; ['1', 'edit']
+end
+
+get %r{/hello/([\w]+)} do
+  "Hello, #{params[:captures].first}!"
+end
+
+get '/foo', :agent =&gt; /Songbird (\d\.\d)[\d\/]*?/ do
+  "You're using Songbird version #{params[:agent][0]}"
+end
+
+get '/foo' do
+  # Matches non-songbird browsers
+end
+</code></pre>
+
+<h2 id="Options">Options</h2>
+
+<pre><code>#set, #enable, #disable
+
+set :foo, 'bar'
+
+get '/foo' do
+  options.foo
+  # =&gt; 'bar'
+end
+</code></pre>
+
+<h2 id="-environment">:environment</h2>
+
+<p>A symbol representing the deployment environment. Defaults to RACK_ENV
+or :development. Typically is one of :test, :production, or :development.</p>
+
+<h2 id="-sessions">:sessions</h2>
+
+<p>Support for encrypted cookie-based sessions are included with Sinatra but
+are disabled by default.</p>
+
+<h2 id="-methodoverride">:methodoverride</h2>
+
+<p>Support RESTful routes by faking the HTTP method using POST param :_method.</p>
+
+<h2 id="-root">:root</h2>
+
+<p>Application root directory.</p>
+
+<h2 id="-static">:static</h2>
+
+<p>Boolean determining whether or not static files should be served from
+the applications :public directory.</p>
+
+<h2 id="-public">:public</h2>
+
+<p>Static public files directory.</p>
+
+<h2 id="-views">:views</h2>
+
+<p>View template directory.</p>
+
+<h2 id="-run">:run</h2>
+
+<p>Whether or not the built-in web server is started when the
+application is fully loaded. By default this is true only when
+$0 == :app_file, i.e when running the application file directly.</p>
+
+<h2 id="-server">:server</h2>
+
+<p>String or array of rack server handler names. Defaults to %w( thin mongrel webrick )</p>
+
+<h2 id="-host">:host</h2>
+
+<p>Hostname or ipaddress. Defaults to 0.0.0.0</p>
+
+<h2 id="-port">:port</h2>
+
+<p>Server port number, defaults to 4567.</p>
+
+<h2 id="-dump_errors">:dump_errors</h2>
+
+<p>Boolean specifying whether backtraces are written to STDERR when
+an exception is raised from a route or filter.</p>
+
+<h2 id="-clean_trace">:clean_trace</h2>
+
+<p>Whether or not Sinatra should clean the backtrace, removing library
+/ framework entries.</p>
+
+<h2 id="-raise_errors">:raise_errors</h2>
+
+<p>Boolean specifying whether exceptions raised from routes and filters
+should escape the application. When disabled, exceptions are rescued
+and mapped to error handlers which typically set a 5xx status code and
+render a custom error page.</p>
+
+<p>Enabling the :raise_errors option causes exceptions to be raised
+outside of the application where it may be handled by the server handler or
+Rack middleware, such as Rack::ShowExceptions or Rack::MailExceptions.</p>
+
+<h2 id="-lock">:lock</h2>
+
+<p>Ensure only a single request at a time using a mutex lock.</p>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>March 2011</li>
+    <li class='tr'>ruby_sinatra(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>

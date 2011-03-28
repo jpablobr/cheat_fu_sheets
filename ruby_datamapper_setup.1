@@ -1,0 +1,37 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_DATAMAPPER_SETUP" "1" "March 2011" "" ""
+.
+.SH "An in\-memory Sqlite3 connection:"
+.
+.nf
+
+DataMapper\.setup(:default, \'sqlite3::memory:\')
+.
+.fi
+.
+.SH "A MySQL connection:"
+.
+.nf
+
+DataMapper\.setup(:default, \'mysql://localhost/the_database_name\')
+.
+.fi
+.
+.SH "A Postgres connection:"
+.
+.nf
+
+DataMapper\.setup(:default, \'postgres://localhost/the_database_name\')
+.
+.fi
+.
+.SH "Logger Example"
+.
+.nf
+
+DataObjects::Sqlite3\.logger = DataObjects::Logger\.new $stdout, 0
+.
+.fi
+

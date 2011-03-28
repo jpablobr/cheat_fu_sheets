@@ -1,0 +1,131 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_REGEXP" "1" "March 2011" "" ""
+.
+.SH "Syntax"
+.
+.nf
+
+/normal regex/iomx[neus]
+%r|alternate form|
+.
+.fi
+.
+.SH "options:"
+\fB/i\fR case insensitive
+.
+.br
+\fB/o\fR only interpolate #{} blocks once
+.
+.br
+\fB/m\fR multiline mode \- \'\.\' will match newline
+.
+.br
+\fB/x\fR extended mode \- whitespace is ignored
+.
+.br
+\fB/[neus]\fR encoding: none, EUC, UTF\-8, SJIS, respectively
+.
+.br
+.
+.SH "regex characters:"
+\fB\.\fR any character except newline
+.
+.br
+\fB[ ]\fR any single character of set
+.
+.br
+\fB[^ ]\fR any single character NOT of set
+.
+.br
+\fB*\fR 0 or more previous regular expression
+.
+.br
+\fB*?\fR 0 or more previous regular expression(non greedy)
+.
+.br
+\fB+\fR 1 or more previous regular expression
+.
+.br
+\fB+?\fR 1 or more previous regular expression(non greedy)
+.
+.br
+\fB?\fR 0 or 1 previous regular expression
+.
+.br
+\fB|\fR alternation
+.
+.br
+\fB( )\fR grouping regular expressions
+.
+.br
+\fB^\fR beginning of a line or string
+.
+.br
+\fB$\fR end of a line or string
+.
+.br
+\fB{m,n}\fR at least m but most n previous regular expression
+.
+.br
+\fB{m,n}?\fR at least m but most n previous regular expression(non greedy)
+.
+.br
+\fB\eA\fR beginning of a string
+.
+.br
+\fB\eb\fR backspace(0x08)(inside[]only)
+.
+.br
+\fB\eB\fR non\-word boundary
+.
+.br
+\fB\eb\fR word boundary(outside[]only)
+.
+.br
+\fB\ed\fR digit, same as[0\-9]
+.
+.br
+\fB\eD\fR non\-digit
+.
+.br
+\fB\eS\fR non\-whitespace character
+.
+.br
+\fB\es\fR whitespace character[ \et\en\er\ef]
+.
+.br
+\fB\eW\fR non\-word character
+.
+.br
+\fB\ew\fR word character[0\-9A\-Za\-z_]
+.
+.br
+\fB\ez\fR end of a string
+.
+.br
+\fB\eZ\fR end of a string, or before newline at the end
+.
+.br
+\fB(?# )\fR comment
+.
+.br
+\fB(?: )\fR grouping without backreferences
+.
+.br
+\fB(?= )\fR zero\-width positive look\-ahead assertion
+.
+.br
+\fB(?! )\fR zero\-width negative look\-ahead assertion
+.
+.br
+\fB(?ix\-ix)\fR turns on/off i/x options, localized in group if any\.
+.
+.br
+\fB(?ix\-ix: )\fR turns on/off i/x options, localized in non\-capturing group\.
+.
+.br
+.
+.P
+thanks to \fIhttp://www\.zenspider\.com/Languages/Ruby/QuickRef\.html#11\fR

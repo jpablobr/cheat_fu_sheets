@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>ruby_scrapi(1) - Ruby Selectors</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#List-">List:</a>
+    <a href="#Scraper-scrape-source-options-result">Scraper.scrape(source, options?) =&gt; result</a>
+    <a href="#Extract-value-from-see-more-options-in-API-">Extract value from (see more options in API):</a>
+    <a href="#Extract-value-to-more-options-in-API-">Extract value to (more options in API):</a>
+    <a href="#Instance-Methods">Instance Methods</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>ruby_scrapi(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>ruby_scrapi(1)</li>
+  </ol>
+
+  <h1>Ruby Selectors</h1>
+<h2 id="List-">List:</h2>
+
+<pre><code>*           any element
+E           an element of type E
+E.warning       an E element whose class is "warning" (the document language specifies how class is determined).
+E#myid          an E element with ID equal to "myid".
+E[foo]          an E element with a "foo" attribute
+E[foo="bar"]        an E element whose "foo" attribute value is exactly equal to "bar"
+E[foo~="bar"]       an E element whose "foo" attribute value is a list of space-separated values, one of which is exactly equal to "bar"
+E[foo^="bar"]       an E element whose "foo" attribute value begins exactly with the string "bar"
+E[foo$="bar"]       an E element whose "foo" attribute value ends exactly with the string "bar"
+E[foo*="bar"]       an E element whose "foo" attribute value contains the substring "bar"
+E[hreflang|="en"]       an E element whose "hreflang" attribute has a hyphen-separated list of values beginning (from the left) with "en"
+E:root          an E element, root of the document
+E:nth-child(n)      an E element, the n-th child of its parent
+E:nth-last-child(n)     an E element, the n-th child of its parent, counting from the last one
+E:nth-of-type(n)        an E element, the n-th sibling of its type
+E:nth-last-of-type(n)   an E element, the n-th sibling of its type, counting from the last one
+E:first-child           an E element, first child of its parent
+E:last-child            an E element, last child of its parent
+E:first-of-type         an E element, first sibling of its type
+E:last-of-type          an E element, last sibling of its type
+E:only-child            an E element, only child of its parent
+E:only-of-type          an E element, only sibling of its type
+E:empty                 an E element that has no children (including text nodes)
+E:not(s)                an E element that does not match simple selector s
+E F                     an F element descendant of an E element
+E &gt; F                   an F element child of an E element
+E + F                   an F element immediately preceded by an E element
+E ~ F                   an F element preceded by an E element
+</code></pre>
+
+<h2 id="Scraper-scrape-source-options-result">Scraper.scrape(source, options?) => result</h2>
+
+<p>Scrapes source and returns the result. Source is one of:</p>
+
+<pre><code>String        HTML content: parse and scrape.
+URI           Page URL: read, parse and scrape.
+HTML::Node    Element or document, for use with structures.
+</code></pre>
+
+<p>Options for reading: <code>:last_modified</code>, <code>:etag</code>, <code>:redirect_limit</code>, <code>:user_agent</code>, <code>:timeout</code>.
+Options for parsing: <code>:root_element</code>, <code>:parser</code>, <code>:parser_options</code>.</p>
+
+<pre><code>    process(selector, *values, extractor?) { |element| .... }
+    process(symbol?, selector, *values, extractor?) { |element| ... }
+</code></pre>
+
+<p>Use selector to select elements, and extractor to extract and store values. Pass each selected element to the block. Block can be used instead of or in combination with extractors.</p>
+
+<h2 id="Extract-value-from-see-more-options-in-API-">Extract value from (see more options in API):</h2>
+
+<pre><code>:element      Element itself
+:text         Text value of element
+Class         Another scraper
+"elem"        Element if name matches
+"@attr"       Attribute if specified
+"elem@attr"   Attribute if specified on element
+[value, ...]  First value that matches
+</code></pre>
+
+<h2 id="Extract-value-to-more-options-in-API-">Extract value to (more options in API):</h2>
+
+<pre><code>symbol        Instance variable (e.g. :title to @title)
+symbol[]      Array instance variable (e.g. "links[]")
+:skip         If true, do not further process this element
+</code></pre>
+
+<p>Attribute accessors defined for each symbol used. If first argument is symbol, uses that name to replace any other processing rule with same name.</p>
+
+<pre><code>process_first(selector, *values, extractor?) { |element| .... }
+process_first(symbol?, selector, *values, extractor?) { |element| ... }
+</code></pre>
+
+<p>Similar to process but only processes the first selected element (if more than one).</p>
+
+<pre><code>result(*symbols)
+</code></pre>
+
+<p>Specifies which instance variables to return. One symbol: return value of that variable. Multiple symbols: return object with suitable accessors.</p>
+
+<p>   array(*symbols)</p>
+
+<p>Specifies which instance variables are arrays. Otherwise, stores only last extracted value.</p>
+
+<pre><code>selector(symbol, selector, *values)
+selector(symbol?, selector, *values) { |elements| ... }
+</code></pre>
+
+<p>Defines selector method with the given name (symbol) that takes an element as argument and returns array of selected elements, empty if no elements selected. Defines first_ method that returns the first selected element or nil.</p>
+
+<h2 id="Instance-Methods">Instance Methods</h2>
+
+<p>  <code>extracted</code>         True if any processing rule returned true (also extracted = true/false).<br />
+  <code>skip(element?)</code>    Do not further process element. See also :skip=&gt;true.<br />
+  <code>stop()</code>            Stop processing.<br />
+  <code>prepare(document)</code> Called on document before any processing.<br />
+  <code>collect()</code>         Called after processing is done.<br />
+  <code>result()</code>          Called to return result. By default returns self if extracted. You can override method, or redefine with class method result.<br /></p>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>March 2011</li>
+    <li class='tr'>ruby_scrapi(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
