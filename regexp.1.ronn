@@ -1,0 +1,27 @@
+Regexps(1)
+=========
+
+print "success" if subject =~ /regex/<br>
+result = subject.gsub(/before/, "after")<br>
+myarray = mystring.scan(/delimiter/)<br>
+
+## Operators
+`/i    ` makes match case insensitive.<br>
+`/m    ` makes the dot match newlines.<br>
+`[] 	 ` range specification (e.g., [a-z] means a letter in the range a to z)<br>
+`\w 	 ` letter or digit; same as [0-9A-Za-z]<br>
+`\W 	 ` neither letter or digit<br>
+`\s 	 ` space character; same as [ \t\n\r\f]<br>
+`\S 	 ` non-space character<br>
+`\d 	 ` digit character; same as [0-9]<br>
+`\D 	 ` non-digit character<br>
+`\b 	 ` backspace (0x08) (only if in a range specification)<br>
+`\b 	 ` word boundary (if not in a range specification)<br>
+`\B 	 ` non-word boundary<br>
+`* 	   ` zero or more repetitions of the preceding<br>
+`+ 	   ` one or more repetitions of the preceding<br>
+`{m,n} `	at least m and at most n repetitions of the preceding<br>
+`? 	   ` at most one repetition of the preceding; same as {0,1}<br>
+`| 	   ` either preceding or next expression may match<br>
+`() 	 ` grouping<br>
+`/o    ` causes any #{...} substitutions in a particular regex literal to be performed just once, the first time it is evaluated. Otherwise, the substitutions will be performed every time the literal generates a Regexp object.<br>

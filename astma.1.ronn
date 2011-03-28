@@ -1,0 +1,20 @@
+AsTMa= Language Definition
+============================
+
+## SYNOPSIS
+
+AsTMa= is part of the AsTMa* language family which was designed to facilitate
+authoring, but also constraining and querying topic maps.
+
+## Conventions
+The keywords `MUST,` `MUST NOT,` `REQUIRED,` `SHALL,` `SHALL NOT,` `SHOULD,`
+`SHOULD NOT,` `RECOMMEND,` `MAY,` and `OPTIONAL` will be used in this document
+as defined in RFC 2119.
+
+## Syntax
+
+`\` At the very end of a line n indicates that the followup line n+1 extends line n.
+
+`~` lines can be split. If a `~` has to appear in the text, then it has to be stuffed as `~~`.
+
+Suggested predefined inline association templates <http://astma.it.bond.edu.au/astma=-spec-xtm.dbk?section=13>

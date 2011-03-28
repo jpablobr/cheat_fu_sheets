@@ -1,0 +1,28 @@
+Emacs(1) for Ruby & Rails
+======================
+
+## From ruby-mode.el
+`M-C-a         `   Beginning of defun<br>
+`M-C-e         `   End of defun<br>
+`M-C-b or M-C-p`   Beginning of block<br>
+`M-C-f or M-C-n`   End of block<br>
+`M-C-h         `   Mark defun<br>
+`\t            `   Indent<br>
+`C-c C-e       `   Insert end<br>
+`C-j           `   Reindent then newline and indent<br>
+`C-m           `   Newline<br>
+
+## From inf-ruby.el
+`C-c C-e or M-C-x        `  send the current definition to the process buffer<br>
+`C-c M-e                 `  switch to ruby process buffer after sending their text<br>
+`C-c C-r                 `  send the current region to the process buffer<br>
+`C-c M-r                 `  switch to ruby process buffer after sending their text<br>
+`C-c C-z                 `  switches the current buffer to the ruby process buffer<br>
+`C-c C-l                 `  Load a Ruby file into the inferior Ruby process.<br>
+`C-c C-s or M-x run-ruby `  Run an inferior Ruby process...<br>
+
+Emacs opens in yaml-mode and outdent-mode when first line is:<br>
+`# -*- mode: yaml; mode: outdent; -*-`
+
+For more:
+<http://wiki.rubyonrails.org/rails/pages/HowToUseEmacsWithRails>

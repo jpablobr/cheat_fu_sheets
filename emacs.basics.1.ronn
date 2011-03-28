@@ -1,0 +1,79 @@
+Basic emacs(1) cheats
+==================
+
+## Commands to Manipulate Files
+
+`C-x s`      save-some-buffers. Save All.<br>
+`C-x C-f`     find-file.<br>
+`C-x C-s`    save-buffer. Save.<br>
+
+## Commands to Manipulate Buffers
+
+`C-x k`      kill-buffer. Asks to save if modified.<br>
+`C-x b`      switch-to-buffer.<br>
+`C-x C-b`    list-buffers.<br>
+`C-x C-q`    vc-toggle-read-only. Toggle read-only <-> read-write.<br>
+
+## Commands to Manipulate Windows
+
+`C-v`     scroll-up.<br>
+`M-v`     scroll-down.<br>
+`C-x o`               other-window.<br>
+`C-x 1`               delete-other-windows.<br>
+`C-x 0`               delete-window.<br>
+`C-x 2`               split-window-vertically.<br>
+`C-x 3`               split-window-horizontally.<br>
+`C-M-v`               scroll-other-window. <br>
+
+## Infinite Undo with Redo
+`C-_`        undo. (Also C-x u and C-/)
+
+## Motion and Objects
+
+`C-f   `   forward-char. Moves forward (to the right) over a character.<br>
+`C-b   `   backward-char. Moves backward (to the left) over a character.<br>
+`M-f   `   forward-word. Moves forward over a word.<br>
+`M-b   `   backward-word. Moves backward over a word.<br>
+`C-n   `   next-line. Moves down to the next line.<br>
+`C-p   `   previous-line. Moves up to the previous line.<br>
+`C-a   `   beginning-of-line. Moves to the beginning of the current line.<br>
+`C-e   `   end-of-line. Moves to the end of the current line.<br>
+`M-a   `   backward-sentence. Moves to the beginning of the current sentence.<br>
+`M-e   `   forward-sentence. Moves to the end of the current sentence.<br>
+`M-{   `   backward-paragraph. Move to the beginning of the current paragraph.<br>
+`M-}   `   forward-paragraph. Move to the end of the current paragraph.<br>
+`M-<   `   beginning-of-buffer. Moves to the beginning of the buffer.<br>
+`M->   `   end-of-buffer. Moves to the end of the buffer.<br>
+`C-x [ `   backward-page. Moves to the beginning of the current page.<br>
+`C-x ] `   forward-page. Moves to the end of the current page.<br>
+
+## Deleting, Killing and Yanking
+Deletion means to remove text from the buffer without saving it.
+Killing means to save the removed text, so that it can be yanked back later someplace else.
+
+`C-d          `  delete-char.<br>
+`DEL          `  delete-backward-char.<br>
+`M-d          `  kill-word.<br>
+`C-k          `  kill-line. Kills to the end of the current line.<br>
+`M-k          `  kill-sentence. Kills to the end of the current sentence.<br>
+`C-M-k        `  kill-sexp. Kills the sexp after the cursor.<br>
+`M-DEL        `  backward-kill-word.<br>
+`C-u 0 C-k    `  kill-line. Kills to the beginning of the current line.<br>
+`C-u -1 C-k   `  kill-line. Kills to the beginning of the current line, and previous newline character.<br>
+`C-u -1 M-k   `  kill-sentence. Kills to the beginning of the current sentence.<br>
+`C-u -1 C-M-k `  kill-sexp. Kills the sexp before the cursor.<br>
+
+##  Help
+
+`C-h a`  command-apropos.  List commands matching the given name or regexp.<br>
+`C-h f`  describe-function.  Show documentation on the given function.<br>
+`C-h v`  describe-variable.  Show documentation on the given variable.<br>
+`C-h c`  describe-key-briefly.  Name the function bound to the given key sequence.<br>
+`C-h k`  describe-key.  Show documentation for the function bound to the given key sequence.<br>
+`C-h w`  where-is.      Show key sequences bound to the given command name.<br>
+`C-h m`  describe-mode. Documentation on the current major mode.<br>
+`C-h l`  view-lossage.  Show the last 100 keystrokes.<br>
+
+C-h after any prefix key will display all available shortcuts under that prefix.
+
+From <http://www.lib.uchicago.edu/keith/tcl-course/emacs-tutorial.html>

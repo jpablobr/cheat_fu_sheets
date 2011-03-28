@@ -1,0 +1,73 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "REGEXP" "1" "March 2011" "" ""
+print "success" if subject =~ /regex/
+.
+.br
+result = subject\.gsub(/before/, "after")
+.
+.br
+myarray = mystring\.scan(/delimiter/)
+.
+.br
+.
+.SH "Operators"
+\fB/i\fR makes match case insensitive\.
+.
+.br
+\fB/m\fR makes the dot match newlines\.
+.
+.br
+\fB[]\fR range specification (e\.g\., [a\-z] means a letter in the range a to z)
+.
+.br
+\fB\ew\fR letter or digit; same as [0\-9A\-Za\-z]
+.
+.br
+\fB\eW\fR neither letter or digit
+.
+.br
+\fB\es\fR space character; same as [ \et\en\er\ef]
+.
+.br
+\fB\eS\fR non\-space character
+.
+.br
+\fB\ed\fR digit character; same as [0\-9]
+.
+.br
+\fB\eD\fR non\-digit character
+.
+.br
+\fB\eb\fR backspace (0x08) (only if in a range specification)
+.
+.br
+\fB\eb\fR word boundary (if not in a range specification)
+.
+.br
+\fB\eB\fR non\-word boundary
+.
+.br
+\fB*\fR zero or more repetitions of the preceding
+.
+.br
+\fB+\fR one or more repetitions of the preceding
+.
+.br
+\fB{m,n}\fR at least m and at most n repetitions of the preceding
+.
+.br
+\fB?\fR at most one repetition of the preceding; same as {0,1}
+.
+.br
+\fB|\fR either preceding or next expression may match
+.
+.br
+\fB()\fR grouping
+.
+.br
+\fB/o\fR causes any #{\.\.\.} substitutions in a particular regex literal to be performed just once, the first time it is evaluated\. Otherwise, the substitutions will be performed every time the literal generates a Regexp object\.
+.
+.br
+
