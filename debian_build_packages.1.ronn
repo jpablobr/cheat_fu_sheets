@@ -1,0 +1,92 @@
+Debian build packages (1)
+=========================
+
+## DESCRIPTION
+
+`$ mkdir -p ./debian/usr/bin`
+`$ cp linuxstatus ./debian/usr/bin`
+
+The version number must have a dash with an additional Debian package
+version number, e.g. '1.1-1'. If your program consists e.g. only of
+portable shell scripts, use 'all' as its 'Architecture'.
+
+For 'Depends' you might need to find out to which package a certain file
+or program your new package relies onto belongs to. You can use 'dpkg -S
+<file>' for this to find this out, e.g.:
+
+`$ dkpg -S /bin/cat`
+
+Then to find out more about package 'coreutils' you can use the command
+'apt-cache showpkg coreutils', which will tell you among other things
+the current version number that is installed on the system.
+
+As a side note, there are two more ways to find the same
+information. There is a web page where you can search for Debian files:
+http://www.debian.org/distrib/packages. Go to the bottom of that page to
+fill out the web form.
+
+Last not least there is a nice GUI application named 'kpackage', which
+provides convenient package browsing options and also allows to search
+after packages given individual file names.
+
+'Suggests', 'Conflicts', and 'Replaces' etc. can be left out if not needed.
+
+So here is the result of our first 'control' file:
+
+    Package: linuxstatus
+    Version: 1.1-1
+    Section: base
+    Priority: optional
+    Architecture: all
+    Depends: bash (>= 2.05a-11), textutils (>= 2.0-12), awk, procps (>= \
+    1:2.0.7-8), sed (>= 3.02-8), grep (>= 2.4.2-3), coreutils (>= 5.0-5)
+    Maintainer: Chr. Clemens Lee <clemens@kclee.de>
+    Description: Linux system information
+     This script provides a broad overview of different
+     system aspects.
+
+ The 'control' file gets copied into a directory called 'DEBIAN' inside the other 'debian' directory.
+
+`$ mkdir -p debian/DEBIAN`
+    # this is necessary on Debian Woody, don't ask me why
+`$ find ./debian -type d | xargs chmod 755`
+`$ cp control debian/DEBIAN`
+
+Now it is almost done. Just type:
+
+`$ dpkg-deb --build debian`
+
+dpkg-deb: building package `linuxstatus' in `debian.deb'.
+
+`$ mv debian.deb linuxstatus_1.1-1_all.deb`
+
+Now we just have to install this package on our box and we are done:
+
+`# dpkg -i ./linuxstatus_1.1-1_all.deb`
+
+Type 'linuxstatus' or 'ls -l /usr/bin/linuxstatus' to see if it
+worked. If you don't like your package any more, just type 'dpkg -r
+linuxstatus' and check again that the package is deinstalled. If you
+install a newer version you don't have to remove the old one first,
+thought.
+
+### Double Check - lintian
+
+If you have not installed it yet on your system, this is a good moment
+(apt-get install lintian).
+
+Now we use this little treasure tool on our new package file:
+
+    `$ lintian linuxstatus_1.1-1_all.deb`
+    E: linuxstatus: binary-without-manpage linuxstatus
+    E: linuxstatus: no-copyright-file
+    W: linuxstatus: prerm-does-not-remove-usr-doc-link
+    W: linuxstatus: postinst-does-not-set-usr-doc-link
+
+## Links
+
+<http://tldp.org/HOWTO/html_single/Debian-Binary-Package-Building-HOWTO>
+
+## SEE ALSO
+
+dpkg(5), lintian(5), man(1)

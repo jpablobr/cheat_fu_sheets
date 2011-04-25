@@ -1,5 +1,5 @@
 Ruby Exeptions
-=============
+===============
 
 ## Hierarchy
 
