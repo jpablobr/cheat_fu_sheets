@@ -3,12 +3,17 @@ Heroku
 
 ## Sass without plugins
 
-File: config/compass.rb
-      css_dir = "tmp/stylesheets/compiled"
+Add the following line to your production config:
 
-File: config.ru
+     Compass.configuration.sass_options={:never_update=>true}
+or
+
+File: **config/compass.rb**:
+
+    css_dir = "tmp/stylesheets/compiled"
+
+File: **config.ru**:
+
     require ::File.expand_path('../config/environment', __FILE__)
     use Rack::Static, :urls => ["/stylesheets/compiled"], :root => "tmp"
     run MyApp::Application
-
-

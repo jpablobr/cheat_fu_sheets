@@ -15,14 +15,18 @@ rake refinery:override controller=what/ever
 .fi
 .
 .SH "Pages"
-\fBModel\fR
-.
-.P
-Methods:
+\fBModel\fR:
 .
 .TP
 \fBnested_path()\fR
 p\.nested_path "/path/to/page"
 .
+.P
+\fBViews\fR:
+.
+.TP
+\fBhide_children\fR
+<%= render :partial => \'/shared/menu\', :locals => { :hide_children => true } %> For removing child pages from the main menu\. \fIhttp://bit\.ly/kBLvJV\fR
+.
 .SH "Links"
-\fIhttp://refinerycms\.com/guides/how\-to\-change\-page\-parts\fR
+\fIhttp://refinerycms\.com/guides\fR

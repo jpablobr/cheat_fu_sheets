@@ -65,12 +65,19 @@
   <h1>Heroku</h1>
 <h2 id="Sass-without-plugins">Sass without plugins</h2>
 
-<p>File: config/compass.rb</p>
+<p>Add the following line to your production config:</p>
 
-<pre><code>  css_dir = "tmp/stylesheets/compiled"
+<pre><code> Compass.configuration.sass_options={:never_update=&gt;true}
 </code></pre>
 
-<p>File: config.ru</p>
+<p>or</p>
+
+<p>File: <strong>config/compass.rb</strong>:</p>
+
+<pre><code>css_dir = "tmp/stylesheets/compiled"
+</code></pre>
+
+<p>File: <strong>config.ru</strong>:</p>
 
 <pre><code>require ::File.expand_path('../config/environment', __FILE__)
 use Rack::Static, :urls =&gt; ["/stylesheets/compiled"], :root =&gt; "tmp"

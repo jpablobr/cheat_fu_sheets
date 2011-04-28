@@ -4,20 +4,36 @@
 .TH "HEROKU" "1" "April 2011" "" ""
 .
 .SH "Sass without plugins"
-File: config/compass\.rb
+Add the following line to your production config:
 .
 .IP "" 4
 .
 .nf
 
-  css_dir = "tmp/stylesheets/compiled"
+ Compass\.configuration\.sass_options={:never_update=>true}
 .
 .fi
 .
 .IP "" 0
 .
 .P
-File: config\.ru
+or
+.
+.P
+File: \fBconfig/compass\.rb\fR:
+.
+.IP "" 4
+.
+.nf
+
+css_dir = "tmp/stylesheets/compiled"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+File: \fBconfig\.ru\fR:
 .
 .IP "" 4
 .
