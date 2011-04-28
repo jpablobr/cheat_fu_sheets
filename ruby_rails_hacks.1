@@ -1,0 +1,15 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY_RAILS_HACKS" "1" "April 2011" "" ""
+.
+.SH "Fast loading\. http://bit\.ly/jTWaGC"
+.
+.nf
+
+# file: config/application\.rb
+config\.autoload_paths << Rails\.root\.join("app")\.to_s
+config\.autoload_paths << Rails\.root\.join("lib")\.to_s
+.
+.fi
+

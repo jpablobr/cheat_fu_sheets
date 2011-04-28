@@ -1,0 +1,12 @@
+Ruby help tools
+===============
+
+## Gems
+
+## ruby-prof
+
+Example:
+
+`ruby-prof --printer=graph_html ./script/rails runner > profile.html`
+
+<http://bit.ly/jTWaGC>

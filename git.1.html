@@ -1,0 +1,783 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>Git(1) - Cheats</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#Setup">Setup</a>
+    <a href="#Add-colors-to-your-gitconfig-file-">Add colors to your ~/.gitconfig file:</a>
+    <a href="#Highlight-whitespace-in-diffs">Highlight whitespace in diffs</a>
+    <a href="#Add-aliases-to-your-gitconfig-file-">Add aliases to your ~/.gitconfig file:</a>
+    <a href="#Configuration-">Configuration:</a>
+    <a href="#edit-the-git-config-or-gitconfig-file-in-your-EDITOR">edit the .git/config [or ~/.gitconfig] file in your $EDITOR</a>
+    <a href="#sets-your-name-and-email-for-commit-messages">sets your name and email for commit messages</a>
+    <a href="#Setup-new-branches-so-that-git-pull-1-">Setup new branches so that git-pull(1)</a>
+    <a href="#Convert-the-newlines-to-the-system-s-standard">Convert the newlines to the system’s standard</a>
+    <a href="#OPTIONS">OPTIONS</a>
+    <a href="#Adding-Deleting">Adding / Deleting</a>
+    <a href="#Ignoring">Ignoring</a>
+    <a href="#Staging">Staging</a>
+    <a href="#Unstaging">Unstaging</a>
+    <a href="#Committing">Committing</a>
+    <a href="#Branching">Branching</a>
+    <a href="#Merging">Merging</a>
+    <a href="#Cherry-Picking">Cherry-Picking</a>
+    <a href="#Squashing">Squashing</a>
+    <a href="#Conflicts">Conflicts</a>
+    <a href="#Sharing">Sharing</a>
+    <a href="#Reverting">Reverting</a>
+    <a href="#Fix-mistakes-Undo">Fix mistakes / Undo</a>
+    <a href="#Plumbing">Plumbing</a>
+    <a href="#Stashing">Stashing</a>
+    <a href="#Remotes">Remotes</a>
+    <a href="#Submodules">Submodules</a>
+    <a href="#Removing-submodules">Removing submodules</a>
+    <a href="#Patches">Patches</a>
+    <a href="#Tags">Tags</a>
+    <a href="#Git-Instaweb">Git Instaweb</a>
+    <a href="#Environment-Variables">Environment Variables</a>
+    <a href="#Credits">Credits</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>Git(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>Git(1)</li>
+  </ol>
+
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>Git</code> - <span class="man-whatis">Cheats</span>
+</p>
+
+<h2 id="Setup">Setup</h2>
+
+<p>Add "--global" after "git config" to make it global to all git repos (writes to ~/.gitconfig).</p>
+
+<h2 id="Add-colors-to-your-gitconfig-file-">Add colors to your ~/.gitconfig file:</h2>
+
+<pre><code>[color]
+  ui = auto
+[color "branch"]
+  current = yellow reverse
+  local = yellow
+  remote = green
+[color "diff"]
+  meta = yellow bold
+  frag = magenta bold
+  old = red bold
+  new = green bold
+[color "status"]
+  added = yellow
+  changed = green
+  untracked = cyan
+</code></pre>
+
+<h2 id="Highlight-whitespace-in-diffs">Highlight whitespace in diffs</h2>
+
+<pre><code>[color]
+  ui = true
+[color "diff"]
+  whitespace = red reverse
+[core]
+  whitespace=fix,-indent-with-non-tab,trailing-space,cr-at-eol
+</code></pre>
+
+<h2 id="Add-aliases-to-your-gitconfig-file-">Add aliases to your ~/.gitconfig file:</h2>
+
+<pre><code>[alias]
+  st = status
+  ci = commit
+  br = branch
+  co = checkout
+  df = diff
+  lg = log -p
+  lol = log --graph --decorate --pretty=oneline --abbrev-commit
+  lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+  ls = ls-files
+</code></pre>
+
+<h2 id="Configuration-">Configuration:</h2>
+
+<h2 id="edit-the-git-config-or-gitconfig-file-in-your-EDITOR">edit the .git/config [or ~/.gitconfig] file in your $EDITOR</h2>
+
+<pre><code>git config -e [--global]
+</code></pre>
+
+<h2 id="sets-your-name-and-email-for-commit-messages">sets your name and email for commit messages</h2>
+
+<pre><code>git config --global user.name 'John Doe'
+git config --global user.email johndoe@example.com
+</code></pre>
+
+<h2 id="Setup-new-branches-so-that-git-pull-1-">Setup new branches so that git-pull(1)</h2>
+
+<pre><code>git config branch.autosetupmerge true
+</code></pre>
+
+<p>Will appropriately merge from that remote branch.  Recommended.  Without this,
+you will have to add <code>--track</code> to your branch command or manually merge remote
+tracking branches with "fetch" and then "merge".</p>
+
+<h2 id="Convert-the-newlines-to-the-system-s-standard">Convert the newlines to the system’s standard</h2>
+
+<pre><code>git config core.autocrlf true
+</code></pre>
+
+<h2 id="OPTIONS">OPTIONS</h2>
+
+<p>Helpful options.</p>
+
+<p><code>git reflog</code>:</p>
+
+<p>Use this to recover from <em>major</em> fuck ups! It's basically a log of the
+last few actions and you might have luck and find old commits that
+have been lost by doing a complex merge.</p>
+
+<p><code>git diff</code>:</p>
+
+<p>Show a diff of the changes made since your last commit
+to diff one file: "git diff -- <var>filename</var>"
+to show a diff between staging area and HEAD: <code>git diff --cached</code></p>
+
+<p><code>git status</code>:</p>
+
+<p>show files added to the staging area, files with changes, and untracked files</p>
+
+<p><code>git log</code>:</p>
+
+<p>show recent commits, most recent on top. Useful options:
+--color       with color
+--graph       with an ASCII-art commit graph on the left
+--decorate    with branch and tag names on appropriate commits
+--stat        with stats (files changed, insertions, and deletions)
+-p            with full diffs
+--author=foo  only by a certain author
+--after="MMM DD YYYY" ex. ("Jun 20 2008") only commits after a certain date
+--before="MMM DD YYYY" only commits that occur before a certain date
+--merge       only the commits involved in the current merge conflicts</p>
+
+<p><code>git log &lt;ref>..&lt;ref></code>:</p>
+
+<p>Show commits between the specified range. Useful for seeing changes from remotes:</p>
+
+<p><code>git log HEAD..origin/master</code>: # after git remote update</p>
+
+<p><code>git show &lt;rev></code>:</p>
+
+<p>show the changeset (diff) of a commit specified by <var>rev</var>, which can be any
+SHA1 commit ID, branch name, or tag (shows the last commit (HEAD) by default)</p>
+
+<p><code>git show --name-only &lt;rev></code>:</p>
+
+<p>show only the names of the files that changed, no diff information.</p>
+
+<p><code>git blame &lt;file></code>:</p>
+
+<p>show who authored each line in <var>file</var></p>
+
+<p><code>git blame &lt;file> &lt;rev></code>:</p>
+
+<p>show who authored each line in <var>file</var> as of <var>rev</var> (allows blame to go back in
+time)</p>
+
+<p><code>git gui blame</code>:</p>
+
+<p>really nice GUI interface to git blame</p>
+
+<p><code>git whatchanged &lt;file></code>:</p>
+
+<p>show only the commits which affected <var>file</var> listing the most recent first
+E.g. view all changes made to a file on a branch:
+  git whatchanged <var>branch</var> <var>file</var>  | grep commit |  colrm 1 7 | xargs -I % git show % <var>file</var>
+this could be combined with git remote show <var>remote</var> to find all changes on
+all branches to a particular file.</p>
+
+<p><code>git diff &lt;commit> head path/to/fubar</code>:</p>
+
+<p>show the diff between a file on the current branch and potentially another
+branch</p>
+
+<p><code>git diff head -- &lt;file></code>:</p>
+
+<p>use this form when doing git diff on cherry-pick'ed (but not committed)
+changes
+somehow changes are not shown when using just git diff.</p>
+
+<p><code>git ls-files</code>:</p>
+
+<p>list all files in the index and under version control.</p>
+
+<p><code>git ls-remote &lt;remote> [HEAD]</code>:</p>
+
+<p>show the current version on the remote repo. This can be used to check whether
+a local is required by comparing the local head revision.</p>
+
+<h2 id="Adding-Deleting">Adding / Deleting</h2>
+
+<p><code>git add &lt;file1> &lt;file2> ...</code></p>
+
+<p>add <var>file1</var>, <var>file2</var>, etc... to the project</p>
+
+<p><code>git add &lt;dir&gt;</code></p>
+
+<p>add all files under directory <dir> to the project, including subdirectories</dir></p>
+
+<p><code>git add .</code></p>
+
+<p>add all files under the current directory to the project
+<em>WARNING</em>: including untracked files.</p>
+
+<p><code>git rm &lt;file1> &lt;file2> ...</code></p>
+
+<p>remove <var>file1</var>, <var>file2</var>, etc... from the project</p>
+
+<p><code>git rm $(git ls-files --deleted)</code></p>
+
+<p>remove all deleted files from the project</p>
+
+<p><code>git rm --cached &lt;file1> &lt;file2> ...</code></p>
+
+<p>commits absence of <var>file1</var>, <var>file2</var>, etc... from the project</p>
+
+<h2 id="Ignoring">Ignoring</h2>
+
+<p><code>Edit $GIT_DIR/info/exclude.</code></p>
+
+<p>See Environment Variables below for explanation on <code>$GIT_DIR.</code></p>
+
+<p>Add a file .gitignore to the root of your project. This file will be checked in.
+Either way you need to add patterns to exclude to these files.</p>
+
+<h2 id="Staging">Staging</h2>
+
+<p><code>git add &lt;file1> &lt;file2> ...</code></p>
+
+<p><code>git stage &lt;file1> &lt;file2> ...</code></p>
+
+<p>add changes in <var>file1</var>, <var>file2</var> ... to the staging area (to be included in
+the next commit</p>
+
+<p><code>git add -p</code></p>
+
+<p><code>git stage --patch</code></p>
+
+<p>interactively walk through the current changes (hunks) in the working
+tree, and decide which changes to add to the staging area.</p>
+
+<p><code>git add -i</code></p>
+
+<p><code>git stage --interactive</code></p>
+
+<p>interactively add files/changes to the staging area. For a simpler
+mode (no menu), try <code>git add --patch</code> (above)</p>
+
+<h2 id="Unstaging">Unstaging</h2>
+
+<p><code>git reset HEAD &lt;file1> &lt;file2> ...</code></p>
+
+<p>remove the specified files from the next commit</p>
+
+<h2 id="Committing">Committing</h2>
+
+<p><code>git commit &lt;file1> &lt;file2> ... [-m &lt;msg>]</code></p>
+
+<p>commit <var>file1</var>, <var>file2</var>, etc..., optionally using commit message <var>msg</var>,
+otherwise opening your editor to let you type a commit message</p>
+
+<p><code>git commit -a</code></p>
+
+<p>commit all files changed since your last commit
+(does not include new (untracked) files)</p>
+
+<p><code>git commit -v</code></p>
+
+<p>commit verbosely, i.e. includes the diff of the contents being committed in
+the commit message screen</p>
+
+<p><code>git commit --amend</code></p>
+
+<p>edit the commit message of the most recent commit</p>
+
+<p><code>git commit --amend &lt;file1> &lt;file2> ...</code></p>
+
+<p>redo previous commit, including changes made to <var>file1</var>, <var>file2</var>, etc...</p>
+
+<h2 id="Branching">Branching</h2>
+
+<p><code>git branch</code></p>
+
+<p>list all local branches</p>
+
+<p><code>git branch -r</code></p>
+
+<p>list all remote branches</p>
+
+<p><code>git branch -a</code></p>
+
+<p>list all local and remote branches</p>
+
+<p><code>git branch &lt;branch></code></p>
+
+<p>create a new branch named <var>branch</var>, referencing the same point in history as
+the current branch</p>
+
+<p><code>git branch &lt;branch> &lt;start-point></code>
+create a new branch named <var>branch</var>, referencing <var>start-point</var>, which may be
+specified any way you like, including using a branch name or a tag name</p>
+
+<p><code>git push &lt;repo> &lt;start-point>:refs/heads/&lt;branch></code></p>
+
+<p>create a new remote branch named <var>branch</var>, referencing <var>start-point</var> on the
+remote.
+Example: git push origin origin:refs/heads/branch-1
+Example: git push origin origin/branch-1:refs/heads/branch-2</p>
+
+<p><code>git branch --track &lt;branch> &lt;remote-branch></code></p>
+
+<p>create a tracking branch. Will push/pull changes to/from another repository.
+Example: git branch --track experimental origin/experimental</p>
+
+<p><code>git branch -d &lt;branch></code></p>
+
+<p>delete the branch <var>branch</var>; if the branch you are deleting points to a
+commit which is not reachable from the current branch, this command
+will fail with a warning.</p>
+
+<p><code>git branch -r -d &lt;remote-branch></code></p>
+
+<p>delete a remote-tracking branch.
+Example: git branch -r -d wycats/master</p>
+
+<p><code>git branch -D &lt;branch></code></p>
+
+<p>even if the branch points to a commit not reachable from the current branch,
+you may know that that commit is still reachable from some other branch or
+tag. In that case it is safe to use this command to force git to delete the
+branch.</p>
+
+<p><code>git checkout &lt;branch></code></p>
+
+<p>make the current branch <var>branch</var>, updating the working directory to reflect
+the version referenced by <var>branch</var></p>
+
+<p><code>git checkout -b &lt;new> &lt;start-point></code></p>
+
+<p>create a new branch <var>new</var> referencing <var>start-point</var>, and check it out.</p>
+
+<p><code>git push &lt;repository> :&lt;branch></code></p>
+
+<p>removes a branch from a remote repository.
+Example: git push origin :old_branch_to_be_deleted</p>
+
+<p><code>git co &lt;branch> &lt;path to new file></code></p>
+
+<p>Checkout a file from another branch and add it to this branch. File
+will still need to be added to the git branch, but it's present.
+Eg. git co remote_at_origin__tick702_antifraud_blocking
+..../...nt_elements_for_iframe_blocked_page.rb</p>
+
+<p><code>git show &lt;branch> -- &lt;path to file that does not exist></code></p>
+
+<p>Eg. git show remote_tick702 -- path/to/fubar.txt
+show the contents of a file that was created on another branch and that
+does not exist on the current branch.</p>
+
+<p><code>git show &lt;rev>:&lt;repo path to file></code></p>
+
+<p>Show the contents of a file at the specific revision. Note: path has to be
+absolute within the repo.</p>
+
+<h2 id="Merging">Merging</h2>
+
+<p><code>git merge &lt;branch></code></p>
+
+<p>merge branch <var>branch</var> into the current branch; this command is idempotent
+and can be run as many times as needed to keep the current branch
+up-to-date with changes in <var>branch</var></p>
+
+<p><code>git merge &lt;branch> --no-commit</code></p>
+
+<p>merge branch <var>branch</var> into the current branch, but do not autocommit the
+result; allows you to make further tweaks</p>
+
+<p><code>git merge &lt;branch> -s ours</code></p>
+
+<p>merge branch <var>branch</var> into the current branch, but drops any changes in
+<var>branch</var>, using the current tree as the new tree</p>
+
+<h2 id="Cherry-Picking">Cherry-Picking</h2>
+
+<p><code>git cherry-pick [--edit] [-n] [-m parent-number] [-s] [-x] &lt;commit></code></p>
+
+<p>selectively merge a single commit from another local branch
+Example: git cherry-pick 7300a6130d9447e18a931e898b64eefedea19544</p>
+
+<h2 id="Squashing">Squashing</h2>
+
+<p>WARNING: "git rebase" changes history. Be careful. Google it.</p>
+
+<p><code>git rebase --interactive HEAD~10</code></p>
+
+<p>(then change all but the first "pick" to "squash")
+squash the last 10 commits into one big commit</p>
+
+<h2 id="Conflicts">Conflicts</h2>
+
+<p><code>git mergetool</code></p>
+
+<p>work through conflicted files by opening them in your mergetool (opendiff,
+kdiff3, etc.) and choosing left/right chunks. The merged result is staged for
+commit.</p>
+
+<p>For binary files or if mergetool won't do, resolve the conflict(s) manually
+and then do:</p>
+
+<p><code>git add &lt;file1> [&lt;file2> ...]</code></p>
+
+<p>Once all conflicts are resolved and staged, commit the pending merge with:</p>
+
+<p><code>git commit</code></p>
+
+<h2 id="Sharing">Sharing</h2>
+
+<p><code>git fetch &lt;remote></code></p>
+
+<p>update the remote-tracking branches for <var>remote</var> (defaults to "origin").
+ Does not initiate a merge into the current branch (see "git pull" below).</p>
+
+<p><code>git pull</code></p>
+
+<p>fetch changes from the server, and merge them into the current branch.
+Note: .git/config must have a [branch "some_name"] section for the current
+branch, to know which remote-tracking branch to merge into the current
+branch.  Git 1.5.3 and above adds this automatically.</p>
+
+<p><code>git push</code></p>
+
+<p>update the server with your commits across all branches that are <em>COMMON</em>
+between your local copy and the server.  Local branches that were never
+pushed to the server in the first place are not shared.</p>
+
+<p><code>git push origin &lt;branch></code></p>
+
+<p>update the server with your commits made to <var>branch</var> since your last push.
+This is always <em>required</em> for new branches that you wish to share. After
+the first explicit push, "git push" by itself is sufficient.</p>
+
+<p><code>git push origin &lt;branch>:refs/heads/&lt;branch></code></p>
+
+<p>E.g. git push origin twitter-experiment:refs/heads/twitter-experiment
+Which, in fact, is the same as git push origin <var>branch</var> but a little
+more obvious what is happening.</p>
+
+<h2 id="Reverting">Reverting</h2>
+
+<p><code>git revert &lt;rev></code></p>
+
+<p>reverse commit specified by <var>rev</var> and commit the result.  This does <em>not</em> do
+the same thing as similarly named commands in other VCS's such as "svn
+revert" or "bzr revert", see below</p>
+
+<p><code>git checkout &lt;file></code></p>
+
+<p>re-checkout <var>file</var>, overwriting any local changes</p>
+
+<p><code>git checkout .</code></p>
+
+<p>re-checkout all files, overwriting any local changes.  This is most similar
+to "svn revert" if you're used to Subversion commands</p>
+
+<h2 id="Fix-mistakes-Undo">Fix mistakes / Undo</h2>
+
+<p><code>git reset --hard</code></p>
+
+<p>abandon everything since your last commit; this command can be DANGEROUS.
+If merging has resulted in conflicts and you'd like to just forget about
+the merge, this command will do that.</p>
+
+<p><code>git reset --hard ORIG_HEAD</code></p>
+
+<p>undo your most recent <em>successful</em> merge <em>and</em> any changes that occurred
+after.  Useful for forgetting about the merge you just did.  If there are
+conflicts (the merge was not successful), use "git reset --hard" (above)
+instead.</p>
+
+<p><code>git reset --soft HEAD^</code></p>
+
+<p>forgot something in your last commit? That's easy to fix. Undo your last
+commit, but keep the changes in the staging area for editing.</p>
+
+<p><code>git commit --amend</code></p>
+
+<p>redo previous commit, including changes you've staged in the meantime.
+Also used to edit commit message of previous commit.</p>
+
+<h2 id="Plumbing">Plumbing</h2>
+
+<p><code>test &lt;sha1-A> = $(git merge-base &lt;sha1-A> &lt;sha1-B>)</code></p>
+
+<p>determine if merging sha1-B into sha1-A is achievable as a fast forward;
+non-zero exit status is false.</p>
+
+<h2 id="Stashing">Stashing</h2>
+
+<p><code>git stash</code></p>
+
+<p><code>git stash save &lt;optional-name></code></p>
+
+<p>save your local modifications to a new stash (so you can for example
+"git svn rebase" or "git pull")</p>
+
+<p><code>git stash apply</code></p>
+
+<p>restore the changes recorded in the stash on top of the current working tree
+state</p>
+
+<p><code>git stash pop</code></p>
+
+<p>restore the changes from the most recent stash, and remove it from the stack
+of stashed changes</p>
+
+<p>'git stash list'</p>
+
+<p>list all current stashes</p>
+
+<p><code>git stash show &lt;stash-name> -p</code></p>
+
+<p>show the contents of a stash - accepts all diff args</p>
+
+<p><code>git stash drop [&lt;stash-name>]</code></p>
+
+<p>delete the stash</p>
+
+<p><code>git stash clear</code></p>
+
+<p>delete all current stashes</p>
+
+<h2 id="Remotes">Remotes</h2>
+
+<p><code>git remote add &lt;remote> &lt;remote_URL></code></p>
+
+<p>adds a remote repository to your git config.  Can be then fetched locally.</p>
+
+<pre><code>Example:
+  git remote add coreteam git://github.com/wycats/merb-plugins.git
+  git fetch coreteam
+</code></pre>
+
+<p><code>git push &lt;remote> :refs/heads/&lt;branch></code></p>
+
+<p>delete a branch in a remote repository</p>
+
+<p><code>git push &lt;remote> &lt;remote>:refs/heads/&lt;remote_branch></code></p>
+
+<p>create a branch on a remote repository
+Example: git push origin origin:refs/heads/new_feature_name</p>
+
+<p><code>git push &lt;repository> +&lt;remote>:&lt;new_remote></code></p>
+
+<p>replace a <var>remote</var> branch with <var>new_remote</var>
+think twice before do this
+Example: git push origin +master:my_branch</p>
+
+<p><code>git remote prune &lt;remote></code></p>
+
+<p>prune deleted remote-tracking branches from "git branch -r" listing</p>
+
+<p><code>git remote add -t master -m master origin git://example.com/git.git/</code></p>
+
+<p>add a remote and track its master</p>
+
+<p><code>git remote show &lt;remote></code></p>
+
+<p>show information about the remote server.</p>
+
+<p><code>git checkout -b &lt;local branch> &lt;remote>/&lt;remote branch></code></p>
+
+<p>Eg git checkout -b myfeature origin/myfeature
+Track a remote branch as a local branch.</p>
+
+<p><code>git pull &lt;remote> &lt;branch></code></p>
+
+<p>git push
+For branches that are remotely tracked (via git push) but
+that complain about non-fast forward commits when doing a
+git push. The pull synchronizes local and remote, and if
+all goes well, the result is pushable.</p>
+
+<p><code>git fetch &lt;remote></code></p>
+
+<p>Retrieves all branches from the remote repository. After
+this 'git branch --track ...' can be used to track a branch
+from the new remote.</p>
+
+<h2 id="Submodules">Submodules</h2>
+
+<p><code>git submodule add &lt;remote_repository> &lt;path/to/submodule&gt;</code></p>
+
+<p>add the given repository at the given path. The addition will be part of the
+next commit.</p>
+
+<p><code>git submodule update [--init]</code></p>
+
+<p>Update the registered submodules (clone missing submodules, and checkout
+the commit specified by the super-repo). --init is needed the first time.</p>
+
+<p><code>git submodule foreach &lt;command></code>
+Executes the given command within each checked out submodule.</p>
+
+<h2 id="Removing-submodules">Removing submodules</h2>
+
+<ol>
+<li><p>Delete the relevant line from the .gitmodules file.</p></li>
+<li><p>Delete the relevant section from .git/config.</p></li>
+<li><p>Run git rm --cached path_to_submodule (no trailing slash).</p></li>
+<li><p>Commit and delete the now untracked submodule files.</p></li>
+</ol>
+
+
+<p>Updating submodules
+  To update a submodule to a new commit:</p>
+
+<pre><code>1. update submodule:
+    cd &lt;path to submodule>
+    git pull
+2. commit the new version of submodule:
+    cd &lt;path to toplevel>
+    git commit -m "update submodule version"
+3. check that the submodule has the correct version
+    git submodule status
+</code></pre>
+
+<p>  If the update in the submodule is not committed in the
+  main repository, it is lost and doing git submodule
+  update will revert to the previous version.</p>
+
+<h2 id="Patches">Patches</h2>
+
+<p><code>git format-patch HEAD^</code></p>
+
+<p>Generate the last commit as a patch that can be applied on another
+clone (or branch) using 'git am'. Format patch can also generate a
+patch for all commits using 'git format-patch HEAD^ HEAD'
+All page files will be enumerated with a prefix, e.g. 0001 is the
+first patch.</p>
+
+<p><code>git format-patch &lt;Revision>^..&lt;Revision></code></p>
+
+<p>Generate a patch for a single commit. E.g.
+git format-patch d8efce43099<sup>..d8efce43099</sup>
+Revision does not need to be fully specified.</p>
+
+<p><code>git am &lt;patch file></code>
+Applies the patch file generated by format-patch.</p>
+
+<p><code>git diff --no-prefix &gt; patchfile</code>
+Generates a patch file that can be applied using patch:
+patch -p0 &lt; patchfile
+Useful for sharing changes without generating a git commit.</p>
+
+<h2 id="Tags">Tags</h2>
+
+<p><code>git tag -l</code></p>
+
+<p>Will list all tags defined in the repository.</p>
+
+<p><code>git co &lt;tag_name></code></p>
+
+<p>Will checkout the code for a particular tag. After this you'll
+probably want to do: 'git co -b <var>some branch name</var>' to define
+a branch. Any changes you now make can be committed to that
+branch and later merged.</p>
+
+<h2 id="Git-Instaweb">Git Instaweb</h2>
+
+<p>git instaweb --httpd=webrick [--start | --stop | --restart]</p>
+
+<h2 id="Environment-Variables">Environment Variables</h2>
+
+<p><code>GIT_AUTHOR_NAME</code>, <code>GIT_COMMITTER_NAME</code></p>
+
+<p>Your full name to be recorded in any newly created commits.  Overrides
+user.name in .git/config</p>
+
+<p><code>GIT_AUTHOR_EMAIL</code>, <code>GIT_COMMITTER_EMAIL</code></p>
+
+<p>Your email address to be recorded in any newly created commits.  Overrides
+user.email in .git/config</p>
+
+<p><code>GIT_DIR</code></p>
+
+<p>Location of the repository to use (for out of working directory repositories)</p>
+
+<p><code>GIT_WORKING_TREE</code></p>
+
+<p>Location of the Working Directory - use with GIT_DIR to specifiy the working
+directory root
+or to work without being in the working directory at all.</p>
+
+<h2 id="Credits">Credits</h2>
+
+<p><a href="http://cheat.errtheblog.com/s/git" data-bare-link="true">http://cheat.errtheblog.com/s/git</a></p>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>April 2011</li>
+    <li class='tr'>Git(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
