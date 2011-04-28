@@ -1,0 +1,14 @@
+Heroku
+======
+
+## Sass without plugins
+
+File: config/compass.rb
+      css_dir = "tmp/stylesheets/compiled"
+
+File: config.ru
+    require ::File.expand_path('../config/environment', __FILE__)
+    use Rack::Static, :urls => ["/stylesheets/compiled"], :root => "tmp"
+    run MyApp::Application
+
+

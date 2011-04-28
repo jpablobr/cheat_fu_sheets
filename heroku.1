@@ -1,0 +1,33 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "HEROKU" "1" "April 2011" "" ""
+.
+.SH "Sass without plugins"
+File: config/compass\.rb
+.
+.IP "" 4
+.
+.nf
+
+  css_dir = "tmp/stylesheets/compiled"
+.
+.fi
+.
+.IP "" 0
+.
+.P
+File: config\.ru
+.
+.IP "" 4
+.
+.nf
+
+require ::File\.expand_path(\'\.\./config/environment\', __FILE__)
+use Rack::Static, :urls => ["/stylesheets/compiled"], :root => "tmp"
+run MyApp::Application
+.
+.fi
+.
+.IP "" 0
+

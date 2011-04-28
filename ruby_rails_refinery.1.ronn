@@ -5,6 +5,20 @@ Refinery
 
 After scratch install enable <page parts> by setting the <New Page Parts> value to <true>
 
+## Rake Tasks
+
+    rake refinery:override controller=what/ever
+
+## Pages
+
+**Model**
+
+Methods:
+
+  * `nested_path()`:
+    p.nested_path
+    "/path/to/page"
+
 ## Links
 
 <http://refinerycms.com/guides/how-to-change-page-parts>
