@@ -1,0 +1,83 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RUBY" "1" "April 2011" "" ""
+.
+.SH "NAME"
+\fBRuby\fR \- Fragment Caching
+.
+.SH "views/layouts/shared/_menu\.html\.erb"
+.
+.nf
+
+hide_children = RefinerySetting\.find_or_set(:menu_hide_children, false) if hide_children\.nil?
+
++ cache(\'site_menu\') do
+
+    collection ||= @menu_pages\.includes(:slugs)
+    …
+    </nav>
+
++ end
+.
+.fi
+.
+.SH "create sweepers/page_sweeper\.rb"
+.
+.nf
+
+class PageSweeper < ActionController::Caching::Sweeper
+
+  observe Page
+
+  def after_create(page)
+    expire_cache_for(page)
+  end
+
+  def after_update(page)
+    expire_cache_for(page)
+  end
+
+  def after_destroy(page)
+    expire_cache_for(page)
+  end
+
+
+  private
+
+  def expire_cache_for(page)
+    expire_fragment(\'site_menu\')
+  end
+end
+.
+.fi
+.
+.SH "in controllers/admin/pages_controller\.rb"
+.
+.nf
+
+  module Admin
+    class PagesController < Admin::BaseController
+
++    cache_sweeper :page_sweeper
+.
+.fi
+.
+.SH "OR if you\'re not comfortable overriding AdminPagesController inside the actual file: do it in config/application\.rb"
+.
+.nf
+
+class Application < Rails::Application
+  …
+
++ config\.to_prepare do
++   ::Admin::PagesController\.module_eval %{
++    cache_sweeper :page_sweeper
++   }
++ end
+
+  …
+end
+.
+.fi
+
