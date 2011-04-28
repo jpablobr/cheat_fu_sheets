@@ -1,0 +1,10 @@
+Refinery
+========
+
+## Basics
+
+After scratch install enable <page parts> by setting the <New Page Parts> value to <true>
+
+## Links
+
+<http://refinerycms.com/guides/how-to-change-page-parts>

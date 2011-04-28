@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>ruby_eventmachine_spdy_npn(1) - Get development tools installed</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#Install-RVM">Install RVM</a>
+    <a href="#Compile-OpenSSL-that-has-NPN-support">Compile OpenSSL that has NPN support</a>
+    <a href="#Set-up-the-environment-to-point-to-the-NPN-OpenSSL">Set up the environment to point to the NPN OpenSSL</a>
+    <a href="#If-you-have-1-9-2-installed-already-remove-it-first-rvm-remove-1-9-2">If you have 1.9.2 installed already remove it first: rvm remove 1.9.2</a>
+    <a href="#Install-a-handfull-of-gem-deps-needed-later">Install a handfull of gem deps needed later</a>
+    <a href="#Install-the-NPN-enabled-event-machine">Install the NPN enabled event machine</a>
+    <a href="#Install-spdy">Install spdy</a>
+    <a href="#Credits">Credits</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>ruby_eventmachine_spdy_npn(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>ruby_eventmachine_spdy_npn(1)</li>
+  </ol>
+
+  <h1>Get development tools installed</h1>
+<pre><code>sudo yum install -y git cvs zlib-devel
+sudo yum groupinstall -y "Development Tools"
+</code></pre>
+
+<h2 id="Install-RVM">Install RVM</h2>
+
+<pre><code>bash &lt; &lt;(curl -s https://rvm.beginrescueend.com/install/rvm)
+. .rvm/scripts/rvm
+</code></pre>
+
+<h2 id="Compile-OpenSSL-that-has-NPN-support">Compile OpenSSL that has NPN support</h2>
+
+<pre><code>mkdir openssl
+cd openssl
+mkdir openssl-dist
+cvs -d anonymous@cvs.openssl.org:/openssl-cvs co openssl
+#or wget ftp://ftp.openssl.org/snapshot/openssl-SNAP-20110425.tar.gz; tar xvzf openssl-SNAP-20110425.tar.gz; mv openssl-SNAP-20110425 openssl-src
+mv openssl openssl-src
+cd openssl-src
+./config --prefix=$HOME/openssl/openssl-dist/
+make depend
+make install
+cd ..
+</code></pre>
+
+<h2 id="Set-up-the-environment-to-point-to-the-NPN-OpenSSL">Set up the environment to point to the NPN OpenSSL</h2>
+
+<pre><code>cat &gt;&gt; openssl-env.sh &lt;&lt;EOF
+export PATH=$HOME/openssl/openssl-dist/bin/:$PATH
+export LD_LIBRARY_PATH=$HOME/openssl/openssl-dist/lib
+export PKG_CONFIG_PATH=$HOME/openssl/openssl-dist/lib/pkgconfig
+export CPATH=$HOME/openssl/openssl-dist/include
+EOF
+
+. openssl-env.sh
+
+cd ..
+</code></pre>
+
+<p>RVM install 1.9.2 pointing it to the custom openssl version</p>
+
+<h2 id="If-you-have-1-9-2-installed-already-remove-it-first-rvm-remove-1-9-2">If you have 1.9.2 installed already remove it first: rvm remove 1.9.2</h2>
+
+<pre><code>rvm install 1.9.2 -C --with-openssl-dir=$HOME/openssl/openssl-dist/
+rvm use 1.9.2
+</code></pre>
+
+<h2 id="Install-a-handfull-of-gem-deps-needed-later">Install a handfull of gem deps needed later</h2>
+
+<pre><code>gem install rake-compiler rspec bundler bindata ffi-zlib
+</code></pre>
+
+<h2 id="Install-the-NPN-enabled-event-machine">Install the NPN enabled event machine</h2>
+
+<pre><code>git clone git://github.com/carsonmcdonald/eventmachine.git
+cd eventmachine
+git checkout tls-npn
+rake gem
+gem install pkg/eventmachine-1.0.0.beta.3.gem
+cd ..
+</code></pre>
+
+<h2 id="Install-spdy">Install spdy</h2>
+
+<pre><code>git clone git://github.com/carsonmcdonald/spdy.git
+cd spdy
+git checkout npn
+cd examples
+ruby npn_spdy_server.rb
+</code></pre>
+
+<p>You can now connect to the server on port 8000 using https. Using a browser without
+SPDY support you will see a non-spdy response and with support you will see a spdy
+response.</p>
+
+<h2 id="Credits">Credits</h2>
+
+<p><a href="https://gist.github.com/944386" data-bare-link="true">https://gist.github.com/944386</a></p>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>April 2011</li>
+    <li class='tr'>ruby_eventmachine_spdy_npn(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>

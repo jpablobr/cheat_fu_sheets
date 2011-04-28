@@ -1,0 +1,71 @@
+Get development tools installed
+===============================
+
+    sudo yum install -y git cvs zlib-devel
+    sudo yum groupinstall -y "Development Tools"
+
+## Install RVM
+
+    bash < <(curl -s https://rvm.beginrescueend.com/install/rvm)
+    . .rvm/scripts/rvm
+
+## Compile OpenSSL that has NPN support
+
+    mkdir openssl
+    cd openssl
+    mkdir openssl-dist
+    cvs -d anonymous@cvs.openssl.org:/openssl-cvs co openssl
+    #or wget ftp://ftp.openssl.org/snapshot/openssl-SNAP-20110425.tar.gz; tar xvzf openssl-SNAP-20110425.tar.gz; mv openssl-SNAP-20110425 openssl-src
+    mv openssl openssl-src
+    cd openssl-src
+    ./config --prefix=$HOME/openssl/openssl-dist/
+    make depend
+    make install
+    cd ..
+
+## Set up the environment to point to the NPN OpenSSL
+
+    cat >> openssl-env.sh <<EOF
+    export PATH=$HOME/openssl/openssl-dist/bin/:$PATH
+    export LD_LIBRARY_PATH=$HOME/openssl/openssl-dist/lib
+    export PKG_CONFIG_PATH=$HOME/openssl/openssl-dist/lib/pkgconfig
+    export CPATH=$HOME/openssl/openssl-dist/include
+    EOF
+
+    . openssl-env.sh
+
+    cd ..
+
+RVM install 1.9.2 pointing it to the custom openssl version
+
+## If you have 1.9.2 installed already remove it first: rvm remove 1.9.2
+    rvm install 1.9.2 -C --with-openssl-dir=$HOME/openssl/openssl-dist/
+    rvm use 1.9.2
+
+## Install a handfull of gem deps needed later
+
+    gem install rake-compiler rspec bundler bindata ffi-zlib
+
+## Install the NPN enabled event machine
+
+    git clone git://github.com/carsonmcdonald/eventmachine.git
+    cd eventmachine
+    git checkout tls-npn
+    rake gem
+    gem install pkg/eventmachine-1.0.0.beta.3.gem
+    cd ..
+
+## Install spdy
+
+    git clone git://github.com/carsonmcdonald/spdy.git
+    cd spdy
+    git checkout npn
+    cd examples
+    ruby npn_spdy_server.rb
+
+You can now connect to the server on port 8000 using https. Using a browser without
+SPDY support you will see a non-spdy response and with support you will see a spdy
+response.
+
+## Credits
+<https://gist.github.com/944386>
