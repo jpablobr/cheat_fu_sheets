@@ -1,0 +1,74 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "TMUX" "1" "April 2011" "" ""
+.
+.SH "NAME"
+\fBtmux\fR \- terminal multiplexer
+.
+.SH "Install Tmux on Ubuntu"
+Download from \fIhttp://tmux\.sourceforge\.net\fR
+.
+.SH "Install libevent\-dev"
+To download libevent directly, go to:
+.
+.P
+\fIhttp://monkey\.org/~provos/libevent/\fR
+.
+.IP "" 4
+.
+.nf
+
+$ tar xvfz libevent\-1\.4\.x\-stable\.tar\.gz
+$ cd libevent\-1\.4\.x
+$ \./configure
+$ make
+$ sudo make install
+$ sudo /sbin/ldconfig
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Install the curses development files"
+.
+.nf
+
+$ sudo apt\-get install libncurses5\-dev
+.
+.fi
+.
+.SH "Install libevent\-dev and libncurses\-dev"
+.
+.nf
+
+$ sudo apt\-get install libevent\-dev libncurses5\-dev
+.
+.fi
+.
+.SH "Build/Install Tmux"
+.
+.nf
+
+$ \./configure
+$ make
+$ sudo make install
+.
+.fi
+.
+.P
+If you get an error saying
+.
+.P
+tmux: error while loading shared libraries: libeven\-1\.4\.so\.2: cannot open shared object file: No such file or directory then you need to run
+.
+.IP "" 4
+.
+.nf
+
+$ sudo /sbin/ldconfig
+.
+.fi
+.
+.IP "" 0
+\fIhttp://arcoleo\.org/dsawiki/Wiki\.jsp?page=Install%20Tmux%20on%20Ubuntu\fR

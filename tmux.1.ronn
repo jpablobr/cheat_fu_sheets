@@ -1,0 +1,44 @@
+tmux(1) --  terminal multiplexer
+================================
+
+## Install Tmux on Ubuntu
+
+Download from <http://tmux.sourceforge.net>
+
+## Install libevent-dev#
+
+To download libevent directly, go to:
+
+<http://monkey.org/~provos/libevent/>
+
+    $ tar xvfz libevent-1.4.x-stable.tar.gz
+    $ cd libevent-1.4.x
+    $ ./configure
+    $ make
+    $ sudo make install
+    $ sudo /sbin/ldconfig
+
+## Install the curses development files
+
+    $ sudo apt-get install libncurses5-dev
+
+## Install libevent-dev and libncurses-dev
+
+    $ sudo apt-get install libevent-dev libncurses5-dev
+
+## Build/Install Tmux#
+
+    $ ./configure
+    $ make
+    $ sudo make install
+
+If you get an error saying
+
+tmux: error while loading shared libraries: libeven-1.4.so.2: cannot
+open shared object file: No such file or directory then you need to run
+
+    $ sudo /sbin/ldconfig
+
+# LINKS
+
+<http://arcoleo.org/dsawiki/Wiki.jsp?page=Install%20Tmux%20on%20Ubuntu>

@@ -1,0 +1,71 @@
+awk(1) -- cheat sheet
+=====================
+
+FEATURES
+
+* Associative array type.
+* Automatic string, integer, and floating point value types.
+* C-style if, while, and do constructs.
+* For-each style for construct for iterating over associative arrays.
+* Arithmetic (+, -, *, /), modulu-division (%), exponentiation (^), increment/decrement (++, --), and assignment shorthand (+=, -=, *=, …) operators.
+* Array membership operator (expr in array).
+* Integral regular expression type and matching operators (str ~ /pattern/).
+* Comprehensive builtin function library (a small sample: printf, gsub, split, substr, cos, sin, log, sqrt).
+* User defined functions.
+
+**Not bad for 1977.**
+
+## EXAMPLES
+
+Print first field form delimited flat file is a shell pipe:
+
+    cat /etc/passwd | awk -F: '{ print $1 }'
+
+Prints all the usernames from /etc/passwd while avoiding comment lines:
+
+    cat /etc/passwd |
+    awk '
+        BEGIN     { FS = ":" }
+        /^[a-z_]/ { print $1 }
+    '
+Associative arrays and for-in syntax:
+
+    curl -s http://www.gutenberg.org/files/1080/1080.txt |
+    awk '
+        BEGIN { FS="[^a-zA-Z]+" }
+
+        {
+            for (i=1; i<=NF; i++) {
+                word = tolower($i)
+                words[word]++
+            }
+        }
+
+        END {
+            for (w in words)
+                 printf("%3d %s\n", words[w], w)
+        }
+    ' |
+    sort -rn
+
+## AWK IN RUBY
+
+The -n argument causes Ruby to assume a while gets(); ... end loop
+around the provided script. $_ is set to the last line read and the
+BEGIN and END blocks function exactly as they did in AWK.
+
+    curl -s http://www.gutenberg.org/files/1080/1080.txt |
+    ruby -ne '
+      BEGIN { $words = Hash.new(0) }
+
+      $_.split(/[^a-zA-Z]+/).each { |word| $words[word.downcase] += 1 }
+
+      END {
+        $words.each { |word, i| printf "%3d %s\n", i, word }
+      }
+    ' |
+    sort -rn
+
+## LINKS
+
+<http://tomayko.com/writings/awkward-ruby>
