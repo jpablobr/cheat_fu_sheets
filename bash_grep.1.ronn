@@ -1,0 +1,7 @@
+grep(1) -- bash
+===============
+
+## EXAMPLES
+
+    someCommand | grep 'Amargosh' | sed -e 's/foo/bar/g'
+    someCommand | awk '/Amargosh/ { do something }'

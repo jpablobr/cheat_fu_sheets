@@ -1,0 +1,173 @@
+emacs(1) -- Regexp
+==================
+
+In emacs regex, the parenthesis characters **() are literal**. If you want
+to capture a pattern, you need to escape the paren like this:
+`\(myPattern\)`.
+
+ The special characters are '$^.*+?[\'. The character ']' is special if
+ it ends a character alternative (see later). The character '-' is
+ special inside a character alternative. Any other character appearing
+ in a regular expression is ordinary, unless a '\' precedes it.
+
+## Pattern	Matches
+
+    .	             any single character
+    \.	           one period
+    [0-9]+	       sequence of digits
+    [A-Za-z]+	     sequence of letters
+    [-A-Za-z0-9]+	 sequence of letter, digit, hyphen
+    [_A-Za-z0-9]+	 sequence of letter, digit, underscore
+    [-_A-Za-z0-9]+ sequence of letter, digit, hyphen, underscore
+    [[:blank:]]+	 sequence of tabs and spaces
+    [[:upper:]]+	 sequence of cap letters
+    [[:lower:]]+	 sequence of lowercase letters
+    "\([^"]+?\)"	 capture text between double quotes (non-greedy)
+    (\([^)]+?\))	 capture text between parenthesis (non-greedy)
+    “\([^”]+?\)”	 capture text between curly double quotes (non-greedy; unicode char)
+    +	means match  previous pattern 1 or more times
+    *	means match  previous pattern 0 or more times
+    ?	means match  previous pattern 0 or 1 time
+
+`.` (Period)
+is a special character that matches any single character except a
+newline. For example, the regular expressions 'a.b' matches any
+three-character string that begins with 'a' and ends with 'b'.
+
+`*`
+is not a construct by itself; it is a postfix operator that means to
+match the preceding regular expression repetitively any number of times,
+as many times as possible. Thus, 'o*' matches any number of 'o's,
+including no 'o's.
+
+`+`
+is a postfix operator, similar to '*' except that it must match the
+preceding expression at least once. Thus, 'ca+r' matches the strings
+'car' and 'caaaar' but not the string 'cr', whereas 'ca*r' matches all
+three strings.
+
+`?`
+is a postfix operator, similar to '*' except that it can match the
+preceding expression either once or not at all. Thus, 'ca?r' matches
+'car' or 'cr', and nothing else.
+
+`*?, +?, ??`
+are non-greedy variants of the operators above. The normal operators
+'*', '+', '?' match as much as they can, as long as the overall regexp
+can still match. With a following '?', they will match as little as
+possible.  Thus, both 'ab*' and 'ab*?' can match the string 'a' and the
+string 'abbbb'; but if you try to match them both against the text
+'abbb', 'ab*' will match it all (the longest valid match), while 'ab*?'
+will match just 'a' (the shortest valid match).
+
+`\{n\}`
+is a postfix operator specifying n repetitions—that is, the preceding
+regular expression must match exactly n times in a row. For example,
+'x\{4\}' matches the string 'xxxx' and nothing else.
+
+`\{n,m\}`
+is a postfix operator specifying between n and m repetitions—that is,
+the preceding regular expression must match at least n times, but no
+more than m times. If m is omitted, then there is no upper limit, but
+the preceding regular expression must match at least n times.
+`'\{0,1\}' is equivalent to '?'.`
+`'\{0,\}' is equivalent to '*'.`
+`'\{1,\}' is equivalent to '+'.`
+
+`[ ... ]`
+Is a character set, beginning with '[' and terminated by ']'.
+
+In the simplest case, the characters between the two brackets are what
+this set can match. Thus, '[ad]' matches either one 'a' or one 'd', and
+'[ad]*' matches any string composed of just 'a's and 'd's (including the
+empty string). It follows that 'c[ad]*r' matches 'cr', 'car', 'cdr',
+'caddaar', etc.
+
+You can also include certain special character classes in a character
+set. A '[:' and balancing ':]' enclose a character class inside a
+character alternative. For instance, '[[:alnum:]]' matches any letter or
+digit. See Char Classes, for a list of character classes.
+
+To include a ']' in a character set, you must make it the first
+character. For example, '[]a]' matches ']' or 'a'. To include a '-',
+write '-' as the first or last character of the set, or put it after a
+range. Thus, '[]-]' matches both ']' and '-'.
+
+`[^ ... ]`
+'[^' begins a complemented character set, which matches any
+character except the ones specified. Thus, '[^a-z0-9A-Z]' matches all
+characters except ASCII letters and digits.  '^' is not special in a
+character set unless it is the first character. The character following
+the '^' is treated as if it were first (in other words, '-' and ']' are
+not special there).
+
+`^`
+is a special character that matches the empty string, but only at the
+beginning of a line in the text being matched. Otherwise it fails to
+match anything. Thus, '^foo' matches a 'foo' that occurs at the
+beginning of a line.
+
+`$`
+is similar to '^' but matches only at the end of a line. Thus, 'x+$'
+matches a string of one 'x' or more at the end of a line.
+
+`\`
+ Two functions: quotes the special characters (including '\'), and it
+introduces additional special constructs.  Because '\' quotes special
+characters, '\$' is a regular expression that matches only '$', and '\['
+is a regular expression that matches only '[', and so on.
+
+## re-builder
+
+Emacs has a interactive regex mode. It show matches as you type. To go
+into the mode, call `regexp-builder`.
+
+## Double Backslash in Lisp Code
+
+In a lisp regex function that takes a regex string
+(e.g. “search-forward-regexp”), you will need to use double
+backslash. This is because, in elisp string, a backslash needs to be
+prefixed with a backslash, then, this interpreted string is passed to
+emacs's regex engine.
+
+For example, suppose you have this text:
+
+    Sin[x] + Sin[y]
+
+and you need to capture the 「x」 or 「y」. You can use:
+
+    (search-backward-regexp "\\(\\[[a-z]\\]\\)")
+
+The regex engine really just got:
+
+    \(\[[a-z]\]\)
+
+## Differences from Perl's Regex
+
+If you are familiar with Perl's regex, here are some practical major
+differences.
+
+Parenthesis is literal in emacs's regex. Use \(pattern\) to capture
+instead.
+
+Do not use [A-z], as its meaning is currently ambiguous. Use [A-Za-z].
+
+Character classes like /d, /w, /s does not work. Use [[:digit:]],
+[[:word:]], [[:space:]] instead. For example, perl's /d+ for one or more
+digits is emacs's [[:digit:]]+. (Yes, you need double brackets)
+
+When using interactive commands for find ＆ replace, emacs won't
+understand \t, \n. To enter a literal Tab, press 【Ctrl+q Tab】. To
+match a new line, press 【Ctrl+q Ctrl+j】. (For explanation, see:
+Emacs's Key Notations Explained (/r, ^M, C-m, RET, <return>, M-, meta))
+In elisp string, you can use \t, \n and no need to double the backslash.
+
+When doing find ＆ replace in a buffer, the line ending char is always
+represented by \n (Line Feed; ASCII 10). You do not need to worry
+whether the file has unix style line ending or Windows or Mac. Also, you
+should NOT change a file's eol style by doing find ＆ replace. (See:
+Emacs Line Return and Windows, Unix, Mac, All That ^M ^J ^L.)
+
+## REFERENCES
+
+  * <http://xahlee.org/emacs/emacs_regex.html>

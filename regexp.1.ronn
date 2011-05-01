@@ -5,6 +5,16 @@ print "success" if subject =~ /regex/<br>
 result = subject.gsub(/before/, "after")<br>
 myarray = mystring.scan(/delimiter/)<br>
 
+## EXAMPLES
+
+## Everything before
+
+        ^.*?(?=[^\/]+$)
+
+## EVerything after (? in this case)
+
+        \?(.*)
+
 ## Operators
 `/i    ` makes match case insensitive.<br>
 `/m    ` makes the dot match newlines.<br>
@@ -25,3 +35,174 @@ myarray = mystring.scan(/delimiter/)<br>
 `| 	   ` either preceding or next expression may match<br>
 `() 	 ` grouping<br>
 `/o    ` causes any #{...} substitutions in a particular regex literal to be performed just once, the first time it is evaluated. Otherwise, the substitutions will be performed every time the literal generates a Regexp object.<br>
+
+
+## The Anchor Characters: ^ and $
+    ^A	"A" at the beginning of a line
+    A$	"A" at the end of a line
+    A^	"A^" anywhere on a line
+    $A	"$A" anywhere on a line
+    ^^	"^" at the beginning of a line
+    $$	"$" at the end of a line
+
+
+## Matching a specific number of sets with \{ and \}
+    *	         Any line with an asterisk
+    \*	       Any line with an asterisk
+    \\	       Any line with a backslash
+    ^*	       Any line starting with an asterisk
+    ^A*	       Any line
+    ^A\*	     Any line starting with an "A*"
+    ^AA*	     Any line if it starts with one "A"
+    ^AA*B	     Any line with one or more "A"'s followed by a "B"
+    ^A\{4,8\}B Any line starting with 4, 5, 6, 7 or 8 "A"'s followed by a "B"
+    ^A\{4,\}B	 Any line starting with 4 or more "A"'s followed by a "B"
+    ^A\{4\}B	 Any line starting with "AAAAB"
+    \{4,8\}	   Any line with "{4,8}"
+    A{4,8}	   Any line with "A{4,8}"
+
+
+## POSIX character sets
+    [:alnum:]	Alphanumeric
+    [:cntrl:]	Control Character
+    [:lower:]	Lower case character
+    [:space:]	Whitespace
+    [:alpha:]	Alphabetic
+    [:digit:]	Digit
+    [:print:]	Printable character
+    [:upper:]	Upper Case Character
+    [:blank:]	whitespace, tabe, etc.
+    [:graph:]	Printable and visible characters
+    [:punct:]	Puctuation
+    [:xdigit:]	Extended Digit
+
+## Perl Extensions
+     Class	Type	Meaning
+    \t	Character Set	tab
+    \n	Character Set	newline
+    \r	Character Set	return
+    \f	Character Set	form
+    \a	Character Set	alarm
+    \e	Character Set	escape
+    \033	Character Set	octal
+    \x1B	Character Set	hex
+    \c[	Character Set	control
+    \l	Character Set	lowercase
+    \u	Character Set	uppercase
+    \L	Character Set	lowercase
+    \U	Character Set	uppercase
+    \E	Character Set	end
+    \Q	Character Set	quote
+    \w	Character Set	Match a "word" character
+    \W	Character Set	Match a non-word character
+    \s	Character Set	Match a whitespace character
+    \S	Character Set	Match a non-whitespace character
+    \d	Character Set	Match a digit character
+    \D	Character Set	Match a non-digit character
+    \b	Anchor	Match a word boundary
+    \B	Anchor	Match a non-(word boundary)
+    \A	Anchor	Match only at beginning of string
+    \Z	Anchor	Match only at EOS, or before newline
+    \z	Anchor	Match only at end of string
+    \G	Anchor	Match only where previous m//g left off
+
+## Utility	Regular Expression Type
+    vi	    Basic
+    sed	    Basic
+    grep	  Basic
+    csplit	Basic
+    dbx	    Basic
+    dbxtool	Basic
+    more	  Basic
+    ed	    Basic
+    expr	  Basic
+    lex	    Basic
+    pg	    Basic
+    nl	    Basic
+    rdist	  Basic
+    awk	    Extended
+    nawk	  Extended
+    egrep	  Extended
+    EMACS	  EMACS Regular Expressions
+    PERL	  PERL Regular Expressions
+
+
+## Extended Regular Expressions
+    .	all	        Character Set	A single character (except newline)
+    ^	all	        Anchor	Beginning of line
+    $	all	        Anchor	End of line
+    [...]	        all	Character Set	Range of characters
+    *	all	        Modifier	zero or more duplicates
+    \<	          Basic	Anchor	Beginning of word
+    \>	          Basic	Anchor	End of word
+    \(..\)	      Basic	Backreference	Remembers pattern
+    \1..\9	      Basic	Reference	Recalls pattern
+    _+	          Extended	Modifier	One or more duplicates
+    ?	            Extended	Modifier	Zero or one duplicate
+    \{M,N\}	      Extended	Modifier	M to N Duplicates
+    (...|...)	    Extended	Anchor	Shows alteration
+    _
+    \(...\|...\)	EMACS	Anchor	Shows alteration
+    \w	          EMACS	Character set	Matches a letter in a word
+    \W	          EMACS	Character set	Opposite of \w
+
+Two programs use the extended regular expression: egrep and awk. With
+these extensions, those special characters preceded by a backslash no
+longer have the special meaning: "\{" , "\}", "\<", "\>", "\(", "\)" as
+well as the "\digit". There is a very good reason for this, which I will
+delay explaining to build up suspense.
+
+The character "?" matches 0 or 1 instances of the character set before,
+and the character "+" matches one or more copies of the character
+set. You can't use the \{ and \} in the extended regular expressions,
+but if you could, you might consider the "?" to be the same as "\{0,1\}"
+and the "+" to be the same as "\{1,\}".
+
+By now, you are wondering why the extended regular expressions is even
+worth using. Except for two abbreviations, there are no advantages, and
+a lot of disadvantages. Therefore, examples would be useful.
+
+The three important characters in the expanded regular expressions are
+"(", "|", and ")". Together, they let you match a choice of patterns. As
+an example, you can egrep to print all From: and Subject: lines from
+your incoming mail:
+
+egrep '^(From|Subject): ' /usr/spool/mail/$USER All lines starting with
+"From:" or "Subject:" will be printed. There is no easy way to do this
+with the Basic regular expressions. You could try
+"^[FS][ru][ob][mj]e*c*t*: " and hope you don't have any lines that start
+with "Sromeet:". Extended expressions don't have the "\<" and "\>"
+characters. You can compensate by using the alternation
+mechanism. Matching the word "the" in the beginning, middle, end of a
+sentence, or end of a line can be done with the extended regular
+expression:
+
+(^| )the([^a-z]|$) There are two choices before the word, a space or the
+beginining of a line. After the word, there must be something besides a
+lower case letter or else the end of the line. One extra bonus with
+extended regular expressions is the ability to use the "*," "+," and "?"
+modifiers after a "(...)" grouping. The following will match "a simple
+problem," "an easy problem," as well as "a problem".
+
+egrep "a[n]? (simple|easy)? problem" data I promised to explain why the
+backslash characters don't work in extended regular expressions. Well,
+perhaps the "\{...\}" and "\<...\>" could be added to the extended
+expressions. These are the newest addition to the regular expression
+family. They could be added, but this might confuse people if those
+characters are added and the "\(...\)" are not. And there is no way to
+add that functionality to the extended expressions without changing the
+current usage. Do you see why? It's quite simple. If "(" has a special
+meaning, then "\(" must be the ordinary character. This is the opposite
+of the Basic regular expressions, where "(" is ordinary, and "\(" is
+special. The usage of the parentheses is incompatable, and any change
+could break old programs.
+
+If the extended expression used "( ..|...)" as regular characters, and
+"\(...\|...\)" for specifying alternate patterns, then it is possible to
+have one set of regular expressions that has full functionality. This is
+exactly what GNU emacs does, by the way.
+
+## LINKS
+
+  * <http://rubular.com/>
+  * <http://www.grymoire.com/Unix/Regular.html>

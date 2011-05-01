@@ -1,0 +1,5 @@
+bash(1) -- Conditional statments
+
+
+## LINKS
+<http://www.linuxtutorialblog.com/post/tutorial-conditions-in-bash-scripting-if-statements>

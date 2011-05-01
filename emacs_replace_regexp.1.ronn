@@ -1,0 +1,35 @@
+emacs(1) -- Replace regexp
+==========================
+
+## EXAMPLES
+
+     M-x replace-regexp <RET> c[ad]+r <RET> \&-safe <RET>
+
+     M-x replace-regexp <RET> \(c[ad]+r\)-safe <RET> \1 <RET>
+
+## First line in buffer
+
+     M-x replace-regexp <RET> ^ <RET> whatever <RET>
+
+## Repeating our example to exchange ‘x’ and ‘y’, we can thus do it also this way:
+     M-x replace-regexp <RET> \(x\)\|y <RET>
+     \,(if \1 "y" "x") <RET>
+
+## For computing replacement strings for ‘\,’, the format function is often
+## useful (see Formatting Strings). For example, to add consecutively
+## numbered strings like ‘ABC00042’ to columns 73 to 80 (unless they are
+## already occupied), you can use
+
+    M-x replace-regexp <RET> ^.\{0,72\}$ <RET>
+     \,(format "%-72sABC%05d" \& \#) <RET>
+
+## TIPS
+
+    M-x re-builder
+
+## LINKS
+
+  * <http://www.gnu.org/software/emacs/manual/html_node/emacs/Regexp-Replace.html>
+  * <http://www.gnu.org/software/emacs/manual/html_node/elisp/Formatting-Strings.html>
+  * <http://www.gnu.org/software/emacs/elisp/html_node/Regexp-Search.html>
+  * <http://emacsblog.org/2007/03/15/newbie-tip-re-builder/>

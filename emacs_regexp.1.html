@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>emacs(1) - Regexp</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#Pattern-Matches">Pattern  Matches</a>
+    <a href="#re-builder">re-builder</a>
+    <a href="#Double-Backslash-in-Lisp-Code">Double Backslash in Lisp Code</a>
+    <a href="#Differences-from-Perl-s-Regex">Differences from Perl's Regex</a>
+    <a href="#REFERENCES">REFERENCES</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>emacs(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>emacs(1)</li>
+  </ol>
+
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>emacs</code> - <span class="man-whatis">Regexp</span>
+</p>
+
+<p>In emacs regex, the parenthesis characters <strong>() are literal</strong>. If you want
+to capture a pattern, you need to escape the paren like this:
+<code>\(myPattern\)</code>.</p>
+
+<p> The special characters are '$<sup>.*+?[\'.</sup> The character ']' is special if
+ it ends a character alternative (see later). The character '-' is
+ special inside a character alternative. Any other character appearing
+ in a regular expression is ordinary, unless a '\' precedes it.</p>
+
+<h2 id="Pattern-Matches">Pattern  Matches</h2>
+
+<pre><code>.                any single character
+\.             one period
+[0-9]+         sequence of digits
+[A-Za-z]+        sequence of letters
+[-A-Za-z0-9]+    sequence of letter, digit, hyphen
+[_A-Za-z0-9]+    sequence of letter, digit, underscore
+[-_A-Za-z0-9]+ sequence of letter, digit, hyphen, underscore
+[[:blank:]]+     sequence of tabs and spaces
+[[:upper:]]+     sequence of cap letters
+[[:lower:]]+     sequence of lowercase letters
+"\([^"]+?\)"     capture text between double quotes (non-greedy)
+(\([^)]+?\))     capture text between parenthesis (non-greedy)
+“\([^”]+?\)”   capture text between curly double quotes (non-greedy; unicode char)
++   means match  previous pattern 1 or more times
+*   means match  previous pattern 0 or more times
+?   means match  previous pattern 0 or 1 time
+</code></pre>
+
+<p><code>.</code> (Period)
+is a special character that matches any single character except a
+newline. For example, the regular expressions 'a.b' matches any
+three-character string that begins with 'a' and ends with 'b'.</p>
+
+<p><code>*</code>
+is not a construct by itself; it is a postfix operator that means to
+match the preceding regular expression repetitively any number of times,
+as many times as possible. Thus, 'o*' matches any number of 'o's,
+including no 'o's.</p>
+
+<p><code>+</code>
+is a postfix operator, similar to '<em>' except that it must match the
+preceding expression at least once. Thus, 'ca+r' matches the strings
+'car' and 'caaaar' but not the string 'cr', whereas 'ca</em>r' matches all
+three strings.</p>
+
+<p><code>?</code>
+is a postfix operator, similar to '*' except that it can match the
+preceding expression either once or not at all. Thus, 'ca?r' matches
+'car' or 'cr', and nothing else.</p>
+
+<p><code>*?, +?, ??</code>
+are non-greedy variants of the operators above. The normal operators
+'<em>', '+', '?' match as much as they can, as long as the overall regexp
+can still match. With a following '?', they will match as little as
+possible.  Thus, both 'ab</em>' and 'ab<em>?' can match the string 'a' and the
+string 'abbbb'; but if you try to match them both against the text
+'abbb', 'ab</em>' will match it all (the longest valid match), while 'ab*?'
+will match just 'a' (the shortest valid match).</p>
+
+<p><code>\{n\}</code>
+is a postfix operator specifying n repetitions—that is, the preceding
+regular expression must match exactly n times in a row. For example,
+'x{4}' matches the string 'xxxx' and nothing else.</p>
+
+<p><code>\{n,m\}</code>
+is a postfix operator specifying between n and m repetitions—that is,
+the preceding regular expression must match at least n times, but no
+more than m times. If m is omitted, then there is no upper limit, but
+the preceding regular expression must match at least n times.
+<code>'\{0,1\}' is equivalent to '?'.</code>
+<code>'\{0,\}' is equivalent to '*'.</code>
+<code>'\{1,\}' is equivalent to '+'.</code></p>
+
+<p><code>[ ... ]</code>
+Is a character set, beginning with '[' and terminated by ']'.</p>
+
+<p>In the simplest case, the characters between the two brackets are what
+this set can match. Thus, '[ad]' matches either one 'a' or one 'd', and
+'[ad]<em>' matches any string composed of just 'a's and 'd's (including the
+empty string). It follows that 'c[ad]</em>r' matches 'cr', 'car', 'cdr',
+'caddaar', etc.</p>
+
+<p>You can also include certain special character classes in a character
+set. A '[:' and balancing ':]' enclose a character class inside a
+character alternative. For instance, '[[:alnum:]]' matches any letter or
+digit. See Char Classes, for a list of character classes.</p>
+
+<p>To include a ']' in a character set, you must make it the first
+character. For example, '[]a]' matches ']' or 'a'. To include a '-',
+write '-' as the first or last character of the set, or put it after a
+range. Thus, '[]-]' matches both ']' and '-'.</p>
+
+<p><code>[^ ... ]</code>
+'[<sup>'</sup> begins a complemented character set, which matches any
+character except the ones specified. Thus, '[<sup>a-z0-9A-Z]'</sup> matches all
+characters except ASCII letters and digits.  '<sup>'</sup> is not special in a
+character set unless it is the first character. The character following
+the '<sup>'</sup> is treated as if it were first (in other words, '-' and ']' are
+not special there).</p>
+
+<p><code>^</code>
+is a special character that matches the empty string, but only at the
+beginning of a line in the text being matched. Otherwise it fails to
+match anything. Thus, '<sup>foo'</sup> matches a 'foo' that occurs at the
+beginning of a line.</p>
+
+<p><code>$</code>
+is similar to '<sup>'</sup> but matches only at the end of a line. Thus, 'x+$'
+matches a string of one 'x' or more at the end of a line.</p>
+
+<p><code>\</code>
+ Two functions: quotes the special characters (including '\'), and it
+introduces additional special constructs.  Because '\' quotes special
+characters, '\$' is a regular expression that matches only '$', and '['
+is a regular expression that matches only '[', and so on.</p>
+
+<h2 id="re-builder">re-builder</h2>
+
+<p>Emacs has a interactive regex mode. It show matches as you type. To go
+into the mode, call <code>regexp-builder</code>.</p>
+
+<h2 id="Double-Backslash-in-Lisp-Code">Double Backslash in Lisp Code</h2>
+
+<p>In a lisp regex function that takes a regex string
+(e.g. “search-forward-regexp”), you will need to use double
+backslash. This is because, in elisp string, a backslash needs to be
+prefixed with a backslash, then, this interpreted string is passed to
+emacs's regex engine.</p>
+
+<p>For example, suppose you have this text:</p>
+
+<pre><code>Sin[x] + Sin[y]
+</code></pre>
+
+<p>and you need to capture the 「x」 or 「y」. You can use:</p>
+
+<pre><code>(search-backward-regexp "\\(\\[[a-z]\\]\\)")
+</code></pre>
+
+<p>The regex engine really just got:</p>
+
+<pre><code>\(\[[a-z]\]\)
+</code></pre>
+
+<h2 id="Differences-from-Perl-s-Regex">Differences from Perl's Regex</h2>
+
+<p>If you are familiar with Perl's regex, here are some practical major
+differences.</p>
+
+<p>Parenthesis is literal in emacs's regex. Use (pattern) to capture
+instead.</p>
+
+<p>Do not use [A-z], as its meaning is currently ambiguous. Use [A-Za-z].</p>
+
+<p>Character classes like /d, /w, /s does not work. Use [[:digit:]],
+[[:word:]], [[:space:]] instead. For example, perl's /d+ for one or more
+digits is emacs's [[:digit:]]+. (Yes, you need double brackets)</p>
+
+<p>When using interactive commands for find ＆ replace, emacs won't
+understand \t, \n. To enter a literal Tab, press 【Ctrl+q Tab】. To
+match a new line, press 【Ctrl+q Ctrl+j】. (For explanation, see:
+Emacs's Key Notations Explained (/r, ^M, C-m, RET, <var>return</var>, M-, meta))
+In elisp string, you can use \t, \n and no need to double the backslash.</p>
+
+<p>When doing find ＆ replace in a buffer, the line ending char is always
+represented by \n (Line Feed; ASCII 10). You do not need to worry
+whether the file has unix style line ending or Windows or Mac. Also, you
+should NOT change a file's eol style by doing find ＆ replace. (See:
+Emacs Line Return and Windows, Unix, Mac, All That ^M ^J ^L.)</p>
+
+<h2 id="REFERENCES">REFERENCES</h2>
+
+<ul>
+<li><a href="http://xahlee.org/emacs/emacs_regex.html" data-bare-link="true">http://xahlee.org/emacs/emacs_regex.html</a></li>
+</ul>
+
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>May 2011</li>
+    <li class='tr'>emacs(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>
