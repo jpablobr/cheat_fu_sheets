@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "RUBY_RAILS_REFINERY" "1" "April 2011" "" ""
+.TH "RUBY_RAILS_REFINERY" "1" "May 2011" "" ""
 .
 .SH "Basics"
 After scratch install enable \fIpage parts\fR by setting the \fINew Page Parts\fR value to \fItrue\fR
@@ -27,6 +27,25 @@ p\.nested_path "/path/to/page"
 .TP
 \fBhide_children\fR
 <%= render :partial => \'/shared/menu\', :locals => { :hide_children => true } %> For removing child pages from the main menu\. \fIhttp://bit\.ly/kBLvJV\fR
+.
+.SH "Testing"
+.
+.IP "\(bu" 4
+1) Uncomment \fBgem \'refinerycms\-testing\', {version}\fR from the Gemfile
+.
+.IP "\(bu" 4
+2) \fBrails generate refinerycms_testing\fR which will copy its support files\.
+.
+.IP "\(bu" 4
+3) \fBrake\fR to run the current refinery testing env\.
+.
+.IP "\(bu" 4
+4) create new specs and run \fBbundle exec autotest\fR without \fBAUTOFEATURE=true\fR if you don\'t want to run refinery cucumber features\.
+.
+.IP "\(bu" 4
+5) Add \fBgem \'spork\'\fR in the Gemfile for faster tests\.
+.
+.IP "" 0
 .
 .SH "Links"
 \fIhttp://refinerycms\.com/guides\fR

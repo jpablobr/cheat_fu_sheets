@@ -1,0 +1,5 @@
+haml(1) -- Cheat_fu sheets
+
+## One liners
+
+for i in `find app/views/devise -name '*.erb'` ; do html2haml -e $i ${i%erb}haml ; done

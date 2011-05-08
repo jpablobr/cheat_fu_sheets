@@ -4,4 +4,6 @@ Latex(1)
 Latex 2 PDF: `pdflatex file_name`
 
 # Links
-`font` http://www.tug.dk/FontCatalogue/
+http://www.tug.dk/FontCatalogue/
+http://nitens.org/taraborelli/latex
+http://emacs-fu.blogspot.com/2011/04/nice-looking-pdfs-with-org-mode-and.html

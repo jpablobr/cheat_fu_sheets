@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv='content-type' value='text/html;charset=utf8'>
   <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
-  <title>ruby_rails_refinery(1) - Refinery</title>
+  <title>scope(1) - cheat sheet</title>
   <style type='text/css' media='all'>
   /* style: man */
   body#manpage {margin:0}
@@ -53,67 +53,67 @@
   <div class='mp' id='man'>
 
   <div class='man-navigation' style='display:none'>
-    <a href="#Basics">Basics</a>
-    <a href="#Rake-Tasks">Rake Tasks</a>
-    <a href="#Pages">Pages</a>
-    <a href="#Testing">Testing</a>
-    <a href="#Links">Links</a>
+    <a href="#NAME">NAME</a>
+    <a href="#Class-Methods-To-The-Rescue">Class Methods To The Rescue</a>
+    <a href="#Should-I-Ditch-Scopes-Completely-">Should I Ditch Scopes Completely?</a>
   </div>
 
   <ol class='man-decor man-head man head'>
-    <li class='tl'>ruby_rails_refinery(1)</li>
+    <li class='tl'>scope(1)</li>
     <li class='tc'></li>
-    <li class='tr'>ruby_rails_refinery(1)</li>
+    <li class='tr'>scope(1)</li>
   </ol>
 
-  <h1>Refinery</h1>
-<h2 id="Basics">Basics</h2>
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>scope</code> - <span class="man-whatis">cheat sheet</span>
+</p>
 
-<p>After scratch install enable <var>page parts</var> by setting the <var>New Page Parts</var> value to <var>true</var></p>
+<h2 id="Class-Methods-To-The-Rescue">Class Methods To The Rescue</h2>
 
-<h2 id="Rake-Tasks">Rake Tasks</h2>
+<p>Thanks to arel’s greatness, you can avoid the hassle and just go back to using good old class methods:</p>
 
-<pre><code>rake refinery:override controller=what/ever
+<pre><code>class &lt;&lt; self
+  def published
+    where(:published =&gt; true)
+  end
+end
 </code></pre>
 
-<h2 id="Pages">Pages</h2>
+<p>Remember that relations stay unevaluated – and thus still chainable! – until they’re first used in a non-arel context.</p>
 
-<p><strong>Model</strong>:</p>
+<p>This also helps to avoid the tedious lambda syntax that was needed for dynamic scopes:</p>
 
-<dl>
-<dt><code>nested_path()</code></dt><dd>p.nested_path
-"/path/to/page"</dd>
-</dl>
+<pre><code>class &lt;&lt; self
+  def by_author(author)
+    where(:author_id =&gt; author.id)
+  end
+end
+</code></pre>
 
+<p>No problems with optional parameters or differences between Ruby versions either – methods are just methods, after all. So after all, there is just one syntax for one thing again.</p>
 
-<p><strong>Views</strong>:</p>
+<h2 id="Should-I-Ditch-Scopes-Completely-">Should I Ditch Scopes Completely?</h2>
 
-<dl>
-<dt><code>hide_children</code></dt><dd>&lt;%= render :partial => '/shared/menu', :locals => { :hide_children => true } %>
-For removing child pages from the main menu. <a href="http://bit.ly/kBLvJV" data-bare-link="true">http://bit.ly/kBLvJV</a></dd>
-</dl>
+<p>If you want to keep some of scopes’ declarative nature, consider just putting them in a module named Scopes and extending the class like so:</p>
 
+<pre><code>class Post &lt; ActiveRecord::Base
+  module Scopes
+    def by_author(author)
+      where(:author_id =&gt; author.id)
+    end
+  end
+  extend Scopes
+end
+</code></pre>
 
-<h2 id="Testing">Testing</h2>
-
-<ul>
-<li> 1) Uncomment <code>gem 'refinerycms-testing', {version}</code> from the Gemfile</li>
-<li> 2) <code>rails generate refinerycms_testing</code> which will copy its support files.</li>
-<li> 3) <code>rake</code> to run the current refinery testing env.</li>
-<li> 4) create new specs and run <code>bundle exec autotest</code> without <code>AUTOFEATURE=true</code> if you don't want to run refinery cucumber features.</li>
-<li> 5) Add <code>gem 'spork'</code> in the Gemfile for faster tests.</li>
-</ul>
-
-
-<h2 id="Links">Links</h2>
-
-<p><a href="http://refinerycms.com/guides" data-bare-link="true">http://refinerycms.com/guides</a></p>
+<p>This way, you keep scopes somehow separate from the rest of your models’ code.</p>
 
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
     <li class='tc'>May 2011</li>
-    <li class='tr'>ruby_rails_refinery(1)</li>
+    <li class='tr'>scope(1)</li>
   </ol>
 
   </div>

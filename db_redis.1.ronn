@@ -1,0 +1,4 @@
+redis(1) -- cheat_fu sheets
+
+## LINKS
+<http://antirez.com/post/redis-and-scripting.html>

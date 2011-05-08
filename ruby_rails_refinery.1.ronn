@@ -23,6 +23,14 @@ After scratch install enable <page parts> by setting the <New Page Parts> value 
     <%= render :partial => '/shared/menu', :locals => { :hide_children => true } %>
     For removing child pages from the main menu. <http://bit.ly/kBLvJV>
 
+## Testing
+
+   * 1) Uncomment `gem 'refinerycms-testing', {version}` from the Gemfile
+   * 2) `rails generate refinerycms_testing` which will copy its support files.
+   * 3) `rake` to run the current refinery testing env.
+   * 4) create new specs and run `bundle exec autotest` without `AUTOFEATURE=true` if you don't want to run refinery cucumber features.
+   * 5) Add `gem 'spork'` in the Gemfile for faster tests.
+
 ## Links
 
 <http://refinerycms.com/guides>

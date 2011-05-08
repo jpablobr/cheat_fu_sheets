@@ -1,0 +1,14 @@
+vagrant(1) -- Cheat_fu sheets
+=============================
+
+## Basic setup
+
+    vagrant box add debian_squeeze_32 http://mathie-vagrant-boxes.s3.amazonaws.com/debian_squeeze_32.box
+    mkdir squeeze_demo
+    cd squeeze_demo
+    vagrant init debian_squeeze_32
+    vagrant up
+    vagrant ssh
+
+## LINKS
+<http://woss.name/2011/02/07/vagrant-base-bo-for-debian-squeeze/>

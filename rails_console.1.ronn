@@ -1,0 +1,23 @@
+rails console(1) -- cheat sheets
+================================
+
+## Controller Actions
+
+    app.get('sample/echo')
+    output = app.html_document.root.to_s
+
+## Put it into a rake task
+    require 'action_controller/integration'
+
+    namespace :actions do
+    desc "test action"
+      task "echo" do
+        app = ActionController::Integration::Session.new;
+        app.get('/sample/echo')
+        puts app.html_document.root.to_s
+      end
+    end
+
+Call it with:
+
+     rake actions:echo

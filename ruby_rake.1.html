@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv='content-type' value='text/html;charset=utf8'>
   <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
-  <title>ruby_rails_refinery(1) - Refinery</title>
+  <title>rake(1) - cheat sheets</title>
   <style type='text/css' media='all'>
   /* style: man */
   body#manpage {margin:0}
@@ -53,67 +53,45 @@
   <div class='mp' id='man'>
 
   <div class='man-navigation' style='display:none'>
-    <a href="#Basics">Basics</a>
-    <a href="#Rake-Tasks">Rake Tasks</a>
-    <a href="#Pages">Pages</a>
-    <a href="#Testing">Testing</a>
-    <a href="#Links">Links</a>
+    <a href="#NAME">NAME</a>
+    <a href="#passing-a-task-as-a-parameter-to-another-task">passing a task as a parameter to another task</a>
   </div>
 
   <ol class='man-decor man-head man head'>
-    <li class='tl'>ruby_rails_refinery(1)</li>
+    <li class='tl'>rake(1)</li>
     <li class='tc'></li>
-    <li class='tr'>ruby_rails_refinery(1)</li>
+    <li class='tr'>rake(1)</li>
   </ol>
 
-  <h1>Refinery</h1>
-<h2 id="Basics">Basics</h2>
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>rake</code> - <span class="man-whatis">cheat sheets</span>
+</p>
 
-<p>After scratch install enable <var>page parts</var> by setting the <var>New Page Parts</var> value to <var>true</var></p>
+<h2 id="passing-a-task-as-a-parameter-to-another-task">passing a task as a parameter to another task</h2>
 
-<h2 id="Rake-Tasks">Rake Tasks</h2>
+<p><a href="https://gist.github.com/953582" data-bare-link="true">https://gist.github.com/953582</a></p>
 
-<pre><code>rake refinery:override controller=what/ever
+<pre><code>task :quux
+task :foo do |t|
+  tasks = Rake.application.top_level_tasks
+  args  = tasks.slice! (tasks.index(t.name) + 1)..-1
+
+  unless args.empty?
+    puts "You passed me some args! \n#{args.inspect}"
+  end
+end
+
+# $ rake quux foo bar baz
+# You passed me some args!
+# ["bar", "baz"]
 </code></pre>
-
-<h2 id="Pages">Pages</h2>
-
-<p><strong>Model</strong>:</p>
-
-<dl>
-<dt><code>nested_path()</code></dt><dd>p.nested_path
-"/path/to/page"</dd>
-</dl>
-
-
-<p><strong>Views</strong>:</p>
-
-<dl>
-<dt><code>hide_children</code></dt><dd>&lt;%= render :partial => '/shared/menu', :locals => { :hide_children => true } %>
-For removing child pages from the main menu. <a href="http://bit.ly/kBLvJV" data-bare-link="true">http://bit.ly/kBLvJV</a></dd>
-</dl>
-
-
-<h2 id="Testing">Testing</h2>
-
-<ul>
-<li> 1) Uncomment <code>gem 'refinerycms-testing', {version}</code> from the Gemfile</li>
-<li> 2) <code>rails generate refinerycms_testing</code> which will copy its support files.</li>
-<li> 3) <code>rake</code> to run the current refinery testing env.</li>
-<li> 4) create new specs and run <code>bundle exec autotest</code> without <code>AUTOFEATURE=true</code> if you don't want to run refinery cucumber features.</li>
-<li> 5) Add <code>gem 'spork'</code> in the Gemfile for faster tests.</li>
-</ul>
-
-
-<h2 id="Links">Links</h2>
-
-<p><a href="http://refinerycms.com/guides" data-bare-link="true">http://refinerycms.com/guides</a></p>
 
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
     <li class='tc'>May 2011</li>
-    <li class='tr'>ruby_rails_refinery(1)</li>
+    <li class='tr'>rake(1)</li>
   </ol>
 
   </div>

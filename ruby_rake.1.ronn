@@ -1,0 +1,20 @@
+rake(1) -- cheat sheets
+=======================
+
+
+## passing a task as a parameter to another task
+<https://gist.github.com/953582>
+
+    task :quux
+    task :foo do |t|
+      tasks = Rake.application.top_level_tasks
+      args  = tasks.slice! (tasks.index(t.name) + 1)..-1
+
+      unless args.empty?
+        puts "You passed me some args! \n#{args.inspect}"
+      end
+    end
+
+    # $ rake quux foo bar baz
+    # You passed me some args!
+    # ["bar", "baz"]

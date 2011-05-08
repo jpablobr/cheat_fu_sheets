@@ -1,0 +1,33 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RAKE" "1" "May 2011" "" ""
+.
+.SH "NAME"
+\fBrake\fR \- cheat sheets
+.
+.SH "passing a task as a parameter to another task"
+\fIhttps://gist\.github\.com/953582\fR
+.
+.IP "" 4
+.
+.nf
+
+task :quux
+task :foo do |t|
+  tasks = Rake\.application\.top_level_tasks
+  args  = tasks\.slice! (tasks\.index(t\.name) + 1)\.\.\-1
+
+  unless args\.empty?
+    puts "You passed me some args! \en#{args\.inspect}"
+  end
+end
+
+# $ rake quux foo bar baz
+# You passed me some args!
+# ["bar", "baz"]
+.
+.fi
+.
+.IP "" 0
+

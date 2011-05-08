@@ -1,0 +1,37 @@
+rails scope(1) -- cheat sheet
+=============================
+
+## Class Methods To The Rescue
+Thanks to arel’s greatness, you can avoid the hassle and just go back to using good old class methods:
+
+    class << self
+      def published
+        where(:published => true)
+      end
+    end
+
+Remember that relations stay unevaluated – and thus still chainable! – until they’re first used in a non-arel context.
+
+This also helps to avoid the tedious lambda syntax that was needed for dynamic scopes:
+
+    class << self
+      def by_author(author)
+        where(:author_id => author.id)
+      end
+    end
+
+No problems with optional parameters or differences between Ruby versions either – methods are just methods, after all. So after all, there is just one syntax for one thing again.
+
+## Should I Ditch Scopes Completely?
+If you want to keep some of scopes’ declarative nature, consider just putting them in a module named Scopes and extending the class like so:
+
+    class Post < ActiveRecord::Base
+      module Scopes
+        def by_author(author)
+          where(:author_id => author.id)
+        end
+      end
+      extend Scopes
+    end
+
+This way, you keep scopes somehow separate from the rest of your models’ code.

@@ -1,0 +1,5 @@
+linux(1) -- Profiling
+
+## LINKS
+
+<http://www.pixelbeat.org/programming/profiling/>

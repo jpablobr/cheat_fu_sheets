@@ -1,18 +1,9 @@
 Basic emacs(1) cheats
 ==================
 
-## Commands to Manipulate Files
+## Yasnippets
 
-`C-x s`      save-some-buffers. Save All.<br>
-`C-x C-f`     find-file.<br>
-`C-x C-s`    save-buffer. Save.<br>
-
-## Commands to Manipulate Buffers
-
-`C-x k`      kill-buffer. Asks to save if modified.<br>
-`C-x b`      switch-to-buffer.<br>
-`C-x C-b`    list-buffers.<br>
-`C-x C-q`    vc-toggle-read-only. Toggle read-only <-> read-write.<br>
+`C-i` or `TAB` (with hippie) for expanding
 
 ## Commands to Manipulate Windows
 

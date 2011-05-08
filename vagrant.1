@@ -1,0 +1,23 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "VAGRANT" "1" "May 2011" "" ""
+.
+.SH "NAME"
+\fBvagrant\fR \- Cheat_fu sheets
+.
+.SH "Basic setup"
+.
+.nf
+
+vagrant box add debian_squeeze_32 http://mathie\-vagrant\-boxes\.s3\.amazonaws\.com/debian_squeeze_32\.box
+mkdir squeeze_demo
+cd squeeze_demo
+vagrant init debian_squeeze_32
+vagrant up
+vagrant ssh
+.
+.fi
+.
+.SH "LINKS"
+\fIhttp://woss\.name/2011/02/07/vagrant\-base\-bo\-for\-debian\-squeeze/\fR
