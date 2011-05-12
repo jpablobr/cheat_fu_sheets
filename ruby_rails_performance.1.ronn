@@ -1,0 +1,5 @@
+rails performace(1) -- cheat sheet
+==================================
+
+# LINKS
+<https://github.com/thedarkone/rails-dev-boost>

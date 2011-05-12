@@ -1,15 +1,242 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "DB_POSTGRESQL" "1" "May 2011" "" ""
+.TH "POSTGRESQL" "1" "May 2011" "" ""
 .
 .SH "NAME"
-\fBdb_postgresql\fR
+\fBpostgresql\fR \- cheat_fu sheets
+.
+.SH "Setup"
+.
+.nf
+
+sudo apt\-get install postgresql
+.
+.fi
+.
+.SH "Administration"
+pgAdmin III is a handy GUI for PostgreSQL, it is essential to beginners\. To install it, type at the command line:
+.
+.IP "" 4
+.
+.nf
+
+sudo apt\-get install pgadmin3
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Basic Server Setup"
+To start off, we need to change the PostgreSQL postgres user password; we will not be able to access the server otherwise\. As the “postgres” Linux user, we will execute the psql command\.
 .
 .P
-postgresql(1) \-\- cheat_fu sheets
+In a terminal, type:
+.
+.IP "" 4
+.
+.nf
+
+sudo \-u postgres psql template1
+
+sudo \-u postgres psql postgres
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Set a password for the "postgres" database role using the command:
+.
+.IP "" 4
+.
+.nf
+
+\epassword postgres
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Type Control+D to exit the posgreSQL prompt\.
+.
+.SH "Create database"
+To create the first database, which we will call "mydb", simply type :
+.
+.IP "" 4
+.
+.nf
+
+sudo \-u postgres createdb mydb
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Alternative Server Setup"
+If you don\'t intend to connect to the database from other machines, this alternative setup may be simpler\.
+.
+.P
+By default in Ubuntu, Postgresql is configured to use \'ident sameuser\' authentication for any connections from the same machine\. Check out the excellent Postgresql documentation for more information, but essentially this means that if your Ubuntu username is \'foo\' and you add \'foo\' as a Postgresql user then you can connect to the database without requiring a password\.
+.
+.P
+Since the only user who can connect to a fresh install is the postgres user, here is how to create yourself a database account (which is in this case also a database superuser) with the same name as your login name and then create a password for the user:
+.
+.IP "" 4
+.
+.nf
+
+ sudo \-u postgres createuser \-\-superuser $USER
+ sudo \-u postgres psql
+
+ postgres=# \epassword $USER
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Client programs, by default, connect to the local host using your Ubuntu login name and expect to find a database with that name too\. So to make things REALLY easy, use your new superuser privileges granted above to create a database with the same name as your login name:
+.
+.IP "" 4
+.
+.nf
+
+ createdb $USER
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Connecting to your own database to try out some SQL should now be as easy as:
+.
+.IP "" 4
+.
+.nf
+
+ psql
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Creating additional database is just as easy, so for example, after running this:
+.
+.IP "" 4
+.
+.nf
+
+ createdb amarokdb
+.
+.fi
+.
+.IP "" 0
+.
+.SH "Managing users and rights"
+To manage users, you first have to edit /etc/postgresql/8\.1/main/pg_hba\.conf and modify the default configuration which is very protective\. For example, if you want postgres to manage its own users (not linked with system users), you will add the following line:
+.
+.P
+8<\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-host all all 10\.0\.0\.0 255\.255\.255\.0 md5 8<\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-\-
+.
+.P
+Which means that on your local network (10\.0\.0\.0/24 \- replace with your own local network !), postgres users can connect through the network to the database providing a classical couple user / password\.
+.
+.P
+To create a database with a user that have full rights on the database, use the following
+.
+.IP "" 4
+.
+.nf
+
+sudo \-u postgres createuser \-D \-A \-P myuser
+sudo \-u postgres createdb \-O myuser mydb
+.
+.fi
+.
+.IP "" 0
+.
+.P
+The first command line creates the user with no database creation rights (\-D) with no add user rights \-A) and will prompt you for entering a password (\-P)\. The second command line create the database \'mydb with \'myuser\' as owner\.
+.
+.SH "restarting the server"
+.
+.nf
+
+sudo /etc/init\.d/postgresql\-8\.3 restart
+.
+.fi
+.
+.SH "Troubleshooting"
+If you’re receiving the error:
+.
+.P
+FATAL C28000 MIDENT authentication failed for user "todo" Fauth\.c L395 Rauth_failed it is due to Rails connecting to PostgreSQL via TCP socket, not UNIX socket, so in the pg_hba\.conf you need to setup a “host” line, not a “local” line\.
+.
+.P
+So, something like:
+.
+.IP "" 4
+.
+.nf
+
+  host all all 127\.0\.0\.1 255\.255\.255\.255 password
+.
+.fi
+.
+.IP "" 0
+.
+.P
+or
+.
+.IP "" 4
+.
+.nf
+
+host all all 127\.0\.0\.1 255\.255\.255\.255 trust
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Also make sure that your PostgreSQL is listening to TCP/IP requests\. If you are starting PostgreSQL via pg_ctl simply add ‘\-o \-i’ to the end of the line\. On OS X my PostgreSQL start command looks like this:
+.
+.IP "" 4
+.
+.nf
+
+/usr/local/pgsql/bin/pg_ctl \-D /usr/local/pgsql/data  \-l logfile start \-o \-i
+.
+.fi
+.
+.IP "" 0
+.
+.P
+Under a stock Ubuntu install, you will probably encounter either of these errors: e_sendauth: no password supplied
+.
+.IP "" 4
+.
+.nf
+
+fe_sendauth: no password supplied
+.
+.fi
+.
+.IP "" 0
+.
+.P
+This is due to the permissions in pg_hba\.conf being too restrictive by default\. To allow rails to connect, simply change the bottom of pg_hba\.conf to look like this\.local all all trusthost all all 127\.0\.0\.1/32 trusthost all all ::1/128 trust
 .
 .SH "LINKS"
+.
+.SH "development/test/production:"
+adapter: postgresql database: postgresql\-env username: user password: pass host: 127\.0\.0\.1
+.
+.SH "Setup"
+\fIhttp://oldwiki\.rubyonrails\.org/rails/pages/PostgreSQL\fR
 .
 .SH "Concurrency:"
 \fIhttp://devcenter\.heroku\.com/articles/postgresql\-concurrency\fR

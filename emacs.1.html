@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv='content-type' value='text/html;charset=utf8'>
   <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
-  <title>emacs(1) - Basic emacs(1) cheats</title>
+  <title>emacs(1) - Emacs(1) for Ruby &amp;amp; Rails</title>
   <style type='text/css' media='all'>
   /* style: man */
   body#manpage {margin:0}
@@ -53,12 +53,8 @@
   <div class='mp' id='man'>
 
   <div class='man-navigation' style='display:none'>
-    <a href="#Yasnippets">Yasnippets</a>
-    <a href="#Commands-to-Manipulate-Windows">Commands to Manipulate Windows</a>
-    <a href="#Infinite-Undo-with-Redo">Infinite Undo with Redo</a>
-    <a href="#Motion-and-Objects">Motion and Objects</a>
-    <a href="#Deleting-Killing-and-Yanking">Deleting, Killing and Yanking</a>
-    <a href="#Help">Help</a>
+    <a href="#From-ruby-mode-el">From ruby-mode.el</a>
+    <a href="#From-inf-ruby-el">From inf-ruby.el</a>
   </div>
 
   <ol class='man-decor man-head man head'>
@@ -67,81 +63,39 @@
     <li class='tr'>emacs(1)</li>
   </ol>
 
-  <h1>Basic emacs(1) cheats</h1>
-<h2 id="Yasnippets">Yasnippets</h2>
+  <h1>Emacs(1) for Ruby &amp; Rails</h1>
+<h2 id="From-ruby-mode-el">From ruby-mode.el</h2>
 
-<p><code>C-i</code> or <code>TAB</code> (with hippie) for expanding</p>
+<p><code>M-C-a        </code>   Beginning of defun<br />
+<code>M-C-e        </code>   End of defun<br />
+<code>M-C-b or M-C-p</code>   Beginning of block<br />
+<code>M-C-f or M-C-n</code>   End of block<br />
+<code>M-C-h        </code>   Mark defun<br />
+<code>\t           </code>   Indent<br />
+<code>C-c C-e      </code>   Insert end<br />
+<code>C-j          </code>   Reindent then newline and indent<br />
+<code>C-m          </code>   Newline<br /></p>
 
-<h2 id="Commands-to-Manipulate-Windows">Commands to Manipulate Windows</h2>
+<h2 id="From-inf-ruby-el">From inf-ruby.el</h2>
 
-<p><code>C-v</code>     scroll-up.<br />
-<code>M-v</code>     scroll-down.<br />
-<code>C-x o</code>               other-window.<br />
-<code>C-x 1</code>               delete-other-windows.<br />
-<code>C-x 0</code>               delete-window.<br />
-<code>C-x 2</code>               split-window-vertically.<br />
-<code>C-x 3</code>               split-window-horizontally.<br />
-<code>C-M-v</code>               scroll-other-window. <br /></p>
+<p><code>C-c C-e or M-C-x       </code>  send the current definition to the process buffer<br />
+<code>C-c M-e                </code>  switch to ruby process buffer after sending their text<br />
+<code>C-c C-r                </code>  send the current region to the process buffer<br />
+<code>C-c M-r                </code>  switch to ruby process buffer after sending their text<br />
+<code>C-c C-z                </code>  switches the current buffer to the ruby process buffer<br />
+<code>C-c C-l                </code>  Load a Ruby file into the inferior Ruby process.<br />
+<code>C-c C-s or M-x run-ruby</code>  Run an inferior Ruby process...<br /></p>
 
-<h2 id="Infinite-Undo-with-Redo">Infinite Undo with Redo</h2>
+<p>Emacs opens in yaml-mode and outdent-mode when first line is:<br />
+<code># -*- mode: yaml; mode: outdent; -*-</code></p>
 
-<p><code>C-_</code>        undo. (Also C-x u and C-/)</p>
-
-<h2 id="Motion-and-Objects">Motion and Objects</h2>
-
-<p><code>C-f  </code>   forward-char. Moves forward (to the right) over a character.<br />
-<code>C-b  </code>   backward-char. Moves backward (to the left) over a character.<br />
-<code>M-f  </code>   forward-word. Moves forward over a word.<br />
-<code>M-b  </code>   backward-word. Moves backward over a word.<br />
-<code>C-n  </code>   next-line. Moves down to the next line.<br />
-<code>C-p  </code>   previous-line. Moves up to the previous line.<br />
-<code>C-a  </code>   beginning-of-line. Moves to the beginning of the current line.<br />
-<code>C-e  </code>   end-of-line. Moves to the end of the current line.<br />
-<code>M-a  </code>   backward-sentence. Moves to the beginning of the current sentence.<br />
-<code>M-e  </code>   forward-sentence. Moves to the end of the current sentence.<br />
-<code>M-{  </code>   backward-paragraph. Move to the beginning of the current paragraph.<br />
-<code>M-}  </code>   forward-paragraph. Move to the end of the current paragraph.<br />
-<code>M-&lt;  </code>   beginning-of-buffer. Moves to the beginning of the buffer.<br />
-<code>M-&gt;  </code>   end-of-buffer. Moves to the end of the buffer.<br />
-<code>C-x [</code>   backward-page. Moves to the beginning of the current page.<br />
-<code>C-x ]</code>   forward-page. Moves to the end of the current page.<br /></p>
-
-<h2 id="Deleting-Killing-and-Yanking">Deleting, Killing and Yanking</h2>
-
-<p>Deletion means to remove text from the buffer without saving it.
-Killing means to save the removed text, so that it can be yanked back later someplace else.</p>
-
-<p><code>C-d         </code>  delete-char.<br />
-<code>DEL         </code>  delete-backward-char.<br />
-<code>M-d         </code>  kill-word.<br />
-<code>C-k         </code>  kill-line. Kills to the end of the current line.<br />
-<code>M-k         </code>  kill-sentence. Kills to the end of the current sentence.<br />
-<code>C-M-k       </code>  kill-sexp. Kills the sexp after the cursor.<br />
-<code>M-DEL       </code>  backward-kill-word.<br />
-<code>C-u 0 C-k   </code>  kill-line. Kills to the beginning of the current line.<br />
-<code>C-u -1 C-k  </code>  kill-line. Kills to the beginning of the current line, and previous newline character.<br />
-<code>C-u -1 M-k  </code>  kill-sentence. Kills to the beginning of the current sentence.<br />
-<code>C-u -1 C-M-k</code>  kill-sexp. Kills the sexp before the cursor.<br /></p>
-
-<h2 id="Help">Help</h2>
-
-<p><code>C-h a</code>  command-apropos.  List commands matching the given name or regexp.<br />
-<code>C-h f</code>  describe-function.  Show documentation on the given function.<br />
-<code>C-h v</code>  describe-variable.  Show documentation on the given variable.<br />
-<code>C-h c</code>  describe-key-briefly.  Name the function bound to the given key sequence.<br />
-<code>C-h k</code>  describe-key.  Show documentation for the function bound to the given key sequence.<br />
-<code>C-h w</code>  where-is.      Show key sequences bound to the given command name.<br />
-<code>C-h m</code>  describe-mode. Documentation on the current major mode.<br />
-<code>C-h l</code>  view-lossage.  Show the last 100 keystrokes.<br /></p>
-
-<p>C-h after any prefix key will display all available shortcuts under that prefix.</p>
-
-<p>From <a href="http://www.lib.uchicago.edu/keith/tcl-course/emacs-tutorial.html" data-bare-link="true">http://www.lib.uchicago.edu/keith/tcl-course/emacs-tutorial.html</a></p>
+<p>For more:
+<a href="http://wiki.rubyonrails.org/rails/pages/HowToUseEmacsWithRails" data-bare-link="true">http://wiki.rubyonrails.org/rails/pages/HowToUseEmacsWithRails</a></p>
 
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>May 2011</li>
+    <li class='tc'>April 2011</li>
     <li class='tr'>emacs(1)</li>
   </ol>
 

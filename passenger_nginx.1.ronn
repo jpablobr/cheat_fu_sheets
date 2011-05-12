@@ -1,0 +1,17 @@
+passenger nginx(1) -- cheat sheet
+=================================
+
+## Installation
+
+Install passenger as instructed in rvm documentation http://rvm.beginrescueend.com/integration/passenger/
+
+    rvm 1.9.2 --passenger
+    rvm 1.9.2
+    gem install passenger
+    rvmsudo passenger-install-nginx-module
+
+
+## LINKS
+<http://blog.peepcode.com/tutorials/2010/nginx-passenger-script>
+<http://freelancing-gods.com/posts/script_nginx>
+<http://www.modrails.com/documentation/Users%20guide%20Nginx.html>

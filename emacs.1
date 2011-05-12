@@ -1,156 +1,65 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "EMACS" "1" "May 2011" "" ""
+.TH "EMACS" "1" "April 2011" "" ""
 .
-.SH "Yasnippets"
-\fBC\-i\fR or \fBTAB\fR (with hippie) for expanding
-.
-.SH "Commands to Manipulate Windows"
-\fBC\-v\fR scroll\-up\.
+.SH "From ruby\-mode\.el"
+\fBM\-C\-a\fR Beginning of defun
 .
 .br
-\fBM\-v\fR scroll\-down\.
+\fBM\-C\-e\fR End of defun
 .
 .br
-\fBC\-x o\fR other\-window\.
+\fBM\-C\-b or M\-C\-p\fR Beginning of block
 .
 .br
-\fBC\-x 1\fR delete\-other\-windows\.
+\fBM\-C\-f or M\-C\-n\fR End of block
 .
 .br
-\fBC\-x 0\fR delete\-window\.
+\fBM\-C\-h\fR Mark defun
 .
 .br
-\fBC\-x 2\fR split\-window\-vertically\.
+\fB\et\fR Indent
 .
 .br
-\fBC\-x 3\fR split\-window\-horizontally\.
+\fBC\-c C\-e\fR Insert end
 .
 .br
-\fBC\-M\-v\fR scroll\-other\-window\.
+\fBC\-j\fR Reindent then newline and indent
 .
 .br
-.
-.SH "Infinite Undo with Redo"
-\fBC\-_\fR undo\. (Also C\-x u and C\-/)
-.
-.SH "Motion and Objects"
-\fBC\-f\fR forward\-char\. Moves forward (to the right) over a character\.
-.
-.br
-\fBC\-b\fR backward\-char\. Moves backward (to the left) over a character\.
-.
-.br
-\fBM\-f\fR forward\-word\. Moves forward over a word\.
-.
-.br
-\fBM\-b\fR backward\-word\. Moves backward over a word\.
-.
-.br
-\fBC\-n\fR next\-line\. Moves down to the next line\.
-.
-.br
-\fBC\-p\fR previous\-line\. Moves up to the previous line\.
-.
-.br
-\fBC\-a\fR beginning\-of\-line\. Moves to the beginning of the current line\.
-.
-.br
-\fBC\-e\fR end\-of\-line\. Moves to the end of the current line\.
-.
-.br
-\fBM\-a\fR backward\-sentence\. Moves to the beginning of the current sentence\.
-.
-.br
-\fBM\-e\fR forward\-sentence\. Moves to the end of the current sentence\.
-.
-.br
-\fBM\-{\fR backward\-paragraph\. Move to the beginning of the current paragraph\.
-.
-.br
-\fBM\-}\fR forward\-paragraph\. Move to the end of the current paragraph\.
-.
-.br
-\fBM\-<\fR beginning\-of\-buffer\. Moves to the beginning of the buffer\.
-.
-.br
-\fBM\->\fR end\-of\-buffer\. Moves to the end of the buffer\.
-.
-.br
-\fBC\-x [\fR backward\-page\. Moves to the beginning of the current page\.
-.
-.br
-\fBC\-x ]\fR forward\-page\. Moves to the end of the current page\.
+\fBC\-m\fR Newline
 .
 .br
 .
-.SH "Deleting, Killing and Yanking"
-Deletion means to remove text from the buffer without saving it\. Killing means to save the removed text, so that it can be yanked back later someplace else\.
-.
-.P
-\fBC\-d\fR delete\-char\.
+.SH "From inf\-ruby\.el"
+\fBC\-c C\-e or M\-C\-x\fR send the current definition to the process buffer
 .
 .br
-\fBDEL\fR delete\-backward\-char\.
+\fBC\-c M\-e\fR switch to ruby process buffer after sending their text
 .
 .br
-\fBM\-d\fR kill\-word\.
+\fBC\-c C\-r\fR send the current region to the process buffer
 .
 .br
-\fBC\-k\fR kill\-line\. Kills to the end of the current line\.
+\fBC\-c M\-r\fR switch to ruby process buffer after sending their text
 .
 .br
-\fBM\-k\fR kill\-sentence\. Kills to the end of the current sentence\.
+\fBC\-c C\-z\fR switches the current buffer to the ruby process buffer
 .
 .br
-\fBC\-M\-k\fR kill\-sexp\. Kills the sexp after the cursor\.
+\fBC\-c C\-l\fR Load a Ruby file into the inferior Ruby process\.
 .
 .br
-\fBM\-DEL\fR backward\-kill\-word\.
-.
-.br
-\fBC\-u 0 C\-k\fR kill\-line\. Kills to the beginning of the current line\.
-.
-.br
-\fBC\-u \-1 C\-k\fR kill\-line\. Kills to the beginning of the current line, and previous newline character\.
-.
-.br
-\fBC\-u \-1 M\-k\fR kill\-sentence\. Kills to the beginning of the current sentence\.
-.
-.br
-\fBC\-u \-1 C\-M\-k\fR kill\-sexp\. Kills the sexp before the cursor\.
-.
-.br
-.
-.SH "Help"
-\fBC\-h a\fR command\-apropos\. List commands matching the given name or regexp\.
-.
-.br
-\fBC\-h f\fR describe\-function\. Show documentation on the given function\.
-.
-.br
-\fBC\-h v\fR describe\-variable\. Show documentation on the given variable\.
-.
-.br
-\fBC\-h c\fR describe\-key\-briefly\. Name the function bound to the given key sequence\.
-.
-.br
-\fBC\-h k\fR describe\-key\. Show documentation for the function bound to the given key sequence\.
-.
-.br
-\fBC\-h w\fR where\-is\. Show key sequences bound to the given command name\.
-.
-.br
-\fBC\-h m\fR describe\-mode\. Documentation on the current major mode\.
-.
-.br
-\fBC\-h l\fR view\-lossage\. Show the last 100 keystrokes\.
+\fBC\-c C\-s or M\-x run\-ruby\fR Run an inferior Ruby process\.\.\.
 .
 .br
 .
 .P
-C\-h after any prefix key will display all available shortcuts under that prefix\.
+Emacs opens in yaml\-mode and outdent\-mode when first line is:
+.
+.br
+\fB# \-*\- mode: yaml; mode: outdent; \-*\-\fR
 .
 .P
-From \fIhttp://www\.lib\.uchicago\.edu/keith/tcl\-course/emacs\-tutorial\.html\fR
+For more: \fIhttp://wiki\.rubyonrails\.org/rails/pages/HowToUseEmacsWithRails\fR

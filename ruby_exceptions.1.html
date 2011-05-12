@@ -54,6 +54,7 @@
 
   <div class='man-navigation' style='display:none'>
     <a href="#Hierarchy">Hierarchy</a>
+    <a href="#Snippets">Snippets</a>
   </div>
 
   <ol class='man-decor man-head man head'>
@@ -93,6 +94,15 @@
    ZeroDivisionError
  SystemExit
  fatal
+</code></pre>
+
+<h2 id="Snippets">Snippets</h2>
+
+<pre><code>  begin
+    Rails.cache.delete_matched(/.*whatever.*/)
+  rescue NotImplementedError
+    warn "**** [whaterver] ***"
+  end
 </code></pre>
 
 

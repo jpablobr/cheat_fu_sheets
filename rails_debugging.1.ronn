@@ -1,0 +1,6 @@
+rails debugging(1) -- cheat sheets
+==================================
+
+## Envirnoments
+
+    rails server -e production

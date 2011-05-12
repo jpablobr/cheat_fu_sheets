@@ -1,0 +1,9 @@
+bundler(1) -- cheat sheet
+=========================
+
+## NOTE: Gem::Specification#default_executable=
+
+consider `bundle exec` and `rvm use {ruby_with_broken_gem}`
+
+    gem pristine --all --no-extensions
+    gem uninstall

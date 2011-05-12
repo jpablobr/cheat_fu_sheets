@@ -1,0 +1,19 @@
+nginx(1) -- cheat sheet
+=======================
+
+## The Nginx configuration file (/opt/nginx/conf/nginx.conf)
+
+## 'passenger_enabled on', like this:
+
+     server {
+        listen 80;
+        server_name www.yourhost.com;
+        root /somewhere/public;   # <--- be sure to point to 'public'!
+        passenger_enabled on;
+     }
+
+## Users Guide for security and optimization tips and other useful information:
+
+    ~/.rvm/gems/ruby-1.9.2-p136@imagine/gems/passenger-3.0.7/doc/Users guide Nginx.html
+
+
