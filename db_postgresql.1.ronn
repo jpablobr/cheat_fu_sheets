@@ -3,6 +3,7 @@ postgresql(1) -- cheat_fu sheets
 
 ## Setup
 
+    sudo apt-get install libpq-dev
     sudo apt-get install postgresql
 
 ## Administration
@@ -82,10 +83,10 @@ configuration which is very protective. For example, if you want
 postgres to manage its own users (not linked with system users), you
 will add the following line:
 
-8<-------------------------------------------
-# TYPE  DATABASE    USER        IP-ADDRESS        IP-MASK           METHOD
-host    all         all         10.0.0.0       255.255.255.0    md5
-8<-------------------------------------------
+    8<-------------------------------------------
+    # TYPE  DATABASE    USER        IP-ADDRESS        IP-MASK           METHOD
+    host    all         all         10.0.0.0       255.255.255.0    md5
+    8<-------------------------------------------
 
 Which means that on your local network (10.0.0.0/24 - replace with your
 own local network !), postgres users can connect through the network to
@@ -136,23 +137,23 @@ This is due to the permissions in pg_hba.conf being too restrictive by
 default. To allow rails to connect, simply change the bottom of
 pg_hba.conf to look like this.
 
-# TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
+    # TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
 
-# "local" is for Unix domain socket connections only
-local   all         all                               trust
-# IPv4 local connections:
-host    all         all         127.0.0.1/32          trust
-# IPv6 local connections:
-host    all         all         ::1/128               trust
-## LINKS
+    # "local" is for Unix domain socket connections only
+    local   all         all                               trust
+    # IPv4 local connections:
+    host    all         all         127.0.0.1/32          trust
+    # IPv6 local connections:
+    host    all         all         ::1/128               trust
+    ## LINKS
 
 ## development/test/production:
 
-  adapter: postgresql
-  database: postgresql-env
-  username: user
-  password: pass
-  host: 127.0.0.1
+    adapter: postgresql
+    database: postgresql-env
+    username: user
+    password: pass
+    host: 127.0.0.1
 
 ## Setup
 <http://oldwiki.rubyonrails.org/rails/pages/PostgreSQL>

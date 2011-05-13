@@ -62,7 +62,6 @@
     <a href="#Managing-users-and-rights">Managing users and rights</a>
     <a href="#restarting-the-server">restarting the server</a>
     <a href="#Troubleshooting">Troubleshooting</a>
-    <a href="#LINKS">LINKS</a>
     <a href="#development-test-production-">development/test/production:</a>
     <a href="#Setup">Setup</a>
     <a href="#Concurrency-">Concurrency:</a>
@@ -169,12 +168,11 @@ configuration which is very protective. For example, if you want
 postgres to manage its own users (not linked with system users), you
 will add the following line:</p>
 
-<p>8&lt;-------------------------------------------</p>
-
-<h1>TYPE  DATABASE    USER        IP-ADDRESS        IP-MASK           METHOD</h1>
-
-<p>host    all         all         10.0.0.0       255.255.255.0    md5
-8&lt;-------------------------------------------</p>
+<pre><code>8&lt;-------------------------------------------
+# TYPE  DATABASE    USER        IP-ADDRESS        IP-MASK           METHOD
+host    all         all         10.0.0.0       255.255.255.0    md5
+8&lt;-------------------------------------------
+</code></pre>
 
 <p>Which means that on your local network (10.0.0.0/24 - replace with your
 own local network !), postgres users can connect through the network to
@@ -233,29 +231,25 @@ e_sendauth: no password supplied</p>
 default. To allow rails to connect, simply change the bottom of
 pg_hba.conf to look like this.</p>
 
-<h1>TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD</h1>
+<pre><code># TYPE  DATABASE    USER        CIDR-ADDRESS          METHOD
 
-<h1>"local" is for Unix domain socket connections only</h1>
-
-<p>local   all         all                               trust</p>
-
-<h1>IPv4 local connections:</h1>
-
-<p>host    all         all         127.0.0.1/32          trust</p>
-
-<h1>IPv6 local connections:</h1>
-
-<p>host    all         all         ::1/128               trust</p>
-
-<h2 id="LINKS">LINKS</h2>
+# "local" is for Unix domain socket connections only
+local   all         all                               trust
+# IPv4 local connections:
+host    all         all         127.0.0.1/32          trust
+# IPv6 local connections:
+host    all         all         ::1/128               trust
+## LINKS
+</code></pre>
 
 <h2 id="development-test-production-">development/test/production:</h2>
 
-<p>  adapter: postgresql
-  database: postgresql-env
-  username: user
-  password: pass
-  host: 127.0.0.1</p>
+<pre><code>adapter: postgresql
+database: postgresql-env
+username: user
+password: pass
+host: 127.0.0.1
+</code></pre>
 
 <h2 id="Setup">Setup</h2>
 

@@ -1,0 +1,8 @@
+ruby caching(1) -- cheat sheet
+==============================
+
+## in my heroku console
+    ActionController::Base.cache_store.clear
+
+## LINKS
+<http://ror.kateray.net/post/1373868975/scaling-1-caching-with-heroku>

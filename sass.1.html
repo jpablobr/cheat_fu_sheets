@@ -3,7 +3,7 @@
 <head>
   <meta http-equiv='content-type' value='text/html;charset=utf8'>
   <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
-  <title>bundler(1) - cheat sheet</title>
+  <title>sass(1) - cheat sheet</title>
   <style type='text/css' media='all'>
   /* style: man */
   body#manpage {margin:0}
@@ -54,39 +54,36 @@
 
   <div class='man-navigation' style='display:none'>
     <a href="#NAME">NAME</a>
-    <a href="#NOTE-Gem-Specification-default_executable-">NOTE: Gem::Specification#default_executable=</a>
-    <a href="#use-local-gems-in-Gemfile">use local gems in Gemfile</a>
+    <a href="#Rails-Heroku-setup">Rails/Heroku setup</a>
+    <a href="#LINKS">LINKS</a>
   </div>
 
   <ol class='man-decor man-head man head'>
-    <li class='tl'>bundler(1)</li>
+    <li class='tl'>sass(1)</li>
     <li class='tc'></li>
-    <li class='tr'>bundler(1)</li>
+    <li class='tr'>sass(1)</li>
   </ol>
 
   <h2 id="NAME">NAME</h2>
 <p class="man-name">
-  <code>bundler</code> - <span class="man-whatis">cheat sheet</span>
+  <code>sass</code> - <span class="man-whatis">cheat sheet</span>
 </p>
 
-<h2 id="NOTE-Gem-Specification-default_executable-">NOTE: Gem::Specification#default_executable=</h2>
+<h2 id="Rails-Heroku-setup">Rails/Heroku setup</h2>
 
-<p>consider <code>bundle exec</code> and <code>rvm use {ruby_with_broken_gem}</code></p>
-
-<pre><code>gem pristine --all --no-extensions
-gem uninstall
+<pre><code>Compass.configuration.sass_options={:never_update=&gt;true}
 </code></pre>
 
-<h2 id="use-local-gems-in-Gemfile">use local gems in Gemfile</h2>
+<h2 id="LINKS">LINKS</h2>
 
-<pre><code>gem "thin", :path =&gt; "local_gems/thin-1.2.10/"
-</code></pre>
+<p><a href="http://blog.danielfischer.com/2011/04/18/quickstart-guide-to-using-compass-haml-sass-scss-with-rails-3/" data-bare-link="true">http://blog.danielfischer.com/2011/04/18/quickstart-guide-to-using-compass-haml-sass-scss-with-rails-3/</a>
+<a href="http://frontcube.com/blog/2011/how-to-get-sass-to-work-with-rails-3-on-heroku-without-using-any-plugins" data-bare-link="true">http://frontcube.com/blog/2011/how-to-get-sass-to-work-with-rails-3-on-heroku-without-using-any-plugins</a></p>
 
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
     <li class='tc'>May 2011</li>
-    <li class='tr'>bundler(1)</li>
+    <li class='tr'>sass(1)</li>
   </ol>
 
   </div>

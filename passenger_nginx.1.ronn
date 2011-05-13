@@ -10,7 +10,6 @@ Install passenger as instructed in rvm documentation http://rvm.beginrescueend.c
     gem install passenger
     rvmsudo passenger-install-nginx-module
 
-
 ## LINKS
 <http://blog.peepcode.com/tutorials/2010/nginx-passenger-script>
 <http://freelancing-gods.com/posts/script_nginx>

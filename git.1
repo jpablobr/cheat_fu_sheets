@@ -1,7 +1,7 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "GIT" "1" "April 2011" "" ""
+.TH "GIT" "1" "May 2011" "" ""
 .
 .SH "NAME"
 \fBGit\fR \- Cheats
@@ -753,5 +753,8 @@ Location of the repository to use (for out of working directory repositories)
 .P
 Location of the Working Directory \- use with GIT_DIR to specifiy the working directory root or to work without being in the working directory at all\.
 .
+.SH "Forked Repos"
+git clone git@github\.com:username/Spoon\-Knife\.git cd Spoon\-Knife git remote add upstream git://github\.com/octocat/Spoon\-Knife\.git git fetch upstream git fetch upstream git merge upstream/master
+.
 .SH "Credits"
-\fIhttp://cheat\.errtheblog\.com/s/git\fR
+\fIhttp://cheat\.errtheblog\.com/s/git\fR \fIhttp://help\.github\.com/fork\-a\-repo/\fR

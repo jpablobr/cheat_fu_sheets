@@ -654,5 +654,15 @@ Location of the Working Directory - use with GIT_DIR to specifiy the working
 directory root
 or to work without being in the working directory at all.
 
+## Forked Repos
+
+git clone git@github.com:username/Spoon-Knife.git
+cd Spoon-Knife
+git remote add upstream git://github.com/octocat/Spoon-Knife.git
+git fetch upstream
+git fetch upstream
+git merge upstream/master
+
 ## Credits
 <http://cheat.errtheblog.com/s/git>
+<http://help.github.com/fork-a-repo/>

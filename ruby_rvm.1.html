@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv='content-type' value='text/html;charset=utf8'>
+  <meta name='generator' value='Ronn/v0.7.3 (http://github.com/rtomayko/ronn/tree/0.7.3)'>
+  <title>rvm(1) - cheat sheet</title>
+  <style type='text/css' media='all'>
+  /* style: man */
+  body#manpage {margin:0}
+  .mp {max-width:100ex;padding:0 9ex 1ex 4ex}
+  .mp p,.mp pre,.mp ul,.mp ol,.mp dl {margin:0 0 20px 0}
+  .mp h2 {margin:10px 0 0 0}
+  .mp > p,.mp > pre,.mp > ul,.mp > ol,.mp > dl {margin-left:8ex}
+  .mp h3 {margin:0 0 0 4ex}
+  .mp dt {margin:0;clear:left}
+  .mp dt.flush {float:left;width:8ex}
+  .mp dd {margin:0 0 0 9ex}
+  .mp h1,.mp h2,.mp h3,.mp h4 {clear:left}
+  .mp pre {margin-bottom:20px}
+  .mp pre+h2,.mp pre+h3 {margin-top:22px}
+  .mp h2+pre,.mp h3+pre {margin-top:5px}
+  .mp img {display:block;margin:auto}
+  .mp h1.man-title {display:none}
+  .mp,.mp code,.mp pre,.mp tt,.mp kbd,.mp samp,.mp h3,.mp h4 {font-family:monospace;font-size:14px;line-height:1.42857142857143}
+  .mp h2 {font-size:16px;line-height:1.25}
+  .mp h1 {font-size:20px;line-height:2}
+  .mp {text-align:justify;background:#fff}
+  .mp,.mp code,.mp pre,.mp pre code,.mp tt,.mp kbd,.mp samp {color:#131211}
+  .mp h1,.mp h2,.mp h3,.mp h4 {color:#030201}
+  .mp u {text-decoration:underline}
+  .mp code,.mp strong,.mp b {font-weight:bold;color:#131211}
+  .mp em,.mp var {font-style:italic;color:#232221;text-decoration:none}
+  .mp a,.mp a:link,.mp a:hover,.mp a code,.mp a pre,.mp a tt,.mp a kbd,.mp a samp {color:#0000ff}
+  .mp b.man-ref {font-weight:normal;color:#434241}
+  .mp pre {padding:0 4ex}
+  .mp pre code {font-weight:normal;color:#434241}
+  .mp h2+pre,h3+pre {padding-left:0}
+  ol.man-decor,ol.man-decor li {margin:3px 0 10px 0;padding:0;float:left;width:33%;list-style-type:none;text-transform:uppercase;color:#999;letter-spacing:1px}
+  ol.man-decor {width:100%}
+  ol.man-decor li.tl {text-align:left}
+  ol.man-decor li.tc {text-align:center;letter-spacing:4px}
+  ol.man-decor li.tr {text-align:right;float:right}
+  </style>
+</head>
+<!--
+  The following styles are deprecated and will be removed at some point:
+  div#man, div#man ol.man, div#man ol.head, div#man ol.man.
+
+  The .man-page, .man-decor, .man-head, .man-foot, .man-title, and
+  .man-navigation should be used instead.
+-->
+<body id='manpage'>
+  <div class='mp' id='man'>
+
+  <div class='man-navigation' style='display:none'>
+    <a href="#NAME">NAME</a>
+    <a href="#http-github-com-wayneeseguin-rvm">http://github.com/wayneeseguin/rvm</a>
+    <a href="#DESCRIPTION-">DESCRIPTION:</a>
+    <a href="#Usage">Usage</a>
+    <a href="#Flags">Flags</a>
+    <a href="#Options">Options</a>
+    <a href="#Action">Action</a>
+    <a href="#Implementation">Implementation</a>
+    <a href="#Resources-">Resources:</a>
+    <a href="#Contributions-">Contributions:</a>
+    <a href="#INSTALL-">INSTALL:</a>
+  </div>
+
+  <ol class='man-decor man-head man head'>
+    <li class='tl'>rvm(1)</li>
+    <li class='tc'></li>
+    <li class='tr'>rvm(1)</li>
+  </ol>
+
+  <h2 id="NAME">NAME</h2>
+<p class="man-name">
+  <code>rvm</code> - <span class="man-whatis">cheat sheet</span>
+</p>
+
+<h2 id="http-github-com-wayneeseguin-rvm">http://github.com/wayneeseguin/rvm</h2>
+
+<h2 id="DESCRIPTION-">DESCRIPTION:</h2>
+
+<p>RVM is the Ruby Version Manager (rvm). It manages Ruby interpreter
+environments and switching between them.</p>
+
+<h2 id="Usage">Usage</h2>
+
+<pre><code>rvm [Flags] [Options] Action [Implementation[,Implementation[,...]]
+</code></pre>
+
+<h2 id="Flags">Flags</h2>
+
+<pre><code>--default     - with 'rvm use X', sets the default ruby for new shells to X.
+--debug       - Toggle debug mode on for very verbose output.
+--trace       - Toggle trace mode on to see EVERYTHING rvm is doing.
+--force       - Force install, removes old install &amp; source before install.
+--summary     - Used with rubydo to print out a summary of the commands run.
+--latest      - with gemset --dump skips version strings for latest gem.
+--gems        - with uninstall/remove removes gems with the interpreter.
+--docs        - with install, attempt to generate ri after installation.
+--reconfigure - Force ./configure on install even if Makefile already exists.
+</code></pre>
+
+<h2 id="Options">Options</h2>
+
+<pre><code>-v|--version    - Emit rvm version loaded for current shell
+-l|--level      - patch level to use with rvm use / install
+   --prefix     - path for all rvm files (~/.rvm/), with trailing slash!
+   --bin        - path for binaries to be placed (~/.rvm/bin/)
+-S              - Specify a script file to attempt to load and run (rubydo)
+-e              - Execute code from the command line.
+--gems          - Used to set the 'gems_flag', use with 'remove' to remove gems
+--archive       - Used to set the 'archive_flag', use with 'remove' to remove archive
+--patch         - With MRI Rubies you may specify one or more full paths to patches
+                  for multiple, specify comma separated:
+                  --patch /.../.../a.patch[%prefix],/.../.../.../b.patch
+                  'prefix' is an optional argument, which will be bypassed
+                  to the '-p' argument of the 'patch' command. It is separated
+                  from patch file name with '%' symbol.
+-C|--configure  - custom configure options. If you need to pass several configure
+                  options then append them comma separated: -C --...,--...,--...
+--nice          - process niceness (for slow computers, default 0)
+--ree-options   - Options passed directly to ree's './installer' on the command line.
+--with-rubies   - Specifies a string for rvm to attempt to expand for set operations.
+</code></pre>
+
+<h2 id="Action">Action</h2>
+
+<p>  (Note that for most actions, 'rvm help action-name' may provide more information.)</p>
+
+<pre><code>* usage    - show this usage information
+version    - show the rvm version installed in rvm_path
+use        - setup current shell to use a specific ruby version
+reload     - reload rvm source itself (useful after changing rvm source)
+implode    - (seppuku) removes the rvm installation completely.
+             This means everything in $rvm_path (~/.rvm).
+             This does not touch your profiles, which is why
+             there is an if around the sourcing scripts/rvm.
+get        - {head,latest} upgrades rvm to latest head or release version.
+             (If you experience bugs try this first with head version, then
+              ask for help in #rvm on irc.freenode.net and hang around)
+reset      - remove current and stored default &amp; system settings.
+             (If you experience odd behavior try this second)
+info       - show the *current* environment information for current ruby
+current    - print the *current* ruby version and the name of any gemset being used.
+debug      - show info plus additional information for common issues
+
+install    - install one or many ruby versions
+             See also: http://rvm.beginrescueend.com/rubies/installing/
+uninstall  - uninstall one or many ruby versions, leaves their sources
+remove     - uninstall one or many ruby versions and remove their sources
+
+migrate    - Lets you migrate all gemsets from one ruby to another.
+upgrade    - Lets you upgrade from one version of a ruby to another, including
+             migrating your gemsets semi-automatically.
+
+wrapper    - generates a set of wrapper executables for a given ruby with the
+             specified ruby and gemset combination. Used under the hood for
+             passenger support and the like.
+
+cleanup    - Lets you remove stale source folders / archives and other miscellaneous
+             data associated with rvm.
+repair     - Lets you repair parts of your environment e.g. wrappers, env files and
+             and similar files (e.g. general maintenance).
+snapshot   - Lets your backup / restore an rvm installation in a lightweight manner.
+
+disk-usage - Tells you how much disk space rvm install is using.
+tools      - Provides general information about the ruby environment,
+             primarily useful when scripting rvm.
+docs       - Tools to make installing ri and rdoc documentation easier.
+rvmrc      - Tools related to managing rvmrc trust and loading.
+
+exec       - runs an arbitrary command as a set operation.
+ruby       - runs a named ruby file against specified and/or all rubies
+gem        - runs a gem command using selected ruby's 'gem'
+rake       - runs a rake task against specified and/or all rubies
+tests      - runs 'rake test' across selected ruby versions
+specs      - runs 'rake spec' across selected ruby versions
+monitor    - Monitor cwd for testing, run `rake {spec,test}` on changes.
+
+gemset     - gemsets: http://rvm.beginrescueend.com/gemsets/
+
+rubygems   - Switches the installed version of rubygems for the current ruby.
+
+gemdir     - display the path to the current gem directory (GEM_HOME).
+srcdir     - display the path to rvm source directory (may be yanked)
+
+fetch      - Performs an archive / src fetch only of the selected ruby.
+list       - show currently installed rubies, interactive output.
+             http://rvm.beginrescueend.com/rubies/list/
+package    - Install a dependency package {readline,iconv,zlib,openssl}
+             http://rvm.beginrescueend.com/packages/
+notes      - Display notes, with operating system specifics.
+
+export     - Temporarily set an environment variable in the current shell.
+unexport   - Undo changes made to the environment by 'rvm export'.
+</code></pre>
+
+<h2 id="Implementation">Implementation</h2>
+
+<pre><code>* ruby    - MRI/YARV Ruby (The Gold Standard) {1.8.6,1.8.7,1.9.1,1.9.2...}
+jruby     - JRuby, Ruby interpreter on the Java Virtual Machine.
+rbx       - Rubinius
+ree       - Ruby Enterprise Edition, MRI Ruby with several custom
+            patches for performance, stability, and memory.
+macruby   - MacRuby, insanely fast, can make real apps (Mac OS X Only).
+maglev    - GemStone Ruby, awesome persistent ruby object store.
+ironruby  - IronRuby, NOT supported yet. Looking for volunteers to help.
+system    - use the system ruby (eg. pre-rvm state)
+default   - use rvm set default ruby and system if it hasn't been set.
+            http://rvm.beginrescueend.com/rubies/default/
+</code></pre>
+
+<h2 id="Resources-">Resources:</h2>
+
+<p>  <a href="http://rvm.beginrescueend.com/" data-bare-link="true">http://rvm.beginrescueend.com/</a>
+  <a href="https://www.pivotaltracker.com/projects/26822" data-bare-link="true">https://www.pivotaltracker.com/projects/26822</a></p>
+
+<h2 id="Contributions-">Contributions:</h2>
+
+<p>  Any and all contributions offered in any form, past present or future, to the
+  RVM project are understood to be in complete agreement and acceptance with the
+  Apache Licence v2.0.</p>
+
+<h2 id="INSTALL-">INSTALL:</h2>
+
+<p>See http://rvm.beginrescueend.com/rvm/install/</p>
+
+<p>or just use:</p>
+
+<pre><code>bash &lt; &lt;(curl -s https://rvm.beginrescueend.com/install/rvm)
+</code></pre>
+
+
+  <ol class='man-decor man-foot man foot'>
+    <li class='tl'></li>
+    <li class='tc'>May 2011</li>
+    <li class='tr'>rvm(1)</li>
+  </ol>
+
+  </div>
+</body>
+</html>

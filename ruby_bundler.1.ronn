@@ -7,3 +7,7 @@ consider `bundle exec` and `rvm use {ruby_with_broken_gem}`
 
     gem pristine --all --no-extensions
     gem uninstall
+
+## use local gems in Gemfile
+
+    gem "thin", :path => "local_gems/thin-1.2.10/"

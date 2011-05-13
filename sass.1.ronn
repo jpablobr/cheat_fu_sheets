@@ -1,0 +1,10 @@
+sass(1) -- cheat sheet
+======================
+
+## Rails/Heroku setup
+
+    Compass.configuration.sass_options={:never_update=>true}
+
+## LINKS
+<http://blog.danielfischer.com/2011/04/18/quickstart-guide-to-using-compass-haml-sass-scss-with-rails-3/>
+<http://frontcube.com/blog/2011/how-to-get-sass-to-work-with-rails-3-on-heroku-without-using-any-plugins>

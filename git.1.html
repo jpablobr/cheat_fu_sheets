@@ -86,6 +86,7 @@
     <a href="#Tags">Tags</a>
     <a href="#Git-Instaweb">Git Instaweb</a>
     <a href="#Environment-Variables">Environment Variables</a>
+    <a href="#Forked-Repos">Forked Repos</a>
     <a href="#Credits">Credits</a>
   </div>
 
@@ -767,14 +768,24 @@ user.email in .git/config</p>
 directory root
 or to work without being in the working directory at all.</p>
 
+<h2 id="Forked-Repos">Forked Repos</h2>
+
+<p>git clone git@github.com:username/Spoon-Knife.git
+cd Spoon-Knife
+git remote add upstream git://github.com/octocat/Spoon-Knife.git
+git fetch upstream
+git fetch upstream
+git merge upstream/master</p>
+
 <h2 id="Credits">Credits</h2>
 
-<p><a href="http://cheat.errtheblog.com/s/git" data-bare-link="true">http://cheat.errtheblog.com/s/git</a></p>
+<p><a href="http://cheat.errtheblog.com/s/git" data-bare-link="true">http://cheat.errtheblog.com/s/git</a>
+<a href="http://help.github.com/fork-a-repo/" data-bare-link="true">http://help.github.com/fork-a-repo/</a></p>
 
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>April 2011</li>
+    <li class='tc'>May 2011</li>
     <li class='tr'>Git(1)</li>
   </ol>
 
