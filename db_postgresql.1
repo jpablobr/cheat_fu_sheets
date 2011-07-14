@@ -1,15 +1,29 @@
 .\" generated with Ronn/v0.7.3
 .\" http://github.com/rtomayko/ronn/tree/0.7.3
 .
-.TH "POSTGRESQL" "1" "May 2011" "" ""
+.TH "POSTGRESQL" "1" "July 2011" "" ""
 .
 .SH "NAME"
 \fBpostgresql\fR \- cheat_fu sheets
+.
+.SH "Commands"
+.
+.nf
+
+  Start PostgreSQL server:
+  # /etc/init\.d/postgresql start
+  Stop PostgreSQL:
+  # /etc/init\.d/postgresql stop
+  Restart PostgreSQL:
+  # /etc/init\.d/postgresql restart
+.
+.fi
 .
 .SH "Setup"
 .
 .nf
 
+sudo apt\-get install libpq\-dev
 sudo apt\-get install postgresql
 .
 .fi
@@ -28,53 +42,6 @@ sudo apt\-get install pgadmin3
 .IP "" 0
 .
 .SH "Basic Server Setup"
-To start off, we need to change the PostgreSQL postgres user password; we will not be able to access the server otherwise\. As the “postgres” Linux user, we will execute the psql command\.
-.
-.P
-In a terminal, type:
-.
-.IP "" 4
-.
-.nf
-
-sudo \-u postgres psql template1
-
-sudo \-u postgres psql postgres
-.
-.fi
-.
-.IP "" 0
-.
-.P
-Set a password for the "postgres" database role using the command:
-.
-.IP "" 4
-.
-.nf
-
-\epassword postgres
-.
-.fi
-.
-.IP "" 0
-.
-.P
-Type Control+D to exit the posgreSQL prompt\.
-.
-.SH "Create database"
-To create the first database, which we will call "mydb", simply type :
-.
-.IP "" 4
-.
-.nf
-
-sudo \-u postgres createdb mydb
-.
-.fi
-.
-.IP "" 0
-.
-.SH "Alternative Server Setup"
 If you don\'t intend to connect to the database from other machines, this alternative setup may be simpler\.
 .
 .P

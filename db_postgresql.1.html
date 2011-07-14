@@ -54,11 +54,10 @@
 
   <div class='man-navigation' style='display:none'>
     <a href="#NAME">NAME</a>
+    <a href="#Commands">Commands</a>
     <a href="#Setup">Setup</a>
     <a href="#Administration">Administration</a>
     <a href="#Basic-Server-Setup">Basic Server Setup</a>
-    <a href="#Create-database">Create database</a>
-    <a href="#Alternative-Server-Setup">Alternative Server Setup</a>
     <a href="#Managing-users-and-rights">Managing users and rights</a>
     <a href="#restarting-the-server">restarting the server</a>
     <a href="#Troubleshooting">Troubleshooting</a>
@@ -78,9 +77,20 @@
   <code>postgresql</code> - <span class="man-whatis">cheat_fu sheets</span>
 </p>
 
+<h2 id="Commands">Commands</h2>
+
+<pre><code>  Start PostgreSQL server:
+  # /etc/init.d/postgresql start
+  Stop PostgreSQL:
+  # /etc/init.d/postgresql stop
+  Restart PostgreSQL:
+  # /etc/init.d/postgresql restart
+</code></pre>
+
 <h2 id="Setup">Setup</h2>
 
-<pre><code>sudo apt-get install postgresql
+<pre><code>sudo apt-get install libpq-dev
+sudo apt-get install postgresql
 </code></pre>
 
 <h2 id="Administration">Administration</h2>
@@ -92,33 +102,6 @@ beginners. To install it, type at the command line:</p>
 </code></pre>
 
 <h2 id="Basic-Server-Setup">Basic Server Setup</h2>
-
-<p>To start off, we need to change the PostgreSQL postgres user password;
-we will not be able to access the server otherwise. As the “postgres”
-Linux user, we will execute the psql command.</p>
-
-<p>In a terminal, type:</p>
-
-<pre><code>sudo -u postgres psql template1
-
-sudo -u postgres psql postgres
-</code></pre>
-
-<p>Set a password for the "postgres" database role using the command:</p>
-
-<pre><code>\password postgres
-</code></pre>
-
-<p>Type Control+D to exit the posgreSQL prompt.</p>
-
-<h2 id="Create-database">Create database</h2>
-
-<p>To create the first database, which we will call "mydb", simply type :</p>
-
-<pre><code>sudo -u postgres createdb mydb
-</code></pre>
-
-<h2 id="Alternative-Server-Setup">Alternative Server Setup</h2>
 
 <p>If you don't intend to connect to the database from other machines, this
 alternative setup may be simpler.</p>
@@ -262,7 +245,7 @@ host: 127.0.0.1
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>May 2011</li>
+    <li class='tc'>July 2011</li>
     <li class='tr'>postgresql(1)</li>
   </ol>
 

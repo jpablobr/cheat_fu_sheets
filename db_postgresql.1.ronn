@@ -1,6 +1,15 @@
 postgresql(1) -- cheat_fu sheets
 ================================
 
+## Commands
+
+      Start PostgreSQL server:
+      # /etc/init.d/postgresql start
+      Stop PostgreSQL:
+      # /etc/init.d/postgresql stop
+      Restart PostgreSQL:
+      # /etc/init.d/postgresql restart
+
 ## Setup
 
     sudo apt-get install libpq-dev
@@ -14,30 +23,6 @@ beginners. To install it, type at the command line:
     sudo apt-get install pgadmin3
 
 ## Basic Server Setup
-
-To start off, we need to change the PostgreSQL postgres user password;
-we will not be able to access the server otherwise. As the “postgres”
-Linux user, we will execute the psql command.
-
-In a terminal, type:
-
-    sudo -u postgres psql template1
-
-    sudo -u postgres psql postgres
-
-Set a password for the "postgres" database role using the command:
-
-    \password postgres
-
-Type Control+D to exit the posgreSQL prompt.
-
-## Create database
-
-To create the first database, which we will call "mydb", simply type :
-
-    sudo -u postgres createdb mydb
-
-## Alternative Server Setup
 
 If you don't intend to connect to the database from other machines, this
 alternative setup may be simpler.
