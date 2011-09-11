@@ -1,0 +1,40 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "FIND\-CHEATS" "1" "August 2011" "" ""
+.
+.SH "NAME"
+\fBfind\-cheats\fR \- convenience find stuff
+.
+.SH "SYNOPSIS"
+\-a = AND \-o = OR \-xtype l = better for symlinks
+.
+.SH "ONELINERS"
+symlinks in current directory greped from a\-f and returning them sorted out\. \fBfind \. \-type l \-maxdepth 1 \-name \.[a\-f]* | sort\fR
+.
+.P
+find all directories except tmp directory \fBfind /path/to/dest \-type d \e( ! \-name tmp \e) \-print\fR
+.
+.P
+Find all directories except tmp and cache: \fBfind /path/to/dest \-type d \e( ! \-name tmp \e) \-a \e( ! \-name cache \e) \-print\fR
+.
+.P
+The \-prune option make sure that you do not descend into directory: \fBfind /path/to/dest \-type d \e( ! \-name tmp \e) \-a \e( ! \-name cache \-prune \e) \-print\fR
+.
+.P
+All *\.pl find except in tmp and root directory, enter: \fBfind / \e( ! \-name tmp \e) \-a \e( ! \-name root \-prune \e) \-name "*\.pl" \-print\fR
+.
+.P
+find becomes extremely useful when combined with other commands\. One such combination would be using find and grep together\.
+.
+.P
+\fBfind ~/documents \-type f \-name \'*\.txt\' \-exec grep \-s DOGS {} \e; \-print\fR
+.
+.P
+The words following the \-exec option is the command that you want to execute i\.e\. ls \-l in this case\. \fI{}* is basically an indicator that the filenames returned by the search should be substituted here\.\fR\e;* is the terminating string, and is required at the end of the command
+.
+.P
+\fBfind / \- name \'Metallica*\' \-exec ls \-l {\e}\e \e;\fR
+.
+.P
+Find all files with the type f or (\-o) type d \fBfind \. \-type f \-o \e( \-type d \e) \-name \.[a\-d]* | sort\fR

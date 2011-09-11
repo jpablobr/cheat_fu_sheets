@@ -1,0 +1,8 @@
+SSH  - cheats
+=============
+
+
+## DEBUGGING
+rsh remotehost /bin/true > out.dat
+
+

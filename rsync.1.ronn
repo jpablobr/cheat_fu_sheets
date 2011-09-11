@@ -1,0 +1,6 @@
+Rsync(1) - cheats
+
+## DEBUGGING
+
+rsh remotehost /bin/true > out.dat
+

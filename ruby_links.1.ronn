@@ -1,0 +1,7 @@
+ruby_links -- ruby related useful links
+
+## SYNOPSIS
+
+<http://ruby.learncodethehardway.org/>
+
+## LINKS

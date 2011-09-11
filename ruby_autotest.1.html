@@ -58,6 +58,7 @@
     <a href="#Naming-">Naming:</a>
     <a href="#Strategy-">Strategy:</a>
     <a href="#Exclusions-">Exclusions:</a>
+    <a href="#-autotest-examples">.autotest examples</a>
   </div>
 
   <ol class='man-decor man-head man head'>
@@ -68,6 +69,18 @@
 
   <h1>Ruby Autotest</h1>
 <h2 id="Rails-">Rails:</h2>
+
+<p>Gemfile:
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+  gem 'ZenTest'
+  gem 'autotest-rails'
+end</p>
+
+<p>$ rake db:create:all
+$ rake db:test:prepare
+$ bundle exec autotest</p>
 
 <h2 id="Plugins-">Plugins:</h2>
 
@@ -112,10 +125,28 @@ handlers in the form of:<br /></p>
 end
 </code></pre>
 
+<h2 id="-autotest-examples">.autotest examples</h2>
+
+<p>by default autotest greps for test<em> instead of the most common </em>test.rb.
+Therefore, one migth need to remap the greps.</p>
+
+<p>  Autotest.add_hook :initialize do |at|</p>
+
+<pre><code>at.clear_mappings
+
+at.add_mapping(%r{^test/.*_test\.rb$})              {|f, _| [f] }
+at.add_mapping(%r{^lib/factory_girl/(.*)\.rb$})     {|_, m| ["test/#{m[1]}_test.rb",
+                                                             "test/integration_test.rb"] }
+at.add_mapping(%r{^test/(test_helper|models)\.rb$}) { at.files_matching %r{^test/.*_test\.rb$} }
+at.add_mapping(%r{^lib/.*\.rb$})                    { at.files_matching %r{^test/.*_test\.rb$} }
+</code></pre>
+
+<p>  end</p>
+
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>May 2011</li>
+    <li class='tc'>September 2011</li>
     <li class='tr'>ruby_autotest(1)</li>
   </ol>
 

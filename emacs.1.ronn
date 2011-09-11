@@ -21,8 +21,14 @@ Emacs(1) for Ruby & Rails
 `C-c C-l                 `  Load a Ruby file into the inferior Ruby process.<br>
 `C-c C-s or M-x run-ruby `  Run an inferior Ruby process...<br>
 
+## TIPS
+
 Emacs opens in yaml-mode and outdent-mode when first line is:<br>
 `# -*- mode: yaml; mode: outdent; -*-`
+
+To open a file in emacs on a specific line use the following command:
+`emacs +<no> <file>`
+
 
 For more:
 <http://wiki.rubyonrails.org/rails/pages/HowToUseEmacsWithRails>

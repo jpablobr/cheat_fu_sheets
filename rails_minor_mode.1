@@ -1,0 +1,61 @@
+.\" generated with Ronn/v0.7.3
+.\" http://github.com/rtomayko/ronn/tree/0.7.3
+.
+.TH "RAILS_MINOR_MODE" "1" "August 2011" "" ""
+.
+.SH "NAME"
+\fBrails_minor_mode\fR
+.
+.P
+`rails\-minor\-mode\' Minor Mode Bindings: key binding
+.
+.P
+C\-c Prefix Command
+.
+.P
+C\-c c rails\-model\-layout:switch\-to\-controller C\-c g rails\-model\-layout:switch\-to\-migration C\-c m rails\-model\-layout:switch\-to\-model C\-c n rails\-model\-layout:switch\-to\-mailer C\-c r rails\-model\-layout:switch\-to\-rspec\-model C\-c u rails\-model\-layout:switch\-to\-unit\-test C\-c x rails\-model\-layout:switch\-to\-fixture C\-c z rails\-model\-layout:switch\-to\-rspec\-fixture
+.
+.P
+C\-c Prefix Command \fIC\-f1\fR rails\-browse\-api\-at\-point \fIM\-S\-down\fR rails\-lib:run\-secondary\-switch \fIM\-S\-up\fR rails\-lib:run\-primary\-switch \fIf1\fR rails\-search\-doc \fIf11\fR rails\-speedbar:get\-focus \fIf9\fR rails\-scm\-status\-into\-root
+.
+.P
+C\-c C\-c Prefix Command C\-c C\-s rails\-script:console C\-c C\-z rails\-script:console C\-c ESC Prefix Command C\-c / rails\-script:toggle\-output\-window C\-c s rails\-grep\-project C\-c \fIdown\fR rails\-lib:run\-secondary\-switch C\-c \fIf1\fR rails\-browse\-api C\-c \fIup\fR rails\-lib:run\-primary\-switch
+.
+.P
+C\-c C\-M\-z rails\-shell
+.
+.P
+C\-c C\-c C\-t rails\-create\-tags C\-c C\-c # rails\-test:run\-recent C\-c C\-c \. rails\-test:run\-current C\-c C\-c / rails\-test:rerun\-single C\-c C\-c R Prefix Command C\-c C\-c d Prefix Command C\-c C\-c e rails\-script:generate C\-c C\-c f Prefix Command C\-c C\-c g Prefix Command C\-c C\-c k rails\-script:kill\-script C\-c C\-c l rails\-log:open C\-c C\-c o Prefix Command C\-c C\-c r rails\-rake:task C\-c C\-c s Prefix Command C\-c C\-c t rails\-test:run C\-c C\-c w Prefix Command C\-c C\-c x rails\-script:destroy C\-c C\-c y Prefix Command C\-c C\-c z Prefix Command
+.
+.P
+C\-c C\-c R c rails\-refactoring:rename\-controller C\-c C\-c R l rails\-refactoring:rename\-layout C\-c C\-c R m rails\-refactoring:rename\-model C\-c C\-c R q rails\-refactoring:query\-replace
+.
+.P
+C\-c C\-c o d rails\-log:open\-development C\-c C\-c o p rails\-log:open\-production C\-c C\-c o t rails\-log:open\-test
+.
+.P
+C\-c C\-c z \. rails\-spec:run\-current C\-c C\-c z a rails\-spec:run\-all C\-c C\-c z f rails\-spec:run\-files C\-c C\-c z l rails\-spec:run\-last C\-c C\-c z s rails\-spec:run\-this\-spec
+.
+.P
+C\-c C\-c y a rails\-test:run\-all C\-c C\-c y f rails\-test:run\-functionals C\-c C\-c y i rails\-test:run\-integration C\-c C\-c y u rails\-test:run\-units
+.
+.P
+C\-c C\-c d d rails\-rake:migration\-version\-down C\-c C\-c d m rails\-rake:migrate C\-c C\-c d p rails\-rake:migrate\-to\-prev\-version C\-c C\-c d t rails\-rake:clone\-development\-db\-to\-test\-db C\-c C\-c d u rails\-rake:migration\-version\-up C\-c C\-c d v rails\-rake:migrate\-to\-version
+.
+.P
+C\-c C\-c f b rails\-find:lib C\-c C\-c f c rails\-find:controller C\-c C\-c f d rails\-find:db C\-c C\-c f f rails\-find:fixtures C\-c C\-c f g rails\-find:migrate C\-c C\-c f h rails\-find:helpers C\-c C\-c f j rails\-find:javascripts C\-c C\-c f l rails\-find:layout C\-c C\-c f m rails\-find:models C\-c C\-c f o rails\-find:config C\-c C\-c f p rails\-find:public C\-c C\-c f r Prefix Command C\-c C\-c f s rails\-find:stylesheets C\-c C\-c f t rails\-find:tasks C\-c C\-c f v rails\-find:view
+.
+.P
+C\-c C\-c w a rails\-ws:auto\-open\-browser C\-c C\-c w d rails\-ws:start\-development C\-c C\-c w i rails\-ws:print\-status C\-c C\-c w p rails\-ws:start\-production C\-c C\-c w s rails\-ws:toggle\-start\-stop C\-c C\-c w t rails\-ws:start\-test
+.
+.P
+C\-c C\-c s b rails\-script:breakpointer C\-c C\-c s c rails\-script:console C\-c C\-c s s rails\-run\-sql
+.
+.P
+C\-c C\-c g c rails\-nav:goto\-controllers C\-c C\-c g f rails\-nav:goto\-functional\-tests C\-c C\-c g g rails\-nav:goto\-migrate C\-c C\-c g h rails\-nav:goto\-helpers C\-c C\-c g j rails\-nav:goto\-javascripts C\-c C\-c g l rails\-nav:goto\-layouts C\-c C\-c g m rails\-nav:goto\-models C\-c C\-c g n rails\-nav:goto\-mailers C\-c C\-c g o rails\-nav:goto\-observers C\-c C\-c g p rails\-nav:goto\-plugins C\-c C\-c g r Prefix Command C\-c C\-c g s rails\-nav:goto\-stylesheets C\-c C\-c g u rails\-nav:goto\-unit\-tests C\-c C\-c g x rails\-nav:goto\-fixtures
+.
+.P
+C\-c C\-c f r c rails\-find:spec\-controllers C\-c C\-c f r f rails\-find:spec\-fixtures C\-c C\-c f r h rails\-find:spec\-helpers C\-c C\-c f r m rails\-find:spec\-models C\-c C\-c f r s rails\-find:spec C\-c C\-c f r v rails\-find:spec\-views
+.
+.P
+C\-c C\-c g r c rails\-nav:goto\-rspec\-controllers C\-c C\-c g r f rails\-nav:goto\-rspec\-fixtures C\-c C\-c g r l rails\-nav:goto\-rspec\-lib C\-c C\-c g r m rails\-nav:goto\-rspec\-models

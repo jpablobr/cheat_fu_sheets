@@ -1,0 +1,43 @@
+find-cheats(1) -- convenience find stuff
+=============================================
+
+## SYNOPSIS
+-a = AND
+-o = OR
+-xtype l = better for symlinks
+
+## ONELINERS
+
+symlinks in current directory greped from a-f and returning them sorted out.
+`find . -type l -maxdepth 1 -name .[a-f]* | sort`
+
+find all directories except tmp directory
+`find /path/to/dest -type d \( ! -name tmp \) -print`
+
+Find all directories except tmp and cache:
+`find /path/to/dest -type d \( ! -name tmp \) -a \( ! -name cache \) -print`
+
+The -prune option make sure that you do not descend into directory:
+`find /path/to/dest -type d \( ! -name tmp \) -a \( ! -name cache -prune \) -print`
+
+All *.pl find except in tmp and root directory, enter:
+`find /  \( ! -name tmp \) -a \( ! -name root -prune \)  -name "*.pl" -print`
+
+find becomes extremely useful when combined with other commands. One
+such combination would be using find and grep together.
+
+`find ~/documents -type f -name '*.txt' -exec grep -s DOGS {} \; -print`
+
+The words following the -exec option is the command that you want to
+execute i.e. ls -l in this case.
+*{\}\* is basically an indicator that the filenames returned by the search
+should be substituted here.
+*\;* is the terminating string, and is required at the end of the command
+
+`find / - name 'Metallica*' -exec ls -l {\}\ \;`
+
+Find all files with the type f or (-o) type d
+`find . -type f -o \( -type d \) -name .[a-d]* | sort`
+
+
+

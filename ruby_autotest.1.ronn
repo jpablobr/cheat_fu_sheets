@@ -3,6 +3,18 @@ Ruby Autotest
 
 ## Rails:
 
+Gemfile:
+group :test do
+  # Pretty printed test output
+  gem 'turn', :require => false
+  gem 'ZenTest'
+  gem 'autotest-rails'
+end
+
+$ rake db:create:all
+$ rake db:test:prepare
+$ bundle exec autotest
+
 ## Plugins:
 
 Plugins are available by creating a .autotest file either in your
@@ -42,3 +54,17 @@ Autotest uses a simple naming scheme to figure out how to map implementation fil
       at.add_exception(coverage)
       at.add_exception(vendor)
     end
+
+## .autotest examples
+by default autotest greps for test* instead of the most common *test.rb.
+Therefore, one migth need to remap the greps.
+
+  Autotest.add_hook :initialize do |at|
+    at.clear_mappings
+
+    at.add_mapping(%r{^test/.*_test\.rb$})              {|f, _| [f] }
+    at.add_mapping(%r{^lib/factory_girl/(.*)\.rb$})     {|_, m| ["test/#{m[1]}_test.rb",
+                                                                 "test/integration_test.rb"] }
+    at.add_mapping(%r{^test/(test_helper|models)\.rb$}) { at.files_matching %r{^test/.*_test\.rb$} }
+    at.add_mapping(%r{^lib/.*\.rb$})                    { at.files_matching %r{^test/.*_test\.rb$} }
+  end
