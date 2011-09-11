@@ -1,4 +1,122 @@
 Emacs keybindings
 =================
 
-`ido-imenu` C-x C-i
+(kbd "C-x \\") 'align-regexp)
+(kbd "M-=") 'dabbrev-expand)
+(kbd "C-c n") 'cleanup-buffer)
+"\C-s" 'isearch-forward-regexp)
+"\C-r" 'isearch-backward-regexp)
+"\M-m" 'isearch-forward-at-point)
+"\C-\M-s" 'isearch-forward)
+"\C-\M-r" 'isearch-backward)
+(kbd "C-x u") 'view-url)
+(kbd "C-x h") 'mark-whole-buffer)
+(kbd "C-h a") 'apropos)
+(kbd "C-x g") 'magit-status)
+(kbd "C-x C-b") 'ibuffer)
+(kbd "C-x C-n") 'ibuffer)
+
+## Texmate mode
+[(meta \])] 'textmate-shift-right)
+[(meta \[)] 'textmate-shift-left)
+[(meta /)] 'comment-or-uncomment-region-or-line)
+[(meta L)] 'textmate-select-line)
+(kbd "C-l bu") 'browse-url)
+(kbd "C-l cs") 'cheat-fu-sheets)
+(kbd "C-l cc") 'cheat-fu-convert)
+(kbd "C-l cg") 'cheat-fu-commit)
+(kbd "C-l cr") 'ruby-compile-region)
+(kbd "C-l cf") 'ruby-compile-file)
+(kbd "C-l cn") 'cheat-fu-new)
+(kbd "C-l df") 'delete-current-file)
+(kbd "C-l dm") 'ido-imenu); (This is awesome.)
+(kbd "C-l ee") 'eval-buffer)
+(kbd "C-l ei") 'ecb-init-stuff)
+
+(kbd "C-l em") 'ecb-goto-window-methods)
+(kbd "C-l eb") 'ecb-goto-window-edit-by-smart-selection)
+(kbd "C-l ed") 'ecb-goto-window-directories)
+(kbd "C-l es") 'ecb-goto-window-symboldef)
+(kbd "C-l eh") 'ecb-goto-window-history)
+(kbd "C-l el") 'ecb-goto-window-edit-last)
+(kbd "C-l ea") 'ecb-goto-window-analyse)
+
+(kbd "C-l ff") 'find-file)
+(kbd "C-l fl") 'beginning-of-buffer)
+(kbd "C-l fg") 'find-grep)
+(kbd "C-l gt") 'register-to-point)
+(kbd "C-l gs") 'google-s)
+(kbd "C-l gp") 'gist-buffer-private)
+(kbd "C-l gr") 'gist-buffer)
+(kbd "C-l gl") 'goto-line)
+(kbd "C-l ie") 'insert-email)
+(kbd "C-l in") 'insert-name)
+(kbd "C-l id") 'insert-date)
+(kbd "C-l is") 'ispell-region)
+(kbd "C-l jp") 'jp-init-stuff)
+(kbd "C-l jt") 'jp-theme)
+(kbd "C-l ha") 'hs-hide-all)
+(kbd "C-l hs") 'hs-show-all)
+(kbd "C-l hl") 'hs-toggle-hiding)
+(kbd "C-l ll") 'end-of-buffer)
+(kbd "C-l mb") 'menu-bar-mode)
+(kbd "C-l mp") 'match-paren)
+(kbd "C-l rr") 'replace-regexp)
+(kbd "C-l rf") 'rename-file)
+(kbd "C-l ri") 'rails-init-stuff)
+(kbd "C-l rh") 'byte-recompile-home)
+(kbd "C-l tc") 't-ruby-complexity)
+(kbd "C-l tl") 't-linum)
+(kbd "C-l ta") 't-anything)
+(kbd "C-l tm") 't-anything-min)
+(kbd "C-l ss") 'synonym-s)
+(kbd "C-l st") 'test-sh-script)
+(kbd "M-q") 'org-cycle)
+(kbd "M-w") 'copy-region-as-kill)
+(kbd "M-\d") 'backward-kill-word)
+(kbd "M-d") 'kill-word)
+(kbd "C-x b") 'ibuffer)
+(kbd "C-x C-s") 'save-buffer)
+[(meta j)] 'fill-region)
+[(meta up)] 'beginning-of-buffer)
+[(meta down)] 'end-of-buffer)
+[(meta p)] 'beginning-of-buffer)
+[(meta n)] 'end-of-buffer)
+[(meta y)] 'yank-pop)
+(kbd "M-e") 'cua-set-rectangle-mark)
+(kbd "M-,") 'textmate-goto-symbol)
+(kbd "M-l") 'textmate-goto-file)
+(kbd "M-f") 'forward-word)
+(kbd "M-b") 'backward-word)
+
+## perforce bindings
+(kbd "C-C p e") 'p4-edit) ; pkg:perforce
+(kbd "C-C p r") 'p4-revert) ; pkg:perforce
+(kbd "C-C p s") 'p4-sync-code-buffers) ; pkg:perforce
+(kbd "C-C p v") 'p4-env) ; pkg:perforce
+
+## testting Commands
+(kbd "C-C t F")    'jw-run-last-test-or-spec-file) ; pkg:testing
+(kbd "C-C t M")    'jw-run-last-test-or-spec-method) ; pkg:testing
+(kbd "C-C t c")    'jw-run-test-cruise) ; pkg:testing
+(kbd "C-C t f")    'jw-run-test-or-spec-file) ; pkg:testing
+(kbd "C-C t i")    'jw-run-test-integration) ; pkg:testing
+(kbd "C-C t l")    'jw-run-test-functionals) ; pkg:testing
+(kbd "C-C t m")    'jw-run-test-or-spec-method) ; pkg:testing
+(kbd "C-C t r")    'jw-run-test-rake) ; pkg:testing
+(kbd "C-C t s")    'toggle-style) ; pkg:testing
+(kbd "C-C t t")    'jw-mark-for-testing) ; pkg:testing
+(kbd "C-C t u")    'jw-run-test-units) ; pkg:testing
+(kbd "C-C t w")    'jw-test-toggle-warnings) ; pkg:testing
+
+(kbd "C-C t C-f")  'jw-run-last-test-or-spec-file) ; pkg:testing
+(kbd "C-C t C-m")  'jw-run-last-test-or-spec-method) ; pkg:testing
+(kbd "C-C t C-t") 'jw-toggle-clear-buffer-styles) ; pkg:testing
+(kbd "C-C t C-s") 'toggle-debug) ; pkg:testing
+(kbd "C-C t 1") (lambda () (interactive) (setq jw-test-single-window t))) ; pkg:testing
+(kbd "C-C t 2") (lambda () (interactive) (setq jw-test-single-window nil))) ; pkg:testing
+
+## Anything
+;;you can use  C-uM-. input symbol (default thing-at-point 'symbol)
+(kbd "M-;") 'anything-for-files)
+"\M-." 'anything-c-etags-select)
