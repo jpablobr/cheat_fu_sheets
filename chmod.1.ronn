@@ -1,0 +1,24 @@
+chmod(1) by the Numbers
+=======================
+
+
+- rwx r-x r-- info.sh
+  111 101 100
+Now convert each set of three digits to a single digit using this table:
+
+Binary	Becomes
+000	    0
+001	    1
+010	    2
+011	    3
+100	    4
+101	    5
+110	    6
+111	    7
+
+the 111 101 100 translates to the number 754.
+
+Now use that number in a chmod command to set your desired permissions on the file:
+
+chmod 754 info.sh
+
