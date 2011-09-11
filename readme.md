@@ -1,8 +1,4 @@
-# Cheats for Cheats_fu
-
-## Description:
-
-[Cheat_fu](http://cheat-fu.heroku.com/) cheat sheets repo.
+# Cheats for [Cheat_fu](http://cheat-fu.heroku.com/)
 
 ## Screenshot
 
