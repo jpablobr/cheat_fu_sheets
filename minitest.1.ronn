@@ -1,0 +1,5 @@
+minitest(1) - basic
+===================
+
+## Links
+<http://www.rubyinside.com/a-minitestspec-tutorial-elegant-spec-style-testing-that-comes-with-ruby-5354.html>

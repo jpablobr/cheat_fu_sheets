@@ -56,6 +56,7 @@
     <a href="#NAME">NAME</a>
     <a href="#SYNOPSIS">SYNOPSIS</a>
     <a href="#ONELINERS">ONELINERS</a>
+    <a href="#Using-exec-Efficiently-">Using -exec Efficiently:</a>
   </div>
 
   <ol class='man-decor man-head man head'>
@@ -108,10 +109,267 @@ should be substituted here.
 <p>Find all files with the type f or (-o) type d
 <code>find . -type f -o \( -type d \) -name .[a-d]* | sort</code></p>
 
+<p>Change the mode of all files to 666 (—rw-rw-rw) recursively from the
+current directory
+<code>find . -type f -exec chmod 666 {} \;</code></p>
+
+<p>Change the mode of all directories to 777 (—rwxrwxrwx) recursively from
+the current directory
+<code>find . -type f -exec chmod 777 {} \;</code></p>
+
+<p>will display the pathnames of all files in the current directory and all subdirectories.  The commands</p>
+
+<p>find . -print
+find -print
+find .
+do the exact same thing.  Here's an example find command using a search criterion and the default action:</p>
+
+<p>find / -name foo
+This will search the whole system for any files named foo and display their pathnames.  Here we are using the criterion -name with the argument foo to tell find to perform a name search for the filename foo.  The output might look like this:</p>
+
+<p>/home/wpollock/foo
+/home/ua02/foo
+/tmp/foo
+If find doesn't locate any matching files, it produces no output.</p>
+
+<p>The above example said to search the whole system, by specifying the root directory (/) to search.  If you don't run this command as root, find will display a error message for each directory on which you don't have read permission.  This can be a lot of messages, and the matching files that are found may scroll right off your screen.  A good way to deal with this problem is to redirect the error messages so you don't have to see them at all:</p>
+
+<p>find / -name foo 2>/dev/null
+You can specify as many places to search as you wish:</p>
+
+<p>find /tmp /var/tmp . $HOME -name foo
+Advanced Features And Applications:</p>
+
+<p>The -print action lists the names of files separated by a newline.  But it is common to pipe the output of find into xargs, which uses a space to separate file names.  This can lead to a problem if any found files contain spaces in their names, as the output doesn't use any quoting.  In such cases, when the output of find contains a file name such as foo bar and is piped into another command, that command sees two file names, not one file name containing a space.  Even without using xargs you could have a problem if the file name contains a newline character.</p>
+
+<p>In such cases you can specify the action -print0 instead.  This lists the found files separated not with a newline but with a null (or NUL) character, which is not a legal character in Unix or Linux file names.  Of course the command that reads the output of find must be able to handle such a list of file names.  Many commands commonly used with find (such as tar or cpio) have special options to read in file names separated with NULs instead of spaces.</p>
+
+<p>Instead of having find list the files, it can run some command for each file found, using the -exec action.  The -exec is followed by some shell command line, ended with a semicolon (;).  (The semicolon must be quoted from the shell, so find can see it!)  Within that command line the word {} will expand out to the name of the found file.  See below for some examples.</p>
+
+<p>You can use shell-style wildcards in the -name search argument:</p>
+
+<p>find . -name foo*bar
+This will search from the current directory down for foo*bar (that is, any filename that begins with foo and ends with bar).  Note that wildcards in the name argument must be quoted so the shell doesn't expand them before passing them to find.  Also, unlike regular shell wildcards, these will match leading periods in filenames.  (For example find -name *.txt.)</p>
+
+<p>You can search for other criteria beside the name.  Also you can list multiple search criteria.  When you have multiple criteria any found files must match all listed criteria.  That is, there is an implied Boolean AND operator between the listed search criteria.  find also allows OR and NOT Boolean operators, as well as grouping, to combine search criteria in powerful ways (not shown here.)</p>
+
+<p>Here's an example using two search criteria:</p>
+
+<p>find / -type f -mtime -7 | xargs tar -rf weekly_incremental.tar
+gzip weekly_incremental.tar
+will find any regular files (i.e., not directories or other special files) with the criteria -type f, and only those modified seven or fewer days ago (-mtime -7).  Note the use of xargs, a handy utility that coverts a stream of input (in this case the output of find) into command line arguments for the supplied command (in this case tar, used to create a backup archive).</p>
+
+<p>Using the tar option -c is dangerous here;  xargs may invoke tar several times if there are many files found and each -c will cause tar to over-write the previous invocation.  The -r option appends files to an archive.  Other options such as those that would permit filenames containing spaces would be useful in a production quality backup script.</p>
+
+<p>Another use of xargs is illustrated below.  This command will efficiently remove all files named core from your system (provided you run the command as root of course):</p>
+
+<p>find / -name core | xargs /bin/rm -f
+find / -name core -exec /bin/rm -f '{}' \; # same thing
+find / -name core -delete                  # same if using Gnu find
+The last two forms run the rm command once per file, and are not as efficient as the first form, but they are safer if file names contain spaces or newlines.  The first form can be made safer if rewritten to use -print0 instead of (the default) -print.  -exec can be used more efficiently (see Using -exec Efficiently below), but doing so means running the command once with many file names passed as arguments, and so has the same safety issues as with xargs.</p>
+
+<p>One of my favorite of the find criteria is used to locate files modified less than 10 minutes ago.  I use this right after using some system administration tool, to learn which files got changed by that tool:</p>
+
+<p>find / -mmin -10
+(This search is also useful when I've downloaded some file but can't locate it, only in that case -cmin may work better.  Keep in mind neither of these criteria is standard; -mtime and -ctime are standard, but use days and not minutes.)</p>
+
+<p>Another common use is to locate all files owned by a given user (-user username).  This is useful when deleting user accounts.</p>
+
+<p>You can also find files with various permissions set.  -perm /permissions means to find files with any of the specified permissions on, -perm -permissions means to find files with all of the specified permissions on, and -perm permissions means to find files with exactly permissions.  Permissions can be specified either symbolically (preferred) or with an octal number.  The following will locate files that are writeable by others (including symlinks, which should be writeable by all):</p>
+
+<p>find . -perm -o=w
+(Using -perm is more complex than this example shows.  You should check both the POSIX documentation for find (which explains how the symbolic modes work) and the Gnu find man page (which describes the Gnu extensions).</p>
+
+<p>When using find to locate files for backups, it often pays to use the -depth option (really a criterion that is always true), which forces the output to be depth-first—that is, files first and then the directories containing them.  This helps when the directories have restrictive permissions, and restoring the directory first could prevent the files from restoring at all (and would change the time stamp on the directory in any case).  Normally, find returns the directory first, before any of the files in that directory.  This is useful when using the -prune action to prevent find from examining any files you want to ignore:</p>
+
+<p>find / -name /dev -prune ...other criteria | xargs tar ...
+Using just find / -name /dev -prune | xargs tar ... won't work as most people might expect.  This says to only find files named /dev, and then (if a directory) don't descend into it.  So you only get the single directory name /dev!  A better plan is to use the following:</p>
+
+<p>find / ! -path /dev* |xargs ...
+which says find everything except pathnames that start with /dev.  The ! means Boolean NOT.
+When specifying time with find options such as -mmin (minutes) or -mtime (24 hour periods, starting from now), you can specify a number n to mean exactly n, -n to mean less than n, and +n to mean more than n.</p>
+
+<p>Fractional 24-hour periods are truncated!  That means that find -mtime +1 says to match files modified two or more days ago.</p>
+
+<p>For example:</p>
+
+<p>find . -mtime 0   # find files modified between now and 1 day ago</p>
+
+<pre><code>              # (i.e., within the past 24 hours)
+</code></pre>
+
+<p>find . -mtime -1  # find files modified less than 1 day ago</p>
+
+<pre><code>              # (i.e., within the past 24 hours, as before)
+</code></pre>
+
+<p>find . -mtime 1   # find files modified between 24 and 48 hours ago
+find . -mtime +1  # find files modified more than 48 hours ago</p>
+
+<p>find . -mmin +5 -mmin -10 # find files modified between # 6 and 9 minutes ago</p>
+
+<p>Using the -printf action instead of the default -print is useful to
+control the output format better than you can with ls or dir.  You can
+use find with -printf to produce output that can easily be parsed by
+other utilities or imported into spreadsheets or databases.  See the man
+page for the dozens of possibilities with the -printf action.  (In fact
+find with -printf is more versatile than ls and is the preferred tool
+for forensic examiners even on Windows systems, to list file
+information.)  For example the following displays non-hidden (no leading
+dot) files in the current directory only (no subdirectories), with an
+custom output format:</p>
+
+<p><code>find . -maxdepth 1 -name '[!.]*' -printf 'Name: %16f Size: %6s\n'</code>
+-maxdepth is a Gnu extension.  On a modern, POSIX version of find you
+ could use this:</p>
+
+<p><code>find . -path './*' -prune ...</code>
+On any version of find you can use this more complex (but portable) code:</p>
+
+<p><code>find . ! -name . -prune ...</code>
+which says to prune (don't descend into) any directories except ..</p>
+
+<p>Note that -maxdepth 1 will include . unless you also specify -mindepth
+1.  A portable way to include . is:</p>
+
+<p><code>find . \( -name . -o -prune \) ...</code>
+The ( and ) are just parenthesis used for grouping, and escaped from the shell.</p>
+
+<p>[This information posted by Stephane Chazelas, on 3/10/09 in newsgroup comp.unix.shell.]</p>
+
+<p>As a system administrator you can use find to locate suspicious files
+(e.g., world writable files, files with no valid owner and/or group,
+SetUID files, files with unusual permissions, sizes, names, or dates).
+Here's a final more complex example (which I saved as a shell script):</p>
+
+<p>find / -noleaf -wholename '/proc' -prune \</p>
+
+<pre><code> -o -wholename '/sys' -prune \
+ -o -wholename '/dev' -prune \
+ -o -wholename '/windows-C-Drive' -prune \
+ -o -perm -2 ! -type l  ! -type s \
+ ! \( -type d -perm -1000 \) -print
+</code></pre>
+
+<p>This says to seach the whole system, skipping the directories /proc,
+/sys, /dev, and /windows-C-Drive (presumably a Windows partition on a
+dual-booted computer).  The Gnu -noleaf option tells find not to assume
+all remaining mounted filesystems are Unix file systems (you might have
+a mounted CD for instance).  The -o is the Boolean OR operator, and ! is
+the Boolean NOT operator (applies to the following criteria).</p>
+
+<p>So these criteria say to locate files that are world writable (-perm -2,
+same as -o=w) and NOT symlinks (! -type l) and NOT sockets (! -type s)
+and NOT directories with the sticky (or text) bit set (! ( -type d
+-perm -1000 )).  (Symlinks, sockets and directories with the sticky bit
+set are often world-writable and generally not suspicious.)</p>
+
+<p>A common request is a way to find all the hard links to some file.
+Using ls -li file will tell you how many hard links the file has, and
+the inode number.  You can locate all pathnames to this file with:</p>
+
+<p><code>find mount-point -xdev -inum inode-number</code>
+Since hard links are restricted to a single filesystem, you need to
+search that whole filesystem so you start the search at the filesystem's
+mount point.  (This is likely to be either /home or / for files in your
+home directory.)  The -xdev options tells find to not search any other
+filesystems.</p>
+
+<p>(While most Unix and all Linux systems have a find command that supports
+the -inum criterion, this isn't POSIX standard.  Older Unix systems
+provided the ncheck utility instead that could be used for this.)</p>
+
+<h2 id="Using-exec-Efficiently-">Using -exec Efficiently:</h2>
+
+<p>The -exec action takes a Unix command (along with its options) as an
+argument.  The arguments should contain {} (usually quoted), which is
+replaced in the command with the name of the currently found file.  The
+command is terminated by a semicolon, which must be quoted (escaped) so
+the shell will pass it literally to the find command.  You can use the
+sh and the Unix command, in which case you can use more complex actions.
+Here's a (somewhat contrived) example, that for each found file will
+replace Mr. with Mr. or Ms., and also convert the file to uppercase:</p>
+
+<p><code>find whatever... -exec sh -c 'sed "s/Mr\./Mr. or Ms./g" "{}" | tr "[:lower:]" "[:upper:]" &gt;"{}.new"' \;</code></p>
+
+<p>The -exec action in find is very useful, but since it runs the command
+listed for every found file it isn't very efficient.  On a large system
+this makes a difference!  One solution is to combine find with xargs as
+discussed above:</p>
+
+<p><code>find whatever... | xargs command</code></p>
+
+<p>  However this approach has two limitations.  Firstly not all commands
+accept the list of files at the end of the command.  A good example is
+cp:</p>
+
+<p><code>find . -name \*.txt | xargs cp /tmp  # This won't work!</code></p>
+
+<p>(Note the Gnu version of cp has a non-POSIX option -t for this, and
+xargs has options to handle this too.)</p>
+
+<p>Secondly filenames may contain spaces or newlines, which would confuse
+the command used with xargs.  (Again Gnu tools have options for that,
+find ... -print0 |xargs -0 ....)</p>
+
+<p>There are POSIX (but non-obvious) solutions to both problems.  An
+alternate form of -exec ends with a plus-sign, not a semi-colon.  This
+form collects the filenames into groups or sets, and runs the command
+once per set.  (This is exactly what xargs does, to prevent argument
+lists from becoming too long for the system to handle.)  In this form
+the {} argument expands to the set of filenames.  For example:</p>
+
+<p><code>find / -name core -exec /bin/rm -f '{}' +</code></p>
+
+<p>This command is equivalent to using find with xargs, only a bit shorter
+and more efficient.  But this form of -exec can be combined with a shell
+feature to solve the other problem (names with spaces).  The POSIX shell
+allows us to use:</p>
+
+<p><code>sh -c 'command-line' [ command-name [ args... ] ]</code></p>
+
+<p>(We don't usually care about the command-name, so X, dummy, or 'inline
+cmd' is often used.)  Here's an example of efficiently copying found
+files to /tmp, in a POSIX-compliant way (Posted on comp.unix.shell
+netnews newsgroup on Oct. 28 2007 by Stephane CHAZELAS):</p>
+
+<p><code>find . -name '*.txt' -type f   -exec sh -c 'exec cp -f "$@" /tmp' X '{}' +</code></p>
+
+<p>(Obvious, simple, and readable, isn't it?  But worth knowing since it is safe, portable, and efficient.)</p>
+
+<p>Common Gotcha:</p>
+
+<p>If the given expression to find does not contain any of the action
+primaries -exec, -ok, or -print, the given expression is effectively
+replaced by:</p>
+
+<p>find ( expression ) -print
+The implied parenthesis can cause unexpected results.  For example, consider these two similar commands:</p>
+
+<p>$ find -name tmp -prune -o -name *.txt
+./bin/data/secret.txt
+./tmp
+./missingEOL.txt
+./public_html/graphics/README.txt
+./datafile2.txt
+./datafile.txt
+$ find -name tmp -prune -o -name *.txt -print
+./bin/data/secret.txt
+./missingEOL.txt
+./public_html/graphics/README.txt
+./datafile2.txt
+./datafile.txt
+The lack of an action in the first command means it is equivalent to:</p>
+
+<p>find . ( -name tmp -prune -o -name *.txt ) -print
+This causes tmp to be included in the output.  However for the second
+find command the normal rules of Boolean operator precedence apply, so
+the pruned directory does not appear in the output.</p>
+
 
   <ol class='man-decor man-foot man foot'>
     <li class='tl'></li>
-    <li class='tc'>August 2011</li>
+    <li class='tc'>September 2011</li>
     <li class='tr'>find-cheats(1)</li>
   </ol>
 

@@ -68,4 +68,19 @@ total 12K
 4.0K -rwxr-xr-x  1 Administrator None 1.5K Jul 21 23:34 .inputrc
 Here, the command was the ^-al^-lash which replaced the –al with –lash in our previous ls command and re-ran the command again.
 
+!! - Last command
+  !foo - Run most recent command starting with 'foo...' (ex. !ps, !mysqladmin)
+  !foo:p - Print command that !foo would run, and add it as the latest to
+  command history
+  !$ - Last 'word' of last command ('/path/to/file' in the command 'ls -lAFh
+  /path/to/file', '-uroot' in 'mysql -uroot')
+  !$:p - Print word that !$ would substitute
+  !* - All but first word of last command ('-lAFh /path/to/file' in the command
+  'ls -lAFh /path/to/file', '-uroot' in 'mysql -uroot')
+  !*:p - Print words that !* would substitute
+
+  ^foo^bar - Replace 'foo' in last command with 'bar', print the result, then
+  run. ('mysqladmni -uroot', run '^ni^in', results in 'mysqladmin -uroot')
+
+http://www.linuxtopia.org/online_books/advanced_bash_scripting_guide/fto.html
 http://www.skorks.com/2009/09/bash-shortcuts-for-maximum-productivity/

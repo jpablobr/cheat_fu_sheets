@@ -1,0 +1,5 @@
+bash(1) - one-liners
+====================
+
+{a,b,c} passes words to the command, substituting a, b, and c sequentially
+(`cp file{,.bk}` runs `cp file file.bk`)
