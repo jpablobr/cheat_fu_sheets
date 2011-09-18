@@ -1,0 +1,4 @@
+ruby(1) - gems install trickeries
+
+## mysql2
+sudo apt-get install libmysqlclient-dev

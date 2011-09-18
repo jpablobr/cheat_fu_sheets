@@ -1,0 +1,7 @@
+Ruby(1) - gems
+
+# SOAP
+http://savonrb.com/
+
+# Admins
+http://www.activeadmin.info/

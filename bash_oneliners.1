@@ -8,3 +8,6 @@
 .
 .P
 {a,b,c} passes words to the command, substituting a, b, and c sequentially (\fBcp file{,\.bk}\fR runs \fBcp file file\.bk\fR)
+.
+.P
+for i in $( netstat \-an | awk \'$5~/:(80|443)$/{print$0}\' ) ; do dig \-x ${i%:*} +short ; done # What connected to via HTTP\. by \.@linuxdaddy
