@@ -1,9 +1,13 @@
+
 Basic emacs(1) cheats
 ==================
 
 ## Yasnippets
 
 `C-i` or `TAB` (with hippie) for expanding
+
+## delete blank lines
+M-x flush-lines ^$
 
 ## Commands to Manipulate Windows
 

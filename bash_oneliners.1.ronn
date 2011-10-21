@@ -1,7 +1,264 @@
 bash(1) - one-liners
 ====================
 
-{a,b,c} passes words to the command, substituting a, b, and c sequentially
+# {a,b,c} passes words to the command, substituting a, b, and c sequentially
 (`cp file{,.bk}` runs `cp file file.bk`)
 
-for i in $( netstat -an | awk '$5~/:(80|443)$/{print$0}' ) ; do dig -x ${i%:*} +short ; done # What connected to via HTTP. by .@linuxdaddy
+# What connected to via HTTP. by .@linuxdaddy
+for i in $( netstat -an | awk '$5~/:(80|443)$/{print$0}' ) ; do dig -x ${i%:*} +short ; done
+
+# Several directories
+mkdir -p johnbokma.com/{branches,tags,trunk/{cgi-bin,htdocs,scripts}}
+
+http://wiki.dropbox.com/TipsAndTricks/TextBasedLinuxInstall
+# Make output of df more readable. Via .@richardfearn.
+# --Especially good if you have long device names like in LVM.
+df -Ph | column -t
+# Delete all files in this directory and below older than 150 days.
+find . -mtime +150 -delete
+# Stream mp3 at bitrate speed (128Kbits). NSFW "lyrics"
+curl -N --limit-rate 16K http://f.climagic.org/techsup.mp3 | mpg123 -
+# And you can go the other way too. Same as "zip server.log-20110308.zip server.log-20110308"
+zip server.log-20110308{.zip,}
+# Remove matched process owners from group
+ps auxw|grep -i justin.*bieber|cut -d' ' -f 1|sort|uniq|xargs -I{} -n 1 sudo gpasswd -d {} audio
+# Encapsulate UDP packets in a TCP stream so it can be tunneled through an SSH tunnel, etc
+socat -v UDP-LISTEN:8161,fork TCP:localhost:8161
+# Auto switch through the current windows in your running tmux session.
+while true ; do tmux next-window ; sleep 10; done
+# This removes 2nd word on each line. A number N after the s/// command refers to the Nth match.
+sed 's/[^ ]*//2' < README > README.new
+# Normally you can't grep for a tab without using Ctrl-v<tab> #
+# to insert one. $'' is an ANSI C quoting construct that allows it
+grep $'\t'
+# Find all files older than 90 days in /tmp and remove them. Prompting the user first(-ok is like -exec)
+find /tmp -mtime +90 -ok rm \{} \;
+# Palindromes
+cat /usr/share/dict/words|tr A-Z a-z|while read -r w;do r=$( rev <<<$w );if [[ "$w" == "$r" ]];then echo $w ;fi;done
+# Replace IPv4 addr in .conf files with IPv6 addr.
+sed -s -i 's/15.52.3.14/2001:db8::fee1:dead:babe:b00b/g' *.conf
+# Use regex character classes to find 4 letter words that work in ipv6 segs. l=1, o=0, s=5
+egrep -e "^[a-flos]{4}$" /usr/share/dict/words
+# Show top 20 largest files in descending order (sort -r) from this directory tree.
+find . -ls | sort -r -n -k 7 | head -20
+# Poorman's file nonexistance notifier.
+while [[ -f file ]] ; do sleep 1 ; done ; echo "file is gone" | mail -s ALERT you@domain.com
+# File change notifier.
+until [[ $( stat --printf=%Z file ) -gt $(( $( date +%s ) - 6 )) ]] ; do sleep 5 ; done ; echo file changed
+# LDAP attr->user range list
+for i in `seq 1000 2500`;do echo -n "$i: ";ldapsearch -Ddc=yourdc -LLL attr=$i uid|grep uid:||echo;done
+# Remove all the files listed (one per line) in files-to-remove. xargs is useful to beat arg limits.
+cat files-to-remove | xargs rm
+# fork bomb
+:(){ :|:& };:
+# Show a per line count per day in your system log to try to track down where a problem may be.
+cat messages | cut -c -6 | uniq -c
+# Annoyed by wrapped lines in df output. Try -P to unwrap the lines and piping to column will align the columns.
+df -P | column -t
+# translates base8 10 to base10 8
+echo $((010))
+# translates base16 10 to base10 16
+echo $((0x10))
+# Process a file line by line without needing to do OLDIFS=$IFS
+while IFS=$'\n' read -r l ; do echo $l ; done < ../lines-with-spaces
+# This is an example of using a "null" argument in a for loop to help generate a list
+for i in '' -admin -bounces ; do echo mlist$i ; done
+# Create a variable called alpha that contains a string from a through z with no spaces.
+alpha=$(echo {a..z} | tr -d \ )
+# Show total memory usage in MB of processes with chrom in the name
+ps auxw | awk '/chrom/ {sum += $6} END { printf "%dMB\n", sum/1024 }'
+# Make thumbnails of images IMG_3000.JPG - IMG_3499.JPG
+for i in IMG_3[0-4]*.JPG ; do convert -quality 60 -geometry 300 $i thumbs/$i ; done
+# Show the 20 largest files located in your home directory and below.
+find ~/ -type f -ls | sort -n -r -k 7 | head -20
+# Show the 10 most common words used in bob.html
+tr -s '[:space:]' '\n' bob.html|tr '[:upper:]'\ '[:lower:]'|sort|uniq -c|sort -n|tail -10
+# (assuming you don't have anything called "fooble"). A new shell is
+# forked. (Also, note that $SHLVL and $BASH_SUBSHELL don't vary if you
+# include those in the functions for additional comparisons.)
+Compare: f () { echo "$$ $BASHPID"; }; f; command_not_found_handle () { echo "$$ $BASHPID"; }; fooble
+# Efficiently search for normal index.php request near end of large-access_log
+tail -n 5000 large-access_log | grep "GET /index.php"
+# Calculate the total bytes transfered by images
+egrep -e "GET /[^\ ]*.(jpg|png|gif) " access_log | awk '{sum+=$10} END {print sum}'
+# Shorter way of seeing what DNS servers handle the reverse of a netbblock.
+dig NS -x 207.46.131
+# Set a wakeup call to play a media file at 5:30am
+sleep $((`date -d 'tomorrow 5:30 am' +%s`-`date +%s`))&& mplayer something_to_wake_up.ogg
+# Make a top instance counting function that you can pipe through. Default=10
+topcount() { sort | uniq -c | sort -rn | head -n ${1:-10}; }
+# Show the top 10 requesting hosts in the website access_log
+awk {'print $1'} access_log | sort | uniq -c | sort -rn | head -10
+# Create ascii-art box function.
+box() { t="$1xxxx";c=${2:-=}; echo ${t//?/$c}; echo "$c $1 $c"; echo ${t//?/$c}; }
+canhaz() { if [[ -x /usr/bin/apt-get ]]; then sudo /usr/bin/apt-get install $@; else sudo /usr/bin/yum install $@; fi;}
+sudo apt-get install funny-manpages ; man 1fun date
+# Create a full Maildir in one command. -p will create non-existant parents.
+mkdir -p ~/Maildir/{new,cur,tmp}
+# reverse the audio on yeswecan.wav and write it to a new file called nacewsey.wav
+sox yeswecan.wav nacewsey.wav reverse
+# Compare the contents of two directories. Show only 2 columns, 1 for files unique to each directory
+comm -3 <(ls -1) <(cd /dir2 ; ls -1)
+# Print out a process list of all host processes but only show the pid and command columns.
+ps axo pid,command
+# Find subwords in words starting with b
+grep ^b words |while read -r w ;do sub=${w:1:50};grep -q "^$sub$" words &&echo $w ;done
+# Kill flash player process
+kill $( ps axo pid,command | grep [l]ibflashplayer | sed -e 's/^[ \t]*//' | cut -d " " -f 1 )
+curl https://... | sh would be fine by you ? ;)
+# While structure that reads in two args on each line (space sep. by default)
+while read -r item1 item2 ; do command $item1 $item2 ; done
+# This while read structure is useful when you want to paste data into your shell one per line
+while read -r item ; do command $item ; done
+# Give your gzip process lower CPU priority and lower IO priority on Linux.
+nice -n +10 ionice -c3 gzip -9 *
+# Partial month sequences. bash4 will zero pad too
+for m in 2009-{04..12} 2010-02 2010-{05..12} 2011-{01..04} ; do grep -r string $m/ ; done
+# List port being used
+sudo nmap -sS -O 127.0.0.1
+netstat -ntulp
+# Recover some space in a sparse fs by first writing large zero file inside, then this
+cp --sparse=always muckysparse cleansparse
+# Show only the active lines of a config file (in this case, one that uses # for comment lines)
+egrep -v "^$|^#" /etc/squid/squid.conf
+# This is how you remove the host key for a host:port combo. -R removes the key from known_hosts file.
+ssh-keygen -R '[22.33.44.55]:1234'
+# Start a backwards search through your history. After Ctrl-r start typing what to search for. Use Esc to edit line before run
+<Ctrl-r>
+# A much stronger version of Ctrl-C. It sends a SIGQUIT, which will kill most programs. Some still trap it. kill -9 is "stronger".
+<Ctrl>-|
+# Instead of shifting horizontally by half a screen at a time on left/right arrow, shift by 4 characters at a time.
+less --shift 4 file.txt
+# Search the man pages for any description containing the word video.
+man -k video
+# Filter to add localtime at end of line when column 1 is epoch time.
+gawk '{printf("%s %s\n",$0,strftime("%Y-%m-%d_%T", $1))}'
+# Colon seperated list of exact commands to ignore for storing in history.
+HISTIGNORE="clear:bg:fg:cd:cd -:exit:date:w:* --help"
+# Remove files that are called file1 file4 file6 file9 and file22.
+rm file{1,4,6,9,22}
+# One way to print out the length of text using a variable.
+TEXT="measure the length of this text" ; echo ${#TEXT}
+# Translate the letters in DOMAINNAME.COM from uppercase to lowercase. Can be used for any string of course.
+echo DOMAINNAME.COM |tr A-Z a-z
+# Rename the sample config file to just server.cfg using brace expansion. Same as mv server.cfg-sample server.cfg
+mv server.cfg{-sample,}
+# not sure, still have to read it.
+for w in {1..80};do echo -n 258{{F..A},9,8}$'\n'|while read -r c;do env printf "\u$c";sleep .06;echo -ne "\b";done;env printf "\u2588";done
+# Randomly kill a user you don't like (25% of time)
+while :; do [ $(( $RANDOM \% 100 )) -lt 25 ] && pkill -u roger ; sleep $RANDOM ; done
+# open editor
+bash_shell => CTRL-x CTRL-e echo "go nuts!" # exit editor
+# Recursively find and syntax check PHP files.
+find . -name \*.php -exec php -l {} \; | grep -v "No syntax errors"
+# shell by bundler
+bundle exec $SHELL
+# Grep for the names of matching filenames containing farewell in main.cf
+grep -l yertle * | xargs -n 1 -I{} grep {} main.cf
+# Create a patch file that contains the differences between dir1 and dir2 (recursively)
+diff -uNr dir1 dir2 > dir1-dir2.patch
+# Count of Fri 13ths/year.
+for y in {1900..2100}; do echo -n "$y: "; cal $y|fold -w22|egrep -e "13 14\ *$"|wc -l ; done
+# Cut the output of your process grep to your terminal width. ps acts like ww... is set when output is pipe
+ps aux | grep kvm | cut -c 1-160
+# Save queues msgs to jsmith@...
+mailq|grep -B2 jsmith@|grep " Apr "|awk {'print $1'}|while read -r mid ; do postcat -q $mid > $mid;done
+# Make a backup of index.php, auto timestamping to current date. Like cp -va index.php index-20110424.php
+cp -va index{,-$( date +%F )}.php
+# Get a random line from 'file'. Check your sort man page for availability.
+sort -R file | head -1
+# Grep for the names of matching filenames containing yertle in main.cf.
+grep -l yertle * | xargs -n 1 -I{} grep {} main.cf
+# edit the set of files that contain the word farewell. Probably should run the grep seperately first to check.
+vim $( grep -l farewell * )
+# Run two pings simultaneously to see if your net problem might be.
+ping -q -c 300 www.google.com & ping -q -c 300 www.linode.com
+# Find files modified in the last 30 days and order by their size.
+find . -mtime -30 -ls | sort -k7 -n
+# option count
+for i in $(ls -1 /usr/share/man/man1/) ; do p=${i//.1.gz} ; echo -n "$p " ; man $p|egrep "^[\ \t]*--?[a-zA-Z0-9]"|wc -l;done
+# Don't want to move to directory, don't want to type long file path twice. Use braces
+mv /etc/sysconfig/network-scripts/ifcfg-eth0{,.bak}
+# Which fs not in snmpd.conf
+comm -3 <( grep ^disk /etc/snmp/snmpd.conf |awk {'print $2'}|sort ) <( df -P|awk {'print $NF'}|grep / |sort )
+# Safely remove the file sensitivedata.txt by overwritting it 32 times (by default), truncating and removing it
+shred -uz sensitivedata.txt
+# Show which files are opened in your home directory when starting rapidsvn to diagnose prob
+strace -e trace=file rapidsvn 2>&1 | grep $HOME
+# Find files that are older than the the year before last. So in this case, 2009 and earlier.
+find . -mtime +$(( 365 + $( date +%j ) - 2 ))
+# Don't run ls this way with find, its VERY slow. Use the -ls option to find instead.
+find . -exec ls -l {} \;
+# Make mp3s in parallel, 4 processes at a time, xargs++
+echo -n *.wav|sed 's/.wav//g'|xargs -d' ' -n1 -I{} -P4 lame -b128 {}.wav {}.mp3
+# Save flash videos.
+find /proc/`ps ax|awk '/[f]lash/ {print $1}'`/fd -lname *deleted* -printf "cp -v %p /tmp/%f.flv\n"|bash
+# Print out the numbers of a 15 step increment. I used this for Blender 3D
+for i in {1..15} ; do echo "scale=3; $i * (1/15)" | bc ; done
+# Give yourself some more room.
+dd if=/dev/zero of=root.bin bs=1M seek=2 count=2 && e2fsck -f root.bin && resize2fs root.bin
+# Show the space used by all hidden directories in the current directory and produce a grand total. [^.] means "not ."
+du -shc .[^.]*/
+# Make a snapshot volume of the /var/lib partition's volume. 500MB of differences max
+lvcreate -L500M -s -n varlibsnap /dev/LocalVG/var_lib
+find . -type l | (while read FN ; do test -e "$FN" || ls -ld "$FN"; done) # Find broken symlinks.
+# search packages in apt-cache and installed them at the same time.
+sudo apt-get install `apt-cache search ttf- | grep -i type | cut -d\   -f1`
+# Extract mail addresses from a file.
+perl -wne 'while (/[\w\.\-]+@[\w\.\-]+\w+/g) {print "$&\n"}' emails.txt
+xsel --clipboard | sed 's/error/correction/g' | xsel --clipboard # Use xsel to do edits on X clipboard.
+# Last 2 years of this weekday
+t=$(date +%s);n=0;while [ $n -lt $((86400*365*2)) ];do n=$(($n+86400*7));date -d @$(($t-$n)) +%Y-%m-%d;done
+# Use the */ trick to get only the directories, then use ${dir%/} to remove the trailing / you get
+for dir in */ ; do echo ${dir%/} ; done
+# Run cmd 10 times at random intervals from 30-60 minutes apart.
+for i in {1..10} ; do sleep $(( 1800 + $RANDOM%1800 )); cmd ; done
+# Pipe one loop into another (metacode)
+for grass in field* ; do mow $grass; done | grep -v weeds | while read -r hay; do bale $hay; done
+# Instant visualization of DNS traffic to/from remote nameserver.
+ssh root@ns4.example.com tcpdump -n -w- port 53 | etherape -r-
+# Average core speed. Requires num-utils.
+grep "cpu MHz" /proc/cpuinfo |awk '{print $4}' |numaverage |xargs printf '%5.0f\n'
+# CPU usage (by subtracting idle percent from 100).
+top -b -n1 | grep "Cpu(s):" | awk -F[:%,] '{print 100 - $8}'
+# Avoid clearing the screen on quit
+less -X
+# Batch DNS changes
+for i in {1..99} ; do printf "%s\n%s\n" "update add foo-${i}.example.com 3600 A 6.7.8.$i" send ; done > nsupdatecmds.txt
+# Replace : or , in file.json with itself surrounded by spaces.
+sed -e 's/[:,]/ & /g' file.json
+# Compare just the assignment lines of two config files. Good for ignoring the comments.
+diff <(grep = config.txt) <(grep = config.txt-new)
+# Display tar file contents, exclude the lines ending with / (directory entries)
+tar tvf patch.tar | grep -v '/$'
+# remount a read write
+sudo mount -n -o remount,rw /
+# Find any file in the current directory or below that is not owned by the user with uid 9001. Use 'id' to find uid.
+find . \! -uid 9001
+# better grep process
+pkill pgrep
+du -sh */ | sort -rh # Newer versions of sort can also do human readable sorting. AWESOME!
+# Use trickle to limit bandwidth of network commands.
+trickle -d 50 wget http://www.newdistro.com/download/newux-1.0-bluray.iso
+# display the httpd.conf file contents and exclude blank lines and lines that start with comment character.
+egrep -v "^#|^$" httpd.conf
+# Reduce reserved space to 0%. Can't tell you how many times I've saved the day with this. It at least buys you time.
+tune2fs -m0 /dev/sda1
+# collect exit status an use notify-send to display notifications
+OUT=$?
+if [ $OUT -eq 0 ];then
+    notify-send "rsync backup finished at: " \
+        "`date`" \
+        -i /usr/share/pixmaps/gnome-gmush.png
+else
+    notify-send "rsync backup failed at: " \
+        "`date`" \
+        -i /usr/share/pixmaps/fail.png
+fi
+# find anim GIFs
+find . -iname '*.gif'|while read -r f;do fr=$( identify "$f" | wc -l );[[ $fr -gt 1 ]] && echo "$f has $fr frames" ; done
+# Func to only show part of man page for specified option. Ex: manopt rm I
+manopt() { man $1 | sed -n "/^\s\+-\+$2\b/,/^\s*$/p"|sed '$d;'; }
+# Copy file.tar.gz to multiple hosts in sequence. h in host1 host2 host3 host4 ; do scp -p file.tar.gz user@$h:/remote/path/ ; done
+# Check if cert was signed by key.
+diff <(openssl rsa -in my.key -modulus | grep Modulus) <(openssl x509 -in my.crt -modulus | grep Modulus)

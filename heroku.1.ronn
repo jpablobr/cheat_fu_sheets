@@ -21,3 +21,6 @@ File: **config.ru**:
 # Remove development and test from the bundle gems
 
 $ heroku config:add BUNDLE_WITHOUT="development:test"
+
+# Open log files
+File.open('log/production.log', 'r').each_line { |line| puts line }
