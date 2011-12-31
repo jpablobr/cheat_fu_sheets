@@ -2320,7 +2320,7 @@ not come from stdin. Output is sent to stdout (the screen). Thus:
 
 cat filename | sed '10q' # uses piped input
 sed '10q' filename # same effect, avoids a useless "cat"
-sed '10q' filename > newfile # redirects output to disk
+sed '10q' filename > newfile # redirets output to disk
 
 For additional syntax instructions, including the way to apply editing
 commands from a disk file instead of the command line, consult "sed &

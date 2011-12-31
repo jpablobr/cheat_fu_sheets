@@ -262,3 +262,4 @@ manopt() { man $1 | sed -n "/^\s\+-\+$2\b/,/^\s*$/p"|sed '$d;'; }
 # Copy file.tar.gz to multiple hosts in sequence. h in host1 host2 host3 host4 ; do scp -p file.tar.gz user@$h:/remote/path/ ; done
 # Check if cert was signed by key.
 diff <(openssl rsa -in my.key -modulus | grep Modulus) <(openssl x509 -in my.crt -modulus | grep Modulus)
+last | awk '!a[$1]++'

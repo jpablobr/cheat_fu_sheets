@@ -1,0 +1,184 @@
+Advanced Bash-Scripting Guide:
+---------------------------------- -- ---------------------
+[Prev](contributed-scripts.html)      [Next](sedawk.html)
+
+* * * * *
+
+# Appendix B. Reference Cards
+
+The following reference cards provide a useful *summary* of certain
+scripting concepts. The foregoing text treats these matters in more
+depth, as well as giving usage examples.
+
+**Table B-1. Special Shell Variables**
+
+  Variable             Meaning
+  -------------------- -----------------------------------------------------
+  `$0`{.OPTION}        Filename of script
+  `$1`{.OPTION}        Positional parameter \#1
+  `$2 - $9`{.OPTION}   Positional parameters \#2 - \#9
+  `${10}`{.OPTION}     Positional parameter \#10
+  `$#`{.OPTION}        Number of positional parameters
+  `"$*"`{.OPTION}      All the positional parameters (as a single word) \*
+  `"$@"`{.OPTION}      All the positional parameters (as separate strings)
+  `${#*}`{.OPTION}     Number of positional parameters
+  `${#@}`{.OPTION}     Number of positional parameters
+  `$?`{.OPTION}        Return value
+  `$$`{.OPTION}        Process ID (PID) of script
+  `$-`{.OPTION}        Flags passed to script (using *set*)
+  `$_`{.OPTION}        Last argument of previous command
+  `$!`{.OPTION}        Process ID (PID) of last job run in background
+
+**\*** *Must be quoted*, otherwise it defaults to "`$@`{.VARNAME}".
+
+**Table B-2. TEST Operators: Binary Comparison**
+
+Operator                                                    Meaning                                                             -----   Operator                                               Meaning
+----------------------------------------------------------- ------------------------------------------------------------------- ------- ------------------------------------------------------- -----------------------------------------------------
+
+  [Arithmetic Comparison](comparison-ops.html#ICOMPARISON1)                                                                               [String Comparison](comparison-ops.html#SCOMPARISON1)
+  `-eq`{.OPTION}                                              Equal to                                                                    `=`{.OPTION}                                            Equal to
+                                                                                                                                          `==`{.OPTION}                                           Equal to
+  `-ne`{.OPTION}                                              Not equal to                                                                `!=`{.OPTION}                                           Not equal to
+  `-lt`{.OPTION}                                              Less than                                                                   `\<`{.OPTION}                                           Less than ([ASCII](special-chars.html#ASCIIDEF)) \*
+  `-le`{.OPTION}                                              Less than or equal to
+  `-gt`{.OPTION}                                              Greater than                                                                `\>`{.OPTION}                                           Greater than (ASCII) \*
+  `-ge`{.OPTION}                                              Greater than or equal to
+                                                                                                                                          `-z`{.OPTION}                                           String is empty
+                                                                                                                                          `-n`{.OPTION}                                           String is not empty
+
+  Arithmetic Comparison                                       [within double parentheses](testconstructs.html#DBLPRX) (( ... ))
+  `>`{.OPTION}                                                Greater than
+  `>=`{.OPTION}                                               Greater than or equal to
+  `<`{.OPTION}                                                Less than
+  `<=`{.OPTION}                                               Less than or equal to
+
+**\*** *If within a double-bracket* [[ ... ]] *test construct, then no
+escape* \\ *is needed.*
+
+**Table B-3. TEST Operators: Files**
+
+ Operator        Tests Whether                                           -----   Operator               Tests Whether
+ --------------- ------------------------------------------------------- ------- ---------------------- ------------------------------------------------------
+  `-e`{.OPTION}   File exists                                                     `-s`{.OPTION}          File is not zero size
+  `-f`{.OPTION}   File is a *regular* file
+  `-d`{.OPTION}   File is a *directory*                                           `-r`{.OPTION}          File has *read* permission
+  `-h`{.OPTION}   File is a [symbolic link](basic.html#SYMLINKREF)                `-w`{.OPTION}          File has *write* permission
+  `-L`{.OPTION}   File is a *symbolic link*                                       `-x`{.OPTION}          File has *execute* permission
+  `-b`{.OPTION}   File is a [block device](devref1.html#BLOCKDEVREF)
+  `-c`{.OPTION}   File is a [character device](devref1.html#CHARDEVREF)           `-g`{.OPTION}          *sgid* flag set
+  `-p`{.OPTION}   File is a [pipe](special-chars.html#PIPEREF)                    `-u`{.OPTION}          *suid* flag set
+  `-S`{.OPTION}   File is a [socket](devref1.html#SOCKETREF)                      `-k`{.OPTION}          "sticky bit" set
+  `-t`{.OPTION}   File is associated with a *terminal*
+
+  `-N`{.OPTION}   File modified since it was last read                            `F1 -nt F2`{.OPTION}   File F1 is *newer* than F2 \*
+  `-O`{.OPTION}   You own the file                                                `F1 -ot F2`{.OPTION}   File F1 is *older* than F2 \*
+  `-G`{.OPTION}   *Group id* of file same as yours                                `F1 -ef F2`{.OPTION}   Files F1 and F2 are *hard links* to the same file \*
+
+  `!`{.OPTION}    NOT (inverts sense of above tests)
+
+**\*** *Binary* operator (requires two operands).
+
+**Table B-4. Parameter Substitution and Expansion**
+
+ Expression                   Meaning
+ ---------------------------- ---------------------------------------------------------------------------------------------------------
+  `${var}`{.OPTION}            Value of `var`{.PARAMETER} (same as `$var`{.PARAMETER})
+
+  `${var-DEFAULT}`{.OPTION}    If `var`{.PARAMETER} not set, evaluate expression as `$DEFAULT`{.PARAMETER} \*
+  `${var:-DEFAULT}`{.OPTION}   If `var`{.PARAMETER} not set or is empty, evaluate expression as `$DEFAULT`{.PARAMETER} \*
+
+  `${var=DEFAULT}`{.OPTION}    If `var`{.PARAMETER} not set, evaluate expression as `$DEFAULT`{.PARAMETER} \*
+  `${var:=DEFAULT}`{.OPTION}   If `var`{.PARAMETER} not set, evaluate expression as `$DEFAULT`{.PARAMETER} \*
+
+  `${var+OTHER}`{.OPTION}      If `var`{.PARAMETER} set, evaluate expression as `$OTHER`{.PARAMETER}, otherwise as null string
+  `${var:+OTHER}`{.OPTION}     If `var`{.PARAMETER} set, evaluate expression as `$OTHER`{.PARAMETER}, otherwise as null string
+
+  `${var?ERR_MSG}`{.OPTION}    If `var`{.PARAMETER} not set, print `$ERR_MSG`{.PARAMETER} and abort script with an exit status of 1.\*
+  `${var:?ERR_MSG}`{.OPTION}   If `var`{.PARAMETER} not set, print `$ERR_MSG`{.PARAMETER} and abort script with an exit status of 1.\*
+
+  `${!varprefix*}`{.OPTION}    Matches all previously declared variables beginning with `varprefix`{.PARAMETER}
+  `${!varprefix@}`{.OPTION}    Matches all previously declared variables beginning with `varprefix`{.PARAMETER}
+
+**\*** If `var`{.PARAMETER} *is* set, evaluate the expression as
+`$var`{.PARAMETER} with no side-effects.
+
+**Table B-5. String Operations**
+
+Expression                                                       Meaning
+---------------------------------------------------------------- -----------------------------------------------------------------------------------------------------------------------------------------------------------------
+  `${#string}`{.OPTION}                                            Length of `$string`{.PARAMETER}
+
+  `${string:position}`{.OPTION}                                    Extract substring from `$string`{.PARAMETER} at `$position`{.PARAMETER}
+  `${string:position:length}`{.OPTION}                             Extract `$length`{.PARAMETER} characters substring from `$string`{.PARAMETER} at `$position`{.PARAMETER} [zero-indexed, first character is at position 0]
+
+  `${string#substring}`{.OPTION}                                   Strip shortest match of `$substring`{.PARAMETER} from front of `$string`{.PARAMETER}
+  `${string##substring}`{.OPTION}                                  Strip longest match of `$substring`{.PARAMETER} from front of `$string`{.PARAMETER}
+  `${string%substring}`{.OPTION}                                   Strip shortest match of `$substring`{.PARAMETER} from back of `$string`{.PARAMETER}
+  `${string%%substring}`{.OPTION}                                  Strip longest match of `$substring`{.PARAMETER} from back of `$string`{.PARAMETER}
+
+  `${string/substring/replacement}`{.OPTION}                       Replace first match of `$substring`{.PARAMETER} with `$replacement`{.PARAMETER}
+  `${string//substring/replacement}`{.OPTION}                      Replace *all* matches of `$substring`{.PARAMETER} with `$replacement`{.PARAMETER}
+  `${string/#substring/replacement}`{.OPTION}                      If `$substring`{.PARAMETER} matches *front* end of `$string`{.PARAMETER}, substitute `$replacement`{.PARAMETER} for `$substring`{.PARAMETER}
+  `${string/%substring/replacement}`{.OPTION}                      If `$substring`{.PARAMETER} matches *back* end of `$string`{.PARAMETER}, substitute `$replacement`{.PARAMETER} for `$substring`{.PARAMETER}
+
+
+  `expr match "$string" '$substring'`{.OPTION}                     Length of matching `$substring`{.PARAMETER}\* at beginning of `$string`{.PARAMETER}
+  `expr "$string" : '$substring'`{.OPTION}                         Length of matching `$substring`{.PARAMETER}\* at beginning of `$string`{.PARAMETER}
+  `expr index "$string" $substring`{.OPTION}                       Numerical position in `$string`{.PARAMETER} of first character in `$substring`{.PARAMETER}\* that matches [0 if no match, first character counts as position 1]
+  `expr substr $string $position             $length`{.OPTION}     Extract `$length`{.PARAMETER} characters from `$string`{.PARAMETER} starting at `$position`{.PARAMETER} [0 if no match, first character counts as position 1]
+  `expr match "$string"             '\($substring\)'`{.OPTION}     Extract `$substring`{.PARAMETER}\*, searching from beginning of `$string`{.PARAMETER}
+  `expr "$string" :             '\($substring\)'`{.OPTION}         Extract `$substring`{.PARAMETER}\* , searching from beginning of `$string`{.PARAMETER}
+  `expr match "$string"             '.*\($substring\)'`{.OPTION}   Extract `$substring`{.PARAMETER}\*, searching from end of `$string`{.PARAMETER}
+  `expr "$string" :             '.*\($substring\)'`{.OPTION}       Extract `$substring`{.PARAMETER}\*, searching from end of `$string`{.PARAMETER}
+
+**\*** Where `$substring`{.PARAMETER} is a [Regular
+Expression](regexp.html#REGEXREF).
+
+**Table B-6. Miscellaneous Constructs**
+
+  Expression                                           Interpretation
+  ---------------------------------------------------- -------------------------------------------------------------------------------------------------------
+
+  [Brackets](x16947.html#BRACKETSREF)
+  `if [ CONDITION ]`{.OPTION}                          [Test construct](special-chars.html#LEFTBRACKET)
+  `if [[ CONDITION ]]`{.OPTION}                        [Extended test construct](testconstructs.html#DBLBRACKETS)
+  `Array[1]=element1`{.OPTION}                         [Array initialization](arrays.html#ARRAYREF)
+  ` [a-z]`{.OPTION}                                    [Range of characters](x16947.html#BRACKETSREF) within a [Regular Expression](regexp.html#REGEXREF)
+
+  Curly Brackets
+  `${variable}`{.OPTION}                               [Parameter substitution](parameter-substitution.html#PARAMSUBREF)
+  `${!variable}`{.OPTION}                              [Indirect variable reference](ivr.html#IVRREF)
+  `{ command1; command2; . . . commandN; }`{.OPTION}   [Block of code](special-chars.html#CODEBLOCKREF)
+  `{string1,string2,string3,...}`{.OPTION}             [Brace expansion](special-chars.html#BRACEEXPREF)
+  `{a..z}`{.OPTION}                                    [Extended brace expansion](bashver3.html#BRACEEXPREF3)
+  `{}`{.OPTION}                                        Text replacement, after [find](moreadv.html#CURLYBRACKETSREF) and [xargs](moreadv.html#XARGSCURLYREF)
+
+
+  [Parentheses](special-chars.html#PARENSREF)
+  `( command1; command2 )`{.OPTION}                    Command group executed within a [subshell](subshells.html#SUBSHELLSREF)
+  `Array=(element1 element2 element3)`{.OPTION}        [Array initialization](arrays.html#ARRAYINIT0)
+  `result=$(COMMAND)`{.OPTION}                         [Command substitution](commandsub.html#CSPARENS), new style
+  `>(COMMAND)`{.OPTION}                                [Process substitution](process-sub.html#PROCESSSUBREF)
+  `<(COMMAND)`{.OPTION}                                Process substitution
+
+  [Double Parentheses](dblparens.html)
+  `(( var = 78 ))`{.OPTION}                            [Integer arithmetic](dblparens.html#DBLPARENSREF)
+  `var=$(( 20 + 5 ))`{.OPTION}                         Integer arithmetic, with variable assignment
+  `(( var++ ))`{.OPTION}                               *C-style* [variable increment](dblparens.html#PLUSPLUSREF)
+  `(( var-- ))`{.OPTION}                               *C-style* [variable decrement](dblparens.html#PLUSPLUSREF)
+  `(( var0 = var1<98?9:21 ))`{.OPTION}                 *C-style* [trinary](special-chars.html#CSTRINARY) operation
+
+  [Quoting](quoting.html#QUOTINGREF)
+  `"$variable"`{.OPTION}                               ["Weak" quoting](varsubn.html#DBLQUO)
+  `'string'`{.OPTION}                                  ['Strong' quoting](varsubn.html#SNGLQUO)
+
+  [Back Quotes](commandsub.html#BACKQUOTESREF)
+  `` result=`COMMAND` ``{.OPTION}                      [Command substitution](commandsub.html#COMMANDSUBREF), classic style
+
+* * * * *
+
+  ---------------------------------- -------------------- ----------------------------
+  [Prev](contributed-scripts.html)   [Home](index.html)   [Next](sedawk.html)
+  Contributed Scripts                                     A Sed and Awk Micro-Primer
+  ---------------------------------- -------------------- ----------------------------

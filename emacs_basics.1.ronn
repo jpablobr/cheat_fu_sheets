@@ -1,24 +1,11 @@
-
-Basic emacs(1) cheats
+emacs(1) Tips cheats
 ==================
 
-## Yasnippets
-
-`C-i` or `TAB` (with hippie) for expanding
+# Reset directory on eshell
+M-x dirs
 
 ## delete blank lines
 M-x flush-lines ^$
-
-## Commands to Manipulate Windows
-
-`C-v`     scroll-up.<br>
-`M-v`     scroll-down.<br>
-`C-x o`               other-window.<br>
-`C-x 1`               delete-other-windows.<br>
-`C-x 0`               delete-window.<br>
-`C-x 2`               split-window-vertically.<br>
-`C-x 3`               split-window-horizontally.<br>
-`C-M-v`               scroll-other-window. <br>
 
 ## Infinite Undo with Redo
 `C-_`        undo. (Also C-x u and C-/)

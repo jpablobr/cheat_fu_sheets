@@ -1,0 +1,57 @@
+Merging in a Pull Request
+=========================
+
+## Merging a Pull Request
+
+Once the pull request is deemed satisfactory, someone with push access
+to the destination repository must apply the changes and push the
+updated branch. There are a variety of ways to accomplish this. Three
+popular methods are described below.
+
+## Fetch and Merge
+
+This is the most common method of fetching and applying changes. It
+requires adding a remote for the person that sent the pull request,
+fetching from that repository, merging the requested branch, fixing
+any conflicts, and pushing the newly merged branch back to the
+repository:
+
+    git checkout master
+    git remote add kneath git://github.com/kneath/jobs.git
+    git fetch kneath
+    git merge kneath/error-page
+    git push origin master
+
+## Patch and Apply
+
+The fetch and merge approach works great when you’re working on a team
+or repeatedly applying changes from the same small group of
+people. Another approach that’s a bit quicker in one-off cases is to
+use git-am.
+
+Every pull request has a .patch URL where you can grab a textual patch
+file to feed into the git-am command:
+
+    git checkout master
+    curl http://github.com/github/jobs/pull/25.patch | git am
+    git push origin master
+
+## Auto Merge
+
+In many cases it is possible to ask github to auto merge a pull
+request using the merge button. This was made possible with the launch
+of Pull Requests 2.0 and is covered in the related blog post.
+
+## Closing a Pull Request
+
+Pull Requests are automatically closed when the requested commits are
+merged into the destination repository. An event is generated to let
+all repository collaborators and followers know that the merge
+occurred:
+
+It’s also possible to manually close a pull request in cases where the
+set of changes are rejected. This is also sometimes necessary if the
+changes are applied with git-cherry-pick or using some other mechanism
+that disallows the merge from being detected.
+
+http://help.github.com/send-pull-requests/

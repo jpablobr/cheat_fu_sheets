@@ -4,3 +4,4 @@ mysql(1) -- cheat sheet
 ## Gem
 
     gem install mysql -- --with-mysql-config=/usr/bin/mysql_config
+
